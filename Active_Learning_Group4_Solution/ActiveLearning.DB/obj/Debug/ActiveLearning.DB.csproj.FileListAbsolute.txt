@@ -1,0 +1,2 @@
+C:\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning\ActiveLearning.DB\bin\Debug\ActiveLearning.DB.exe.config
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\ActiveLearning.DB.exe.config
