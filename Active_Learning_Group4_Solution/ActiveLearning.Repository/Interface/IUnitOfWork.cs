@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ActiveLearning.DB
+namespace ActiveLearning.Repository.Interface
 {
-    class Program
+    public interface IUnitOfWork : IDisposable
     {
-        static void Main(string[] args)
-        {
-        }
+
     }
 }
