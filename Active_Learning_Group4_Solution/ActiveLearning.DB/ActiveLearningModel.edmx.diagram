@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="879f7818ad0241388656362cb2002c76" Name="Diagram1">
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Admin" Width="1.5" PointX="8.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatDetail" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatRecord" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatRecord_Course_Map" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Course" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Instructor" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Instructor_Course_Map" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Quiz_Course_Map" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizAnswer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizDetail" Width="1.5" PointX="3.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizRecord" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Student" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.Student_Course_Map" Width="1.5" PointX="6" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearningDataModel.sysdiagram" Width="1.5" PointX="8.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_ChatRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_ChatRecord1" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatRecord_Course_Map_ChatRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatRecord_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Instructor_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Quiz_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Student_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Instructor_Course_Map_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Quiz_Course_Map_Quiz" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizAnswer_QuizDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizAnswer_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizDetail_QuizDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="ActiveLearningDataModel.FK_Student_Course_Map_Student" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
