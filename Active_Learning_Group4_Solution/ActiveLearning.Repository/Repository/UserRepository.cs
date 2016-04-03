@@ -20,12 +20,12 @@ namespace ActiveLearning.Repository.Repository
             using (ENET_Project_Active_Learning_Group4Entities db = new ENET_Project_Active_Learning_Group4Entities())
             {
 
-                Admin SU = new Admin();
+                User SU = new User();
                 SU.Username = user.LoginName;
                 SU.Password = user.Password;
-                SU.Sid = 1;
+                SU.IsActive = true;
 
-                db.Admins.Add(SU);
+                db.Users.Add(SU);
                 db.SaveChanges();
 
 

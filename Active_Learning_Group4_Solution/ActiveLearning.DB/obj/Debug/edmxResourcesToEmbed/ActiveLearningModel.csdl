@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ActiveLearningDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="ENET_Project_Active_Learning_Group4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Admin">
     <Key>
       <PropertyRef Name="Sid" />
     </Key>
-    <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Admin_User" FromRole="Admin" ToRole="User" />
   </EntityType>
   <EntityType Name="ChatDetail">
     <Key>
@@ -57,6 +56,7 @@
     <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
     <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Instructor_User" FromRole="Instructor" ToRole="User" />
   </EntityType>
   <EntityType Name="Instructor_Course_Map">
     <Key>
@@ -119,6 +119,7 @@
     <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_ChatRecord" FromRole="Student" ToRole="ChatDetail" />
     <NavigationProperty Name="QuizAnswers" Relationship="Self.FK_QuizAnswer_Student" FromRole="Student" ToRole="QuizAnswer" />
     <NavigationProperty Name="Student_Course_Map" Relationship="Self.FK_Student_Course_Map_Student" FromRole="Student" ToRole="Student_Course_Map" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Student_User" FromRole="Student" ToRole="User" />
   </EntityType>
   <EntityType Name="Student_Course_Map">
     <Key>
@@ -140,6 +141,30 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Sid" />
+    </Key>
+    <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Admin" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
+    <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructor_User" FromRole="User" ToRole="Instructor" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
+  </EntityType>
+  <Association Name="FK_Admin_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Sid" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="Sid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ChatDetail_ChatRecord">
     <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
     <End Role="ChatDetail" Type="Self.ChatDetail" Multiplicity="*" />
@@ -248,6 +273,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Instructor_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Sid" />
+      </Principal>
+      <Dependent Role="Instructor">
+        <PropertyRef Name="Sid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Quiz_Course_Map_Quiz">
     <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="0..1" />
     <End Role="Quiz_Course_Map" Type="Self.Quiz_Course_Map" Multiplicity="*" />
@@ -308,6 +345,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Student_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Sid" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Sid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ENET_Project_Active_Learning_Group4Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Admins" EntityType="Self.Admin" />
     <EntitySet Name="ChatDetails" EntityType="Self.ChatDetail" />
@@ -323,6 +372,11 @@
     <EntitySet Name="Students" EntityType="Self.Student" />
     <EntitySet Name="Student_Course_Map" EntityType="Self.Student_Course_Map" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
     <AssociationSet Name="FK_ChatDetail_ChatRecord" Association="Self.FK_ChatDetail_ChatRecord">
       <End Role="Student" EntitySet="Students" />
       <End Role="ChatDetail" EntitySet="ChatDetails" />
@@ -359,6 +413,10 @@
       <End Role="Instructor" EntitySet="Instructors" />
       <End Role="Instructor_Course_Map" EntitySet="Instructor_Course_Map" />
     </AssociationSet>
+    <AssociationSet Name="FK_Instructor_User" Association="Self.FK_Instructor_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Instructor" EntitySet="Instructors" />
+    </AssociationSet>
     <AssociationSet Name="FK_Quiz_Course_Map_Quiz" Association="Self.FK_Quiz_Course_Map_Quiz">
       <End Role="QuizRecord" EntitySet="QuizRecords" />
       <End Role="Quiz_Course_Map" EntitySet="Quiz_Course_Map" />
@@ -378,6 +436,10 @@
     <AssociationSet Name="FK_Student_Course_Map_Student" Association="Self.FK_Student_Course_Map_Student">
       <End Role="Student" EntitySet="Students" />
       <End Role="Student_Course_Map" EntitySet="Student_Course_Map" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_User" Association="Self.FK_Student_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Student" EntitySet="Students" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -4,35 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="879f7818ad0241388656362cb2002c76" Name="Diagram1">
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Admin" Width="1.5" PointX="8.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatDetail" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatRecord" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.ChatRecord_Course_Map" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Course" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Instructor" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Instructor_Course_Map" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Quiz_Course_Map" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizAnswer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizDetail" Width="1.5" PointX="3.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.QuizRecord" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Student" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.Student_Course_Map" Width="1.5" PointX="6" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearningDataModel.sysdiagram" Width="1.5" PointX="8.75" PointY="5.125" IsExpanded="true" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_ChatRecord" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_ChatRecord1" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatDetail_Instructor" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatRecord_Course_Map_ChatRecord" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_ChatRecord_Course_Map_Course" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Instructor_Course_Map_Course" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Quiz_Course_Map_Course" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Student_Course_Map_Course" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Instructor_Course_Map_Instructor" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Quiz_Course_Map_Quiz" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizAnswer_QuizDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizAnswer_Student" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_QuizDetail_QuizDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="ActiveLearningDataModel.FK_Student_Course_Map_Student" ManuallyRouted="false" />
+      <Diagram DiagramId="1133ad986c28464d84e523ee9a344352" Name="Diagram1">
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Admin" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.ChatDetail" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.ChatRecord" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.ChatRecord_Course_Map" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Course" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Instructor" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Instructor_Course_Map" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Quiz_Course_Map" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.QuizAnswer" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.QuizDetail" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.QuizRecord" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Student" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.Student_Course_Map" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ENET_Project_Active_Learning_Group4Model.User" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Admin_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_ChatDetail_ChatRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_ChatDetail_ChatRecord1" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_ChatDetail_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_ChatRecord_Course_Map_ChatRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_ChatRecord_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Instructor_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Quiz_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Student_Course_Map_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Instructor_Course_Map_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Instructor_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Quiz_Course_Map_Quiz" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_QuizAnswer_QuizDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_QuizAnswer_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_QuizDetail_QuizDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Student_Course_Map_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ENET_Project_Active_Learning_Group4Model.FK_Student_User" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

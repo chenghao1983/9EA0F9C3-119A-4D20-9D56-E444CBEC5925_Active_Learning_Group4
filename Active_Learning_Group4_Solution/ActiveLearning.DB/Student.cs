@@ -30,5 +30,6 @@ namespace ActiveLearning.DB
         public virtual ICollection<QuizAnswer> QuizAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student_Course_Map> Student_Course_Map { get; set; }
+        public virtual User User { get; set; }
     }
 }
