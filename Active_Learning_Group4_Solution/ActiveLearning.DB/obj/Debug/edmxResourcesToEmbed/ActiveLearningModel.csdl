@@ -53,7 +53,7 @@
     <Key>
       <PropertyRef Name="Sid" />
     </Key>
-    <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
     <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
     <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
     <NavigationProperty Name="User" Relationship="Self.FK_Instructor_User" FromRole="Instructor" ToRole="User" />

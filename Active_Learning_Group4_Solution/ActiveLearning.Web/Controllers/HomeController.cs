@@ -21,7 +21,7 @@ namespace ActiveLearning.Web.Controllers
             using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
             {
                 // Example1
-                unitOfWork.Users.AddUserAccount(new UserViewModel() { LoginName="lame",Password="asd"});
+                unitOfWork.Users.AddInstructorAccount(new UserViewModel() { LoginName="lame",Password="asd"});
 
                 unitOfWork.Complete();
             }

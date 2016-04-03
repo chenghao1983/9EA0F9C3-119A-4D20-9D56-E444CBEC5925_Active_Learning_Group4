@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ENET_Project_Active_Learning_Group4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ENET_Project_Active_Learning_Group4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Sid" />
@@ -46,7 +46,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Instructor_Course_Map">
           <Key>
@@ -413,8 +413,7 @@
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ENET_Project_Active_Learning_Group4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -471,7 +470,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
           <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
           <NavigationProperty Name="User" Relationship="Self.FK_Instructor_User" FromRole="Instructor" ToRole="User" />

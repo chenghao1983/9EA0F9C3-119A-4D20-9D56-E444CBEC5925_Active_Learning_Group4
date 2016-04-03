@@ -9,8 +9,11 @@ namespace ActiveLearning.Repository.Interface
 {
     public interface IUserRepository : IRepository<UserViewModel>
     {
+        void AddInstructorAccount(UserViewModel user);
 
-        void AddUserAccount(UserViewModel user);
+
+
+
 
     }
 }

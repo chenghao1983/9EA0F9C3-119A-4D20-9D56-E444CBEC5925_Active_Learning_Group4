@@ -41,7 +41,7 @@
     <Key>
       <PropertyRef Name="Sid" />
     </Key>
-    <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sid" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Instructor_Course_Map">
     <Key>
