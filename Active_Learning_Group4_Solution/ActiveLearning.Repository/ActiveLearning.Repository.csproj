@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F583996B-0686-4013-8948-EDBC7FBF2727}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ActiveLearning.Repository</RootNamespace>
     <AssemblyName>ActiveLearning.Repository</AssemblyName>
@@ -32,9 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,13 +52,27 @@
   <ItemGroup>
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IUnitOfWork.cs" />
+    <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Implementation\" />
+    <Folder Include="Context\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveLearning.DB\ActiveLearning.DB.csproj">
+      <Project>{796c0bd5-0a31-4ceb-8920-78805c20b907}</Project>
+      <Name>ActiveLearning.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveLearning.Entities\ActiveLearning.Entities.csproj">
+      <Project>{07d2a7dd-becb-469c-ac17-2f02f6bd7c6b}</Project>
+      <Name>ActiveLearning.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

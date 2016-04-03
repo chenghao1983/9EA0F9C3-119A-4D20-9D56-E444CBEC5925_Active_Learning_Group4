@@ -15,5 +15,7 @@ namespace ActiveLearning.DB
     public partial class Admin
     {
         public int Sid { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
