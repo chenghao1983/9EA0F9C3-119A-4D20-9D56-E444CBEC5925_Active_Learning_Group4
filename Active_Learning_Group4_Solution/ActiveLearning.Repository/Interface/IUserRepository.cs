@@ -12,9 +12,9 @@ namespace ActiveLearning.Repository.Interface
     {
         void AddInstructorAccount(User user);
 
+        void AddStudentAccount(User user);
 
-
-
+        void CheckAuthentication(User user);
 
     }
 }

@@ -10,13 +10,13 @@ namespace ActiveLearning.Business.Interface
     public interface IUserManager
     {
 
-        void AddNewStudent();
+        void AddNewStudent(User user);
 
         void AddNewInstructor(User user);
 
         void AddNewAdmin();
 
-        bool isAuthenticated();
+        void isAuthenticated(User user);
 
 
 

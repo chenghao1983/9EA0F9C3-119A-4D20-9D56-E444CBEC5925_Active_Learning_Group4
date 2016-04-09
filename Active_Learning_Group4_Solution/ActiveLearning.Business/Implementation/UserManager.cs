@@ -20,21 +20,30 @@ namespace ActiveLearning.Business.Implementation
         {
             using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
             {
-                // Example1
                 unitOfWork.Users.AddInstructorAccount(user);
 
                 unitOfWork.Complete();
             }
         }
 
-        public void AddNewStudent()
+        public void AddNewStudent(User user)
         {
-            throw new NotImplementedException();
+            using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
+            {
+                unitOfWork.Users.AddStudentAccount(user);
+
+                unitOfWork.Complete();
+            }
         }
 
-        public bool isAuthenticated()
+        public void isAuthenticated(User user)
         {
-            throw new NotImplementedException();
+            using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
+            {
+                unitOfWork.Users.CheckAuthentication(user);
+
+                unitOfWork.Complete();
+            }
         }
     }
 }

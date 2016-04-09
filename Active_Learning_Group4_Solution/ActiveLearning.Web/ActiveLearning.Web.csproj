@@ -227,6 +227,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActiveLearning.Business\ActiveLearning.Business.csproj">
+      <Project>{ace1b618-44ac-41f7-b9ab-73c783e149d3}</Project>
+      <Name>ActiveLearning.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActiveLearning.DB\ActiveLearning.DB.csproj">
       <Project>{796c0bd5-0a31-4ceb-8920-78805c20b907}</Project>
       <Name>ActiveLearning.DB</Name>

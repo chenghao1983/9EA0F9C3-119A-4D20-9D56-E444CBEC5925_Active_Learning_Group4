@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ActiveLearning.Repository.Repository
 {
@@ -19,38 +20,88 @@ namespace ActiveLearning.Repository.Repository
         {
             using (ENET_Project_Active_Learning_Group4Entities db = new ENET_Project_Active_Learning_Group4Entities())
             {
-
-                //User SU = new User();
-                //SU.Username = user.LoginName;
-                //SU.Password = user.Password;
-                //SU.IsActive = true;
-
-                db.Users.Add(user);
-                db.SaveChanges();     
-
-                Instructor instructor = new Instructor();
-                foreach (var _user in db.Users)
+                using (TransactionScope scope = new TransactionScope())
                 {
-                    if (_user.Username == user.Username)
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    Instructor instructor = new Instructor();
+                    foreach (var _user in db.Users)
                     {
-                        
+                        if (_user.Username == user.Username)
+                        {
 
-                        instructor.Sid = _user.Sid;
 
-                        db.Instructors.Add(instructor);
+                            instructor.Sid = _user.Sid;
 
-                        break;
+                            db.Instructors.Add(instructor);
+
+                            break;
+                        }
+
                     }
+                    db.SaveChanges();
 
+                    scope.Complete();
                 }
-                db.SaveChanges();
-
             }
         }
 
+        public void AddStudentAccount(User user)
+        {
+            using (ENET_Project_Active_Learning_Group4Entities db = new ENET_Project_Active_Learning_Group4Entities())
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    Student student = new Student();
+                    foreach (var _user in db.Users)
+                    {
+                        if (_user.Username == user.Username)
+                        {
 
 
+                            student.Sid = _user.Sid;
 
+                            db.Students.Add(student);
+
+                            break;
+                        }
+
+                    }
+
+                    db.SaveChanges();
+
+                    scope.Complete();
+                }
+            }
+        }
+
+        public void CheckAuthentication(User user)
+        {
+            using (ENET_Project_Active_Learning_Group4Entities db = new ENET_Project_Active_Learning_Group4Entities())
+            {
+                var _user = db.Users.SingleOrDefault(a => a.Username == user.Username && a.Password == user.Password);
+
+                if (_user != null)
+                {
+                    if (db.Students.SingleOrDefault(a => a.Sid == _user.Sid) != null)
+                    {
+                       // Student exists
+                    }
+                    else if (db.Instructors.SingleOrDefault(a => a.Sid == _user.Sid) != null)
+                    {
+                        // Instructor exists
+                    }
+
+
+                }
+
+
+            }
+        }
 
 
 

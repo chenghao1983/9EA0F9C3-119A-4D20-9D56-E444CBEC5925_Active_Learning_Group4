@@ -69,3 +69,5 @@ C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Lea
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\Microsoft.Owin.Security.xml
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\ActiveLearning.Business.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\ActiveLearning.Business.pdb

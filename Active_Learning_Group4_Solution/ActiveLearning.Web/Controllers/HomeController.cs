@@ -1,4 +1,6 @@
-﻿using ActiveLearning.DB;
+﻿using ActiveLearning.Business.Implementation;
+using ActiveLearning.Business.Interface;
+using ActiveLearning.DB;
 using ActiveLearning.Entities.ViewModel;
 using ActiveLearning.Repository;
 using System;
@@ -18,13 +20,14 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult About()
         {
-            //using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
-            //{
-            //    // Example1
-            //    unitOfWork.Users.AddInstructorAccount(new UserViewModel() { LoginName="lame",Password="asd"});
 
-            //    unitOfWork.Complete();
-            //}
+            User user = new DB.User();
+            user.Username = "superman";
+            user.Password = "police";
+
+            IUserManager userMaanager = new UserManager();
+            //userMaanager.AddNewInstructor(user);
+            userMaanager.isAuthenticated(user);
 
             ViewBag.Message = "Your application description page.";
 
