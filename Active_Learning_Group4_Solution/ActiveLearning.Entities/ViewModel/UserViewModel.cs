@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.Entities.ViewModel
 {
-    public class UserViewModel
+    public  class UserViewModel
     {
 
         [Required(ErrorMessage = "*")]
