@@ -1,4 +1,5 @@
-﻿using ActiveLearning.Entities.ViewModel;
+﻿using ActiveLearning.DB;
+using ActiveLearning.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ActiveLearning.Repository.Interface
 {
     public interface IUserRepository : IRepository<UserViewModel>
     {
-        void AddInstructorAccount(UserViewModel user);
+        void AddInstructorAccount(User user);
 
 
 

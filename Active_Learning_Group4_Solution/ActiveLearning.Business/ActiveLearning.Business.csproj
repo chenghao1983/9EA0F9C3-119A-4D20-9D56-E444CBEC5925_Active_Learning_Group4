@@ -54,7 +54,16 @@
     <Compile Include="Interface\IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveLearning.DB\ActiveLearning.DB.csproj">
+      <Project>{796c0bd5-0a31-4ceb-8920-78805c20b907}</Project>
+      <Name>ActiveLearning.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveLearning.Repository\ActiveLearning.Repository.csproj">
+      <Project>{f583996b-0686-4013-8948-edbc7fbf2727}</Project>
+      <Name>ActiveLearning.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

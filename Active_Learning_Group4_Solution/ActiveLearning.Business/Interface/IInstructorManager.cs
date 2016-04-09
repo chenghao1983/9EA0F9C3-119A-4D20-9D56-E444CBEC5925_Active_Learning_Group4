@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Interface
 {
-    interface IInstructorManager
+    public interface IInstructorManager
     {
+        void AddToCourse();
+
+        void RemoveFromCourse();
+
+
+
+
     }
 }

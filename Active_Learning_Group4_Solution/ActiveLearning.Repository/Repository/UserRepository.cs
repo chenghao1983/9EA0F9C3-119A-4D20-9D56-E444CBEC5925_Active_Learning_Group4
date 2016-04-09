@@ -15,23 +15,23 @@ namespace ActiveLearning.Repository.Repository
         {
         }
 
-        public void AddInstructorAccount(UserViewModel user)
+        public void AddInstructorAccount(User user)
         {
             using (ENET_Project_Active_Learning_Group4Entities db = new ENET_Project_Active_Learning_Group4Entities())
             {
 
-                User SU = new User();
-                SU.Username = user.LoginName;
-                SU.Password = user.Password;
-                SU.IsActive = true;
+                //User SU = new User();
+                //SU.Username = user.LoginName;
+                //SU.Password = user.Password;
+                //SU.IsActive = true;
 
-                db.Users.Add(SU);
+                db.Users.Add(user);
                 db.SaveChanges();     
 
                 Instructor instructor = new Instructor();
                 foreach (var _user in db.Users)
                 {
-                    if (_user.Username == user.LoginName)
+                    if (_user.Username == user.Username)
                     {
                         
 

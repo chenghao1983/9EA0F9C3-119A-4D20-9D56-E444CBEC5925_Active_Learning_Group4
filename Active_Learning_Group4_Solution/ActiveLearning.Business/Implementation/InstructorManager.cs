@@ -9,5 +9,14 @@ namespace ActiveLearning.Business.Implementation
 {
     class InstructorManager : IInstructorManager
     {
+        public void AddToCourse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveFromCourse()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

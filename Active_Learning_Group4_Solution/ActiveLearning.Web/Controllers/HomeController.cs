@@ -18,13 +18,13 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult About()
         {
-            using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
-            {
-                // Example1
-                unitOfWork.Users.AddInstructorAccount(new UserViewModel() { LoginName="lame",Password="asd"});
+            //using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
+            //{
+            //    // Example1
+            //    unitOfWork.Users.AddInstructorAccount(new UserViewModel() { LoginName="lame",Password="asd"});
 
-                unitOfWork.Complete();
-            }
+            //    unitOfWork.Complete();
+            //}
 
             ViewBag.Message = "Your application description page.";
 

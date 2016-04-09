@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Repository.Interface
 {
-    public interface IUnitOfWork : IDisposable
+    interface IUnitOfWorkAsync : IUnitOfWork
     {
-        int Complete();
+
     }
 }
