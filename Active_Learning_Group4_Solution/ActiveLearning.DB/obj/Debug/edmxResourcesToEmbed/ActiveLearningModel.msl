@@ -39,6 +39,7 @@
     <EntitySetMapping Name="Courses">
       <EntityTypeMapping TypeName="ENET_Project_Active_Learning_Group4Model.Course">
         <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
           <ScalarProperty Name="Sid" ColumnName="Sid" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -21,13 +21,22 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult About()
         {
 
-            User user = new DB.User();
-            user.Username = "superman";
-            user.Password = "police";
+            //User user = new DB.User();
+            //user.Username = "superman";
+            //user.Password = "police";
 
-            IUserManager userMaanager = new UserManager();
-            //userMaanager.AddNewInstructor(user);
-            userMaanager.isAuthenticated(user);
+            //IUserManager userMaanager = new UserManager();
+            ////userMaanager.AddNewInstructor(user);
+            //userMaanager.isAuthenticated(user);
+
+            //CourseManager asd = new CourseManager();
+            //asd.RemoveStudentFromCourse(1, 15);
+
+
+
+
+
+
 
             ViewBag.Message = "Your application description page.";
 

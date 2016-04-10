@@ -18,9 +18,13 @@ namespace ActiveLearning.Repository
             _context = context;
             Users = new UserRepository(_context);
 
+            Courses = new CourseRepository();
         }
 
         public IUserRepository Users { get; private set; }
+
+        public ICourseRepository Courses { get; private set; }
+
 
 
         public int Complete()

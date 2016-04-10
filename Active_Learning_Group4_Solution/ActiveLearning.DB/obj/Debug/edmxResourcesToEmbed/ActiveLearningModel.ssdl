@@ -36,6 +36,7 @@
       <PropertyRef Name="Sid" />
     </Key>
     <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Instructor">
     <Key>

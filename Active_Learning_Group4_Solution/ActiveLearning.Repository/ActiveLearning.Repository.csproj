@@ -51,12 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomExcepetion\CourseNotFondException.cs" />
+    <Compile Include="Interface\ICourseRepository.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IRepositoryAsync.cs" />
     <Compile Include="Interface\IUnitOfWork.cs" />
     <Compile Include="Interface\IUnitOfWorkAsync.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CourseRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />

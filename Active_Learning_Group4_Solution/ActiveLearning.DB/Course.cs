@@ -24,6 +24,7 @@ namespace ActiveLearning.DB
         }
     
         public int Sid { get; set; }
+        public string CourseName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChatRecord_Course_Map> ChatRecord_Course_Map { get; set; }
