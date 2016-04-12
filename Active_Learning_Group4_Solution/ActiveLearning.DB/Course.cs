@@ -18,6 +18,7 @@ namespace ActiveLearning.DB
         public Course()
         {
             this.ChatRecord_Course_Map = new HashSet<ChatRecord_Course_Map>();
+            this.Contents = new HashSet<Content>();
             this.Instructor_Course_Map = new HashSet<Instructor_Course_Map>();
             this.Quiz_Course_Map = new HashSet<Quiz_Course_Map>();
             this.Student_Course_Map = new HashSet<Student_Course_Map>();
@@ -25,9 +26,14 @@ namespace ActiveLearning.DB
     
         public int Sid { get; set; }
         public string CourseName { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChatRecord_Course_Map> ChatRecord_Course_Map { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Content> Contents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Instructor_Course_Map> Instructor_Course_Map { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -22,6 +22,10 @@ namespace ActiveLearning.DB
         }
     
         public int Sid { get; set; }
+        public string QuizName { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz_Course_Map> Quiz_Course_Map { get; set; }

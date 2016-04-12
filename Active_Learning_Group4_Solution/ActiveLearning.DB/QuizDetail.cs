@@ -27,6 +27,9 @@ namespace ActiveLearning.DB
         public string Option2 { get; set; }
         public string Option3 { get; set; }
         public string Option4 { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuizAnswer> QuizAnswers { get; set; }

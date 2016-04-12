@@ -18,6 +18,9 @@ namespace ActiveLearning.DB
         public Nullable<int> QuizDetailSid { get; set; }
         public Nullable<int> StudentSid { get; set; }
         public string Answer { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         public virtual QuizDetail QuizDetail { get; set; }
         public virtual Student Student { get; set; }

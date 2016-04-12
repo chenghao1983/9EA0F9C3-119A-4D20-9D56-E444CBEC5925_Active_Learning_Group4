@@ -18,6 +18,10 @@ namespace ActiveLearning.DB
         public string Username { get; set; }
         public string Password { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
+        public string Role { get; set; }
     
         public virtual Admin Admin { get; set; }
         public virtual Instructor Instructor { get; set; }

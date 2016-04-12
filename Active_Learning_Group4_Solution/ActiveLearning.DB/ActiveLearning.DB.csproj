@@ -85,6 +85,9 @@
     <Compile Include="ChatRecord_Course_Map.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Content.cs">
+      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Course.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
@@ -119,7 +122,6 @@
     <Compile Include="User.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ActiveLearningModel.edmx">

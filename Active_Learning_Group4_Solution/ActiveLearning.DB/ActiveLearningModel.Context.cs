@@ -13,10 +13,10 @@ namespace ActiveLearning.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ENET_Project_Active_Learning_Group4Entities : DbContext
+    public partial class Entities : DbContext
     {
-        public ENET_Project_Active_Learning_Group4Entities()
-            : base("name=ENET_Project_Active_Learning_Group4Entities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -29,6 +29,7 @@ namespace ActiveLearning.DB
         public virtual DbSet<ChatDetail> ChatDetails { get; set; }
         public virtual DbSet<ChatRecord> ChatRecords { get; set; }
         public virtual DbSet<ChatRecord_Course_Map> ChatRecord_Course_Map { get; set; }
+        public virtual DbSet<Content> Contents { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Instructor_Course_Map> Instructor_Course_Map { get; set; }

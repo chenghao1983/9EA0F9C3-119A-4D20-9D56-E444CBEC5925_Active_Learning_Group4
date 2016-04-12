@@ -19,6 +19,9 @@ namespace ActiveLearning.DB
         public Nullable<int> StuentSid { get; set; }
         public Nullable<int> InstructorSid { get; set; }
         public string Message { get; set; }
+        public Nullable<System.DateTime> CreateDT { get; set; }
+        public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         public virtual Student Student { get; set; }
         public virtual ChatRecord ChatRecord { get; set; }

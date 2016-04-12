@@ -12,15 +12,18 @@ namespace ActiveLearning.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Quiz_Course_Map
+    public partial class Content
     {
         public int Sid { get; set; }
-        public Nullable<int> QuizSid { get; set; }
         public Nullable<int> CourseSid { get; set; }
+        public string Type { get; set; }
+        public string Path { get; set; }
+        public string FileName { get; set; }
+        public string OriginalFileName { get; set; }
         public Nullable<System.DateTime> CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual QuizRecord QuizRecord { get; set; }
     }
 }
