@@ -122,6 +122,21 @@
     <Compile Include="User.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Admin.cs" />
+    <Compile Include="ViewModel\ChatDetail.cs" />
+    <Compile Include="ViewModel\ChatRecord.cs" />
+    <Compile Include="ViewModel\ChatRecord_Course_Map.cs" />
+    <Compile Include="ViewModel\Content.cs" />
+    <Compile Include="ViewModel\Course.cs" />
+    <Compile Include="ViewModel\Instructor.cs" />
+    <Compile Include="ViewModel\Instructor_Course_Map.cs" />
+    <Compile Include="ViewModel\QuizAnswer.cs" />
+    <Compile Include="ViewModel\QuizDetail.cs" />
+    <Compile Include="ViewModel\QuizRecord.cs" />
+    <Compile Include="ViewModel\Quiz_Course_Map.cs" />
+    <Compile Include="ViewModel\Student.cs" />
+    <Compile Include="ViewModel\Student_Course_Map.cs" />
+    <Compile Include="ViewModel\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ActiveLearningModel.edmx">
