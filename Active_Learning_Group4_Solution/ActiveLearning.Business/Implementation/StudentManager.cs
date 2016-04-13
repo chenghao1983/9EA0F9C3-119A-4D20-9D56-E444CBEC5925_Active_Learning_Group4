@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Implementation
 {
-    class StudentManager : IStudentManager
+    public class StudentManager : BaseManager, IStudentManager
     {
         public void AddToCourse()
         {

@@ -16,6 +16,5 @@ namespace ActiveLearning.Repository.CustomExcepetion
         {
         }
 
-
     }
 }

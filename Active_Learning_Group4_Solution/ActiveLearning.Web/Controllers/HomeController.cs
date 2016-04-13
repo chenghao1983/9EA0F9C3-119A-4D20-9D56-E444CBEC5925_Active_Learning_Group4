@@ -1,7 +1,6 @@
 ﻿using ActiveLearning.Business.Implementation;
 using ActiveLearning.Business.Interface;
 using ActiveLearning.DB;
-using ActiveLearning.Entities.ViewModel;
 using ActiveLearning.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ActiveLearning.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {

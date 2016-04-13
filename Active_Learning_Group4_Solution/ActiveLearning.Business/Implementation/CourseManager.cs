@@ -9,16 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActiveLearning.Repository.Context;
 
 namespace ActiveLearning.Business.Implementation
 {
-    public class CourseManager : ICourseManager
+    public class CourseManager : BaseManager, ICourseManager
     {
         public void AddCourse(Course course)
         {
-            using (var unitOfWork = new UnitOfWork(new ENET_Project_Active_Learning_Group4Entities()))
+            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
             {
-                unitOfWork.Courses.AddCourse(course);
+                unitOfWork.Courses.Add(course);
 
                 unitOfWork.Complete();
             }
@@ -26,63 +27,35 @@ namespace ActiveLearning.Business.Implementation
 
         public void EnrolInstructorToCourse(int courseID, int instructorID)
         {
-            // check if course exists
-            ICourseRepository courseRepo = new CourseRepository();
-            if (!courseRepo.IsCourseExist(courseID))
-            {
-                // course not exists
-                throw new CourseNotFondException(courseID + " is not a registered  course.");
-            }
 
-            courseRepo.EnrolInstructorToCourse(courseID, instructorID);
         }
 
         public void EnrolStudentToCourse(int courseID, int studentID)
         {
-            // check if course exists
-            ICourseRepository courseRepo = new CourseRepository();
-            if (!courseRepo.IsCourseExist(courseID))
-            {
-                // course not exists
-                throw new CourseNotFondException(courseID + " is not a registered  course.");
-            }
-
-            courseRepo.EnrolStudentToCourse(courseID, studentID);
 
         }
 
-        public List<Course> GetCoursesByInstructor(int instructorID)
+        public IEnumerable<Course> GetCoursesByInstructor(int instructorID)
         {
-            ICourseRepository courseRepo = new CourseRepository();
-
-
-            return courseRepo.GetCoursesByInstructor(instructorID);
+            // TODO
+            return null;
         }
 
-        public List<Course> GetCoursesByStudent(int studentID)
+        public IEnumerable<Course> GetCoursesByStudent(int studentID)
         {
-
-            ICourseRepository courseRepo = new CourseRepository();
-
-
-            return courseRepo.GetCoursesByStudent(studentID);
+            // TODO
+            return null;
 
         }
 
         public void RemoveInstructorFromCourse(int courseID, int instructorID)
         {
-            ICourseRepository courseRepo = new CourseRepository();
 
-
-             courseRepo.RemoveInstructorFromCourse(courseID, instructorID);
         }
 
         public void RemoveStudentFromCourse(int courseID, int studentID)
         {
-            ICourseRepository courseRepo = new CourseRepository();
 
-
-            courseRepo.RemoveStudentFromCourse(courseID, studentID);
         }
     }
 }

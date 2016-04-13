@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Implementation
 {
-    class ChatManager : IChatManager
+    public class ChatManager : BaseManager, IChatManager
     {
+     
     }
 }

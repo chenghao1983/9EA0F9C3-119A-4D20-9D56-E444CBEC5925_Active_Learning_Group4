@@ -9,17 +9,21 @@ namespace ActiveLearning.Business.Interface
 {
     public interface IUserManager
     {
-
-        void AddNewStudent(User user);
-
-        void AddNewInstructor(User user);
-
-        void AddNewAdmin();
-
-        void isAuthenticated(User user);
-
-
-
-
+        Student AddStudent(Student student);
+        Student GetStudent(int sid);
+        Student GetActiveStudent(int sid);
+        bool UpdateStudent(Student student);
+        bool DeleteStudent(Student student);
+        Instructor AddInstructor(Instructor instructor);
+        Instructor GetInstructor(int sid);
+        Instructor GetActiveInstructor(int sid);
+        bool UpdateInstructor(Instructor instructor);
+        bool DeleteInstructor(Instructor instructor);
+        Admin AddAdmin(Admin admin);
+        Admin GetAdmin(int sid);
+        Admin GetActiveAdmin(int sid);
+        bool UpdateAdmin(Admin admin);
+        bool DeleteAdmin(Admin admin);
+        User IsAuthenticated(string userID, string pass);
     }
 }

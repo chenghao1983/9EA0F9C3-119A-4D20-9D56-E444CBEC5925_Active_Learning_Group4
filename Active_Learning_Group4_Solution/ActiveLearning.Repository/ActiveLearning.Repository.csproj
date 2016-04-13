@@ -51,33 +51,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\ActiveLearningContext.cs" />
+    <Compile Include="CustomExcepetion\ContentNotFoundException.cs" />
     <Compile Include="CustomExcepetion\CourseNotFondException.cs" />
+    <Compile Include="Interface\IAdminRepository.cs" />
+    <Compile Include="Interface\IChatDetailRepository.cs" />
+    <Compile Include="Interface\IChatRecordRepository.cs" />
+    <Compile Include="Interface\IChatRecord_Course_MapRepository.cs" />
+    <Compile Include="Interface\IContentRepository.cs" />
     <Compile Include="Interface\ICourseRepository.cs" />
-    <Compile Include="Interface\IRepository.cs" />
-    <Compile Include="Interface\IRepositoryAsync.cs" />
-    <Compile Include="Interface\IUnitOfWork.cs" />
-    <Compile Include="Interface\IUnitOfWorkAsync.cs" />
+    <Compile Include="Interface\IInstructorRepository.cs" />
+    <Compile Include="Interface\IInstructor_Course_MapRepository.cs" />
+    <Compile Include="Interface\IQuizAnswerRepository.cs" />
+    <Compile Include="Interface\IQuizDetailRepository.cs" />
+    <Compile Include="Interface\IQuizRecordRepository.cs" />
+    <Compile Include="Interface\IQuiz_Course_MapRepository.cs" />
+    <Compile Include="Interface\Core\IRepository.cs" />
+    <Compile Include="Interface\Core\IRepositoryAsync.cs" />
+    <Compile Include="Interface\IStudentRepository.cs" />
+    <Compile Include="Interface\IStudent_Course_MapRepository.cs" />
+    <Compile Include="Interface\Core\IUnitOfWork.cs" />
+    <Compile Include="Interface\Core\IUnitOfWorkAsync.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AdminRepository.cs" />
+    <Compile Include="Repository\ChatDetailRepository.cs" />
+    <Compile Include="Repository\ChatRecordRepository.cs" />
+    <Compile Include="Repository\ChatRecord_Course_MapRepository.cs" />
+    <Compile Include="Repository\ContentRepository.cs" />
     <Compile Include="Repository\CourseRepository.cs" />
-    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\InstructorRepository.cs" />
+    <Compile Include="Repository\Instructor_Course_MapRepository.cs" />
+    <Compile Include="Repository\QuizAnswerRepository.cs" />
+    <Compile Include="Repository\QuizDetailRepository.cs" />
+    <Compile Include="Repository\QuizRecordRepository.cs" />
+    <Compile Include="Repository\Quiz_Course_MapRepository.cs" />
+    <Compile Include="Repository\Core\Repository.cs" />
+    <Compile Include="Repository\StudentRepository.cs" />
+    <Compile Include="Repository\Student_Course_MapRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Context\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ActiveLearning.DB\ActiveLearning.DB.csproj">
       <Project>{796c0bd5-0a31-4ceb-8920-78805c20b907}</Project>
       <Name>ActiveLearning.DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ActiveLearning.Entities\ActiveLearning.Entities.csproj">
-      <Project>{07d2a7dd-becb-469c-ac17-2f02f6bd7c6b}</Project>
-      <Name>ActiveLearning.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

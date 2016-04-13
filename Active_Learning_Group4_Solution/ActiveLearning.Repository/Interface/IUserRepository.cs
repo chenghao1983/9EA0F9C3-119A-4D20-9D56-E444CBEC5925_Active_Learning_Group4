@@ -1,20 +1,10 @@
 ﻿using ActiveLearning.DB;
-using ActiveLearning.Entities.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ActiveLearning.Repository.Interface.Core;
 
 namespace ActiveLearning.Repository.Interface
 {
-    public interface IUserRepository : IRepository<UserViewModel>
+    public interface IUserRepository : IRepository<User>
     {
-        void AddInstructorAccount(User user);
-
-        void AddStudentAccount(User user);
-
-        void CheckAuthentication(User user);
-
+    
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Implementation
 {
-    class QuizManager : IQuizManager
+    public class QuizManager : BaseManager, IQuizManager
     {
     }
 }

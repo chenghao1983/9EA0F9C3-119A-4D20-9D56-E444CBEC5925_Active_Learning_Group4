@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Interface
 {
-    interface IChatManager 
+    public interface IChatManager : IDisposable
     {
-        
+
     }
 }

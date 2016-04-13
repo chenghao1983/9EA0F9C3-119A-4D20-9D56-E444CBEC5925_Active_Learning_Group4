@@ -12,9 +12,9 @@ namespace ActiveLearning.Business.Interface
 
         void AddCourse(Course course);
 
-        List<Course> GetCoursesByStudent(int studentID);
+        IEnumerable<Course> GetCoursesByStudent(int studentID);
 
-        List<Course> GetCoursesByInstructor(int instructorID);
+        IEnumerable<Course> GetCoursesByInstructor(int instructorID);
 
         void EnrolStudentToCourse(int courseID, int studentID);
 
