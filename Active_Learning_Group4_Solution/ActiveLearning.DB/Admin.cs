@@ -15,6 +15,7 @@ namespace ActiveLearning.DB
     public partial class Admin
     {
         public int Sid { get; set; }
+        public Nullable<int> UserSid { get; set; }
     
         public virtual User User { get; set; }
     }

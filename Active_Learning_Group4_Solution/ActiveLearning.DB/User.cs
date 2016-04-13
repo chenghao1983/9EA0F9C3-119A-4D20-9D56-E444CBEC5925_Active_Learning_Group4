@@ -14,6 +14,13 @@ namespace ActiveLearning.DB
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Admins = new HashSet<Admin>();
+            this.Students = new HashSet<Student>();
+        }
+    
         public int Sid { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -23,8 +30,10 @@ namespace ActiveLearning.DB
         public Nullable<System.DateTime> DeleteDT { get; set; }
         public string Role { get; set; }
     
-        public virtual Admin Admin { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admin> Admins { get; set; }
         public virtual Instructor Instructor { get; set; }
-        public virtual Student Student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

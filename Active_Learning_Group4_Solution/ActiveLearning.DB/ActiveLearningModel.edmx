@@ -4,12 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ActiveLearningModel.edmx.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ActiveLearningModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="UserSid" Type="int" />
         </EntityType>
         <EntityType Name="ChatDetail">
           <Key>
@@ -73,6 +74,7 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="UserSid" Type="int" />
         </EntityType>
         <EntityType Name="Instructor_Course_Map">
           <Key>
@@ -137,6 +139,7 @@
           </Key>
           <Property Name="Sid" Type="int" Nullable="false" />
           <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserSid" Type="int" />
         </EntityType>
         <EntityType Name="Student_Course_Map">
           <Key>
@@ -172,14 +175,14 @@
           <Property Name="Role" Type="char" MaxLength="1" />
         </EntityType>
         <Association Name="FK_Admin_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Admin">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -376,18 +379,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Student">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ActiveLearningModeledmxStoreContainer">
+        <EntityContainer Name="ActiveLearningModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatDetail" EntityType="Self.ChatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatRecord" EntityType="Self.ChatRecord" Schema="dbo" store:Type="Tables" />
@@ -481,12 +484,13 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ActiveLearningModel.edmx" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ActiveLearningModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Admin_User" FromRole="Admin" ToRole="User" />
         </EntityType>
         <EntityType Name="ChatDetail">
@@ -564,6 +568,7 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
           <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
           <NavigationProperty Name="User" Relationship="Self.FK_Instructor_User" FromRole="Instructor" ToRole="User" />
@@ -641,6 +646,7 @@
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" />
           <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_ChatRecord" FromRole="Student" ToRole="ChatDetail" />
           <NavigationProperty Name="QuizAnswers" Relationship="Self.FK_QuizAnswer_Student" FromRole="Student" ToRole="QuizAnswer" />
           <NavigationProperty Name="Student_Course_Map" Relationship="Self.FK_Student_Course_Map_Student" FromRole="Student" ToRole="Student_Course_Map" />
@@ -680,19 +686,19 @@
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <Property Name="Role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Admin" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
+          <NavigationProperty Name="Admins" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
           <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructor_User" FromRole="User" ToRole="Instructor" />
-          <NavigationProperty Name="Student" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
         </EntityType>
         <Association Name="FK_Admin_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Admin">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -889,14 +895,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Student">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -995,16 +1001,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ActiveLearningModeledmxStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ActiveLearningModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Admins">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Admin">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="UserSid" ColumnName="UserSid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatDetails">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.ChatDetail">
+            <EntityTypeMapping TypeName="ActiveLearningModel.ChatDetail">
               <MappingFragment StoreEntitySet="ChatDetail">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="ChatRecordSid" ColumnName="ChatRecordSid" />
@@ -1018,7 +1025,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatRecords">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.ChatRecord">
+            <EntityTypeMapping TypeName="ActiveLearningModel.ChatRecord">
               <MappingFragment StoreEntitySet="ChatRecord">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="Topic" ColumnName="Topic" />
@@ -1029,7 +1036,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatRecord_Course_Map">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.ChatRecord_Course_Map">
+            <EntityTypeMapping TypeName="ActiveLearningModel.ChatRecord_Course_Map">
               <MappingFragment StoreEntitySet="ChatRecord_Course_Map">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="ChatRecordSid" ColumnName="ChatRecordSid" />
@@ -1040,7 +1047,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Contents">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Content">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Content">
               <MappingFragment StoreEntitySet="Content">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="CourseSid" ColumnName="CourseSid" />
@@ -1055,7 +1062,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Courses">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Course">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Course">
               <MappingFragment StoreEntitySet="Course">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
@@ -1066,14 +1073,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Instructors">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Instructor">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Instructor">
               <MappingFragment StoreEntitySet="Instructor">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="UserSid" ColumnName="UserSid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Instructor_Course_Map">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Instructor_Course_Map">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Instructor_Course_Map">
               <MappingFragment StoreEntitySet="Instructor_Course_Map">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="InstructorSid" ColumnName="InstructorSid" />
@@ -1084,7 +1092,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Quiz_Course_Map">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Quiz_Course_Map">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Quiz_Course_Map">
               <MappingFragment StoreEntitySet="Quiz_Course_Map">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="QuizSid" ColumnName="QuizSid" />
@@ -1095,7 +1103,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuizAnswers">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.QuizAnswer">
+            <EntityTypeMapping TypeName="ActiveLearningModel.QuizAnswer">
               <MappingFragment StoreEntitySet="QuizAnswer">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="QuizDetailSid" ColumnName="QuizDetailSid" />
@@ -1108,7 +1116,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuizDetails">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.QuizDetail">
+            <EntityTypeMapping TypeName="ActiveLearningModel.QuizDetail">
               <MappingFragment StoreEntitySet="QuizDetail">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="QuizRecordSid" ColumnName="QuizRecordSid" />
@@ -1124,7 +1132,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuizRecords">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.QuizRecord">
+            <EntityTypeMapping TypeName="ActiveLearningModel.QuizRecord">
               <MappingFragment StoreEntitySet="QuizRecord">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="QuizName" ColumnName="QuizName" />
@@ -1135,15 +1143,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Students">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Student">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="UserSid" ColumnName="UserSid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Student_Course_Map">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.Student_Course_Map">
+            <EntityTypeMapping TypeName="ActiveLearningModel.Student_Course_Map">
               <MappingFragment StoreEntitySet="Student_Course_Map">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="StudentSid" ColumnName="StudentSid" />
@@ -1154,7 +1163,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.sysdiagram">
+            <EntityTypeMapping TypeName="ActiveLearningModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1165,7 +1174,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ActiveLearningModel.edmx.User">
+            <EntityTypeMapping TypeName="ActiveLearningModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
