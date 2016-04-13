@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6b4f6506405242dda572f177d0006da7" Name="Diagram1">
+      <Diagram DiagramId="76f322e390844393b20cc4db7659de31" Name="Diagram1">
         <EntityTypeShape EntityType="ActiveLearningModel.Admin" Width="1.5" PointX="3.75" PointY="21.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearningModel.ChatDetail" Width="1.5" PointX="9" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearningModel.ChatRecord" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />

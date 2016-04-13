@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserSid" Type="int" />
         </EntityType>
         <EntityType Name="ChatDetail">
@@ -73,7 +73,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserSid" Type="int" />
         </EntityType>
         <EntityType Name="Instructor_Course_Map">
@@ -137,7 +137,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
           <Property Name="UserSid" Type="int" />
         </EntityType>
@@ -489,7 +489,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Admin_User" FromRole="Admin" ToRole="User" />
         </EntityType>
@@ -567,7 +567,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
           <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
@@ -644,7 +644,7 @@
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserSid" Type="Int32" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_ChatRecord" FromRole="Student" ToRole="ChatDetail" />
@@ -906,7 +906,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ENET_Project_Active_Learning_Group4Entities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="ChatDetails" EntityType="Self.ChatDetail" />
           <EntitySet Name="ChatRecords" EntityType="Self.ChatRecord" />
@@ -1001,7 +1001,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ActiveLearningModelStoreContainer" CdmEntityContainer="ENET_Project_Active_Learning_Group4Entities1">
+        <EntityContainerMapping StorageEntityContainer="ActiveLearningModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="ActiveLearningModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
