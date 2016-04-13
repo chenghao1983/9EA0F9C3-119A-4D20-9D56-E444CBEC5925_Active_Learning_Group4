@@ -85,6 +85,7 @@
     <Compile Include="ChatRecord_Course_Map.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Content.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
