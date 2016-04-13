@@ -125,7 +125,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ad
 BEGIN
 CREATE TABLE [dbo].[Admin](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[UserSid] [int] NULL,
+	[UserSid] [int] NOT NULL,
  CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
