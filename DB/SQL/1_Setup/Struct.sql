@@ -142,11 +142,11 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ch
 BEGIN
 CREATE TABLE [dbo].[ChatDetail](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[ChatRecordSid] [int] NULL,
+	[ChatRecordSid] [int] NOT NULL,
 	[StuentSid] [int] NULL,
 	[InstructorSid] [int] NULL,
-	[Message] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[Message] [nvarchar](max) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_ChatDetail] PRIMARY KEY CLUSTERED 
@@ -165,8 +165,8 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ch
 BEGIN
 CREATE TABLE [dbo].[ChatRecord](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[Topic] [nvarchar](1024) NULL,
-	[CreateDT] [datetime] NULL,
+	[Topic] [nvarchar](1024) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_ChatRecord] PRIMARY KEY CLUSTERED 
@@ -185,9 +185,9 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ch
 BEGIN
 CREATE TABLE [dbo].[ChatRecord_Course_Map](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[ChatRecordSid] [int] NULL,
-	[CourseSid] [int] NULL,
-	[CreateDT] [datetime] NULL,
+	[ChatRecordSid] [int] NOT NULL,
+	[CourseSid] [int] NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
  CONSTRAINT [PK_ChatRecord_Course_Map] PRIMARY KEY CLUSTERED 
 (
@@ -207,12 +207,12 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Co
 BEGIN
 CREATE TABLE [dbo].[Content](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[CourseSid] [int] NULL,
-	[Type] [char](1) NULL,
-	[Path] [nvarchar](max) NULL,
-	[FileName] [nvarchar](max) NULL,
-	[OriginalFileName] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[CourseSid] [int] NOT NULL,
+	[Type] [char](1) NOT NULL,
+	[Path] [nvarchar](max) NOT NULL,
+	[FileName] [nvarchar](max) NOT NULL,
+	[OriginalFileName] [nvarchar](max) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_Content] PRIMARY KEY CLUSTERED 
@@ -233,8 +233,8 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Co
 BEGIN
 CREATE TABLE [dbo].[Course](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[CourseName] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[CourseName] [nvarchar](max) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED 
@@ -266,7 +266,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[In
 BEGIN
 CREATE TABLE [dbo].[Instructor](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[UserSid] [int] NULL,
+	[UserSid] [int] NOT NULL,
  CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
@@ -283,9 +283,9 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[In
 BEGIN
 CREATE TABLE [dbo].[Instructor_Course_Map](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[InstructorSid] [int] NULL,
-	[CourseSid] [int] NULL,
-	[CreateDT] [datetime] NULL,
+	[InstructorSid] [int] NOT NULL,
+	[CourseSid] [int] NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
  CONSTRAINT [PK_Instructor_Course_Map] PRIMARY KEY CLUSTERED 
 (
@@ -303,9 +303,9 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Qu
 BEGIN
 CREATE TABLE [dbo].[Quiz_Course_Map](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[QuizSid] [int] NULL,
-	[CourseSid] [int] NULL,
-	[CreateDT] [datetime] NULL,
+	[QuizSid] [int] NOT NULL,
+	[CourseSid] [int] NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
  CONSTRAINT [PK_Quiz_Course_Map] PRIMARY KEY CLUSTERED 
 (
@@ -323,10 +323,10 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Qu
 BEGIN
 CREATE TABLE [dbo].[QuizAnswer](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[QuizDetailSid] [int] NULL,
-	[StudentSid] [int] NULL,
-	[Answer] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[QuizDetailSid] [int] NOT NULL,
+	[StudentSid] [int] NOT NULL,
+	[Answer] [nvarchar](max) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_QuizAnswer] PRIMARY KEY CLUSTERED 
@@ -345,13 +345,13 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Qu
 BEGIN
 CREATE TABLE [dbo].[QuizDetail](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[QuizRecordSid] [int] NULL,
-	[Question] [nvarchar](max) NULL,
+	[QuizRecordSid] [int] NOT NULL,
+	[Question] [nvarchar](max) NOT NULL,
 	[Option1] [nvarchar](max) NULL,
 	[Option2] [nvarchar](max) NULL,
 	[Option3] [nvarchar](max) NULL,
 	[Option4] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_QuizDetail] PRIMARY KEY CLUSTERED 
@@ -370,8 +370,8 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Qu
 BEGIN
 CREATE TABLE [dbo].[QuizRecord](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[QuizName] [nvarchar](max) NULL,
-	[CreateDT] [datetime] NULL,
+	[QuizName] [nvarchar](max) NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
  CONSTRAINT [PK_Quiz] PRIMARY KEY CLUSTERED 
@@ -390,8 +390,8 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[St
 BEGIN
 CREATE TABLE [dbo].[Student](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[BatchNo] [nvarchar](50) NULL,
-	[UserSid] [int] NULL,
+	[BatchNo] [nvarchar](50) NOT NULL,
+	[UserSid] [int] NOT NULL,
  CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
@@ -408,9 +408,9 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[St
 BEGIN
 CREATE TABLE [dbo].[Student_Course_Map](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
-	[StudentSid] [int] NULL,
-	[CourseSid] [int] NULL,
-	[CreateDT] [datetime] NULL,
+	[StudentSid] [int] NOT NULL,
+	[CourseSid] [int] NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
  CONSTRAINT [PK_Student_Course_Map] PRIMARY KEY CLUSTERED 
 (
@@ -432,8 +432,8 @@ CREATE TABLE [dbo].[User](
 	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [nvarchar](max) NOT NULL,
 	[Password] [nvarchar](max) NOT NULL,
-	[IsActive] [bit] NULL,
-	[CreateDT] [datetime] NULL,
+	[IsActive] [bit] NOT NULL,
+	[CreateDT] [datetime] NOT NULL,
 	[UpdateDT] [datetime] NULL,
 	[DeleteDT] [datetime] NULL,
 	[Role] [char](1) NULL,
