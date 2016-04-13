@@ -125,7 +125,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Admin]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Admin](
-	[Sid] [int] NOT NULL,
+	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[UserSid] [int] NULL,
  CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
 (
@@ -266,7 +266,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Instructor]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Instructor](
-	[Sid] [int] NOT NULL,
+	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[UserSid] [int] NULL,
  CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED 
 (
@@ -390,7 +390,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Student]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[Student](
-	[Sid] [int] NOT NULL,
+	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[BatchNo] [nvarchar](50) NULL,
 	[UserSid] [int] NULL,
  CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
