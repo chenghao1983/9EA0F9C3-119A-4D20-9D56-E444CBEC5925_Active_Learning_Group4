@@ -10,7 +10,7 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserSid" Type="int" />
+          <Property Name="UserSid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ChatDetail">
           <Key>
@@ -175,7 +175,7 @@
           <Property Name="Role" Type="char" MaxLength="1" />
         </EntityType>
         <Association Name="FK_Admin_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -490,7 +490,7 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserSid" Type="Int32" />
+          <Property Name="UserSid" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Admin_User" FromRole="Admin" ToRole="User" />
         </EntityType>
         <EntityType Name="ChatDetail">
@@ -691,7 +691,7 @@
           <NavigationProperty Name="Students" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
         </EntityType>
         <Association Name="FK_Admin_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
