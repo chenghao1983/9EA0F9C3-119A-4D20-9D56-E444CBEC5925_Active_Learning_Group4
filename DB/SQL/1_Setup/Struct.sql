@@ -1,3 +1,4 @@
+
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Student_Course_Map_Student]') AND parent_object_id = OBJECT_ID(N'[dbo].[Student_Course_Map]'))
 ALTER TABLE [dbo].[Student_Course_Map] DROP CONSTRAINT [FK_Student_Course_Map_Student]
 GO
@@ -52,71 +53,71 @@ GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Admin_User]') AND parent_object_id = OBJECT_ID(N'[dbo].[Admin]'))
 ALTER TABLE [dbo].[Admin] DROP CONSTRAINT [FK_Admin_User]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[User]') AND type in (N'U'))
 DROP TABLE [dbo].[User]
 GO
-/****** Object:  Table [dbo].[Student_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Student_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Student_Course_Map]') AND type in (N'U'))
 DROP TABLE [dbo].[Student_Course_Map]
 GO
-/****** Object:  Table [dbo].[Student]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Student]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Student]') AND type in (N'U'))
 DROP TABLE [dbo].[Student]
 GO
-/****** Object:  Table [dbo].[QuizRecord]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizRecord]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuizRecord]') AND type in (N'U'))
 DROP TABLE [dbo].[QuizRecord]
 GO
-/****** Object:  Table [dbo].[QuizDetail]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizDetail]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuizDetail]') AND type in (N'U'))
 DROP TABLE [dbo].[QuizDetail]
 GO
-/****** Object:  Table [dbo].[QuizAnswer]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizAnswer]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuizAnswer]') AND type in (N'U'))
 DROP TABLE [dbo].[QuizAnswer]
 GO
-/****** Object:  Table [dbo].[Quiz_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Quiz_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Quiz_Course_Map]') AND type in (N'U'))
 DROP TABLE [dbo].[Quiz_Course_Map]
 GO
-/****** Object:  Table [dbo].[Instructor_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Instructor_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Instructor_Course_Map]') AND type in (N'U'))
 DROP TABLE [dbo].[Instructor_Course_Map]
 GO
-/****** Object:  Table [dbo].[Instructor]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Instructor]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Instructor]') AND type in (N'U'))
 DROP TABLE [dbo].[Instructor]
 GO
-/****** Object:  Table [dbo].[DBVersion]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[DBVersion]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DBVersion]') AND type in (N'U'))
 DROP TABLE [dbo].[DBVersion]
 GO
-/****** Object:  Table [dbo].[Course]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Course]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Course]') AND type in (N'U'))
 DROP TABLE [dbo].[Course]
 GO
-/****** Object:  Table [dbo].[Content]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Content]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Content]') AND type in (N'U'))
 DROP TABLE [dbo].[Content]
 GO
-/****** Object:  Table [dbo].[ChatRecord_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatRecord_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ChatRecord_Course_Map]') AND type in (N'U'))
 DROP TABLE [dbo].[ChatRecord_Course_Map]
 GO
-/****** Object:  Table [dbo].[ChatRecord]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatRecord]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ChatRecord]') AND type in (N'U'))
 DROP TABLE [dbo].[ChatRecord]
 GO
-/****** Object:  Table [dbo].[ChatDetail]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatDetail]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ChatDetail]') AND type in (N'U'))
 DROP TABLE [dbo].[ChatDetail]
 GO
-/****** Object:  Table [dbo].[Admin]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Admin]    Script Date: 13/04/2016 21:09:03 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Admin]') AND type in (N'U'))
 DROP TABLE [dbo].[Admin]
 GO
-/****** Object:  Table [dbo].[Admin]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Admin]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,6 +126,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ad
 BEGIN
 CREATE TABLE [dbo].[Admin](
 	[Sid] [int] NOT NULL,
+	[UserSid] [int] NULL,
  CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
@@ -132,7 +134,7 @@ CREATE TABLE [dbo].[Admin](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[ChatDetail]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatDetail]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -152,10 +154,10 @@ CREATE TABLE [dbo].[ChatDetail](
 (
 	[Sid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[ChatRecord]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatRecord]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +177,7 @@ CREATE TABLE [dbo].[ChatRecord](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[ChatRecord_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[ChatRecord_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,7 +197,7 @@ CREATE TABLE [dbo].[ChatRecord_Course_Map](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Content]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Content]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -223,7 +225,7 @@ END
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Course]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Course]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +245,7 @@ CREATE TABLE [dbo].[Course](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[DBVersion]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[DBVersion]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -256,7 +258,7 @@ CREATE TABLE [dbo].[DBVersion](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Instructor]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Instructor]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -265,6 +267,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[In
 BEGIN
 CREATE TABLE [dbo].[Instructor](
 	[Sid] [int] NOT NULL,
+	[UserSid] [int] NULL,
  CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
@@ -272,7 +275,7 @@ CREATE TABLE [dbo].[Instructor](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Instructor_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Instructor_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -292,7 +295,7 @@ CREATE TABLE [dbo].[Instructor_Course_Map](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Quiz_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Quiz_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -312,7 +315,7 @@ CREATE TABLE [dbo].[Quiz_Course_Map](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[QuizAnswer]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizAnswer]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -334,7 +337,7 @@ CREATE TABLE [dbo].[QuizAnswer](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[QuizDetail]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizDetail]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -359,7 +362,7 @@ CREATE TABLE [dbo].[QuizDetail](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[QuizRecord]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[QuizRecord]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -379,7 +382,7 @@ CREATE TABLE [dbo].[QuizRecord](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Student]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Student]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -389,6 +392,7 @@ BEGIN
 CREATE TABLE [dbo].[Student](
 	[Sid] [int] NOT NULL,
 	[BatchNo] [nvarchar](50) NULL,
+	[UserSid] [int] NULL,
  CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
 (
 	[Sid] ASC
@@ -396,7 +400,7 @@ CREATE TABLE [dbo].[Student](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Student_Course_Map]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[Student_Course_Map]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -416,7 +420,7 @@ CREATE TABLE [dbo].[Student_Course_Map](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 12/04/2016 4:28:44 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 13/04/2016 21:09:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -444,7 +448,7 @@ GO
 SET ANSI_PADDING OFF
 GO
 IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Admin_User]') AND parent_object_id = OBJECT_ID(N'[dbo].[Admin]'))
-ALTER TABLE [dbo].[Admin]  WITH CHECK ADD  CONSTRAINT [FK_Admin_User] FOREIGN KEY([Sid])
+ALTER TABLE [dbo].[Admin]  WITH CHECK ADD  CONSTRAINT [FK_Admin_User] FOREIGN KEY([UserSid])
 REFERENCES [dbo].[User] ([Sid])
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Admin_User]') AND parent_object_id = OBJECT_ID(N'[dbo].[Admin]'))
@@ -549,7 +553,7 @@ IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[
 ALTER TABLE [dbo].[QuizDetail] CHECK CONSTRAINT [FK_QuizDetail_QuizDetail]
 GO
 IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Student_User]') AND parent_object_id = OBJECT_ID(N'[dbo].[Student]'))
-ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_User] FOREIGN KEY([Sid])
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_User] FOREIGN KEY([UserSid])
 REFERENCES [dbo].[User] ([Sid])
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Student_User]') AND parent_object_id = OBJECT_ID(N'[dbo].[Student]'))
