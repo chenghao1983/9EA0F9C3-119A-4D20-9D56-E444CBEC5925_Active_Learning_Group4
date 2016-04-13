@@ -15,11 +15,11 @@ namespace ActiveLearning.DB
     public partial class ChatDetail
     {
         public int Sid { get; set; }
-        public Nullable<int> ChatRecordSid { get; set; }
+        public int ChatRecordSid { get; set; }
         public Nullable<int> StuentSid { get; set; }
         public Nullable<int> InstructorSid { get; set; }
         public string Message { get; set; }
-        public Nullable<System.DateTime> CreateDT { get; set; }
+        public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
     

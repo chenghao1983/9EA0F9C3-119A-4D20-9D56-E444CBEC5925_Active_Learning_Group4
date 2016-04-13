@@ -15,9 +15,9 @@ namespace ActiveLearning.DB
     public partial class ChatRecord_Course_Map
     {
         public int Sid { get; set; }
-        public Nullable<int> ChatRecordSid { get; set; }
-        public Nullable<int> CourseSid { get; set; }
-        public Nullable<System.DateTime> CreateDT { get; set; }
+        public int ChatRecordSid { get; set; }
+        public int CourseSid { get; set; }
+        public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
     
         public virtual ChatRecord ChatRecord { get; set; }

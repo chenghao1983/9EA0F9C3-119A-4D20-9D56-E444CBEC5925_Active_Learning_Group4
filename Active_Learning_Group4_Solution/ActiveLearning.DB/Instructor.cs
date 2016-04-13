@@ -22,7 +22,7 @@ namespace ActiveLearning.DB
         }
     
         public int Sid { get; set; }
-        public Nullable<int> UserSid { get; set; }
+        public int UserSid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChatDetail> ChatDetails { get; set; }

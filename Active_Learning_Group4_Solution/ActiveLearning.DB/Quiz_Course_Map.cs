@@ -15,9 +15,9 @@ namespace ActiveLearning.DB
     public partial class Quiz_Course_Map
     {
         public int Sid { get; set; }
-        public Nullable<int> QuizSid { get; set; }
-        public Nullable<int> CourseSid { get; set; }
-        public Nullable<System.DateTime> CreateDT { get; set; }
+        public int QuizSid { get; set; }
+        public int CourseSid { get; set; }
+        public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
     
         public virtual Course Course { get; set; }

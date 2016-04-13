@@ -17,11 +17,11 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ChatRecordSid" Type="int" />
+          <Property Name="ChatRecordSid" Type="int" Nullable="false" />
           <Property Name="StuentSid" Type="int" />
           <Property Name="InstructorSid" Type="int" />
-          <Property Name="Message" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -30,8 +30,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Topic" Type="nvarchar" MaxLength="1024" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="Topic" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -40,9 +40,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ChatRecordSid" Type="int" />
-          <Property Name="CourseSid" Type="int" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="ChatRecordSid" Type="int" Nullable="false" />
+          <Property Name="CourseSid" Type="int" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
         </EntityType>
         <EntityType Name="Content">
@@ -50,12 +50,12 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CourseSid" Type="int" />
-          <Property Name="Type" Type="char" MaxLength="1" />
-          <Property Name="Path" Type="nvarchar(max)" />
-          <Property Name="FileName" Type="nvarchar(max)" />
-          <Property Name="OriginalFileName" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="CourseSid" Type="int" Nullable="false" />
+          <Property Name="Type" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OriginalFileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -64,8 +64,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CourseName" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="CourseName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -74,16 +74,16 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserSid" Type="int" />
+          <Property Name="UserSid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Instructor_Course_Map">
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InstructorSid" Type="int" />
-          <Property Name="CourseSid" Type="int" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="InstructorSid" Type="int" Nullable="false" />
+          <Property Name="CourseSid" Type="int" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
         </EntityType>
         <EntityType Name="Quiz_Course_Map">
@@ -91,9 +91,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuizSid" Type="int" />
-          <Property Name="CourseSid" Type="int" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="QuizSid" Type="int" Nullable="false" />
+          <Property Name="CourseSid" Type="int" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
         </EntityType>
         <EntityType Name="QuizAnswer">
@@ -101,10 +101,10 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuizDetailSid" Type="int" />
-          <Property Name="StudentSid" Type="int" />
-          <Property Name="Answer" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="QuizDetailSid" Type="int" Nullable="false" />
+          <Property Name="StudentSid" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -113,13 +113,13 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuizRecordSid" Type="int" />
-          <Property Name="Question" Type="nvarchar(max)" />
+          <Property Name="QuizRecordSid" Type="int" Nullable="false" />
+          <Property Name="Question" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Option1" Type="nvarchar(max)" />
           <Property Name="Option2" Type="nvarchar(max)" />
           <Property Name="Option3" Type="nvarchar(max)" />
           <Property Name="Option4" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -128,8 +128,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuizName" Type="nvarchar(max)" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="QuizName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
         </EntityType>
@@ -138,17 +138,17 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserSid" Type="int" />
+          <Property Name="BatchNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserSid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Student_Course_Map">
           <Key>
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentSid" Type="int" />
-          <Property Name="CourseSid" Type="int" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="StudentSid" Type="int" Nullable="false" />
+          <Property Name="CourseSid" Type="int" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -168,8 +168,8 @@
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreateDT" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
           <Property Name="DeleteDT" Type="datetime" />
           <Property Name="Role" Type="char" MaxLength="1" />
@@ -199,7 +199,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatDetail_ChatRecord1">
-          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="0..1" />
+          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="1" />
           <End Role="ChatDetail" Type="Self.ChatDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChatRecord">
@@ -223,7 +223,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatRecord_Course_Map_ChatRecord">
-          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="0..1" />
+          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="1" />
           <End Role="ChatRecord_Course_Map" Type="Self.ChatRecord_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChatRecord">
@@ -235,7 +235,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatRecord_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="ChatRecord_Course_Map" Type="Self.ChatRecord_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -247,7 +247,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Content_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Content" Type="Self.Content" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -259,7 +259,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Instructor_Course_Map" Type="Self.Instructor_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -271,7 +271,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Course_Map_Instructor">
-          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
           <End Role="Instructor_Course_Map" Type="Self.Instructor_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Instructor">
@@ -283,7 +283,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -295,7 +295,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Quiz_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Quiz_Course_Map" Type="Self.Quiz_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -307,7 +307,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Quiz_Course_Map_Quiz">
-          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="0..1" />
+          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="1" />
           <End Role="Quiz_Course_Map" Type="Self.Quiz_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizRecord">
@@ -319,7 +319,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizAnswer_QuizDetail">
-          <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="0..1" />
+          <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="1" />
           <End Role="QuizAnswer" Type="Self.QuizAnswer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizDetail">
@@ -331,7 +331,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizAnswer_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
           <End Role="QuizAnswer" Type="Self.QuizAnswer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -343,7 +343,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizDetail_QuizDetail">
-          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="0..1" />
+          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="1" />
           <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizRecord">
@@ -355,7 +355,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Student_Course_Map" Type="Self.Student_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -367,7 +367,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Course_Map_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
           <End Role="Student_Course_Map" Type="Self.Student_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -379,7 +379,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -498,11 +498,11 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChatRecordSid" Type="Int32" />
+          <Property Name="ChatRecordSid" Type="Int32" Nullable="false" />
           <Property Name="StuentSid" Type="Int32" />
           <Property Name="InstructorSid" Type="Int32" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Student" Relationship="Self.FK_ChatDetail_ChatRecord" FromRole="ChatDetail" ToRole="Student" />
@@ -514,8 +514,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Topic" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="Topic" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_ChatRecord1" FromRole="ChatRecord" ToRole="ChatDetail" />
@@ -526,9 +526,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChatRecordSid" Type="Int32" />
-          <Property Name="CourseSid" Type="Int32" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="ChatRecordSid" Type="Int32" Nullable="false" />
+          <Property Name="CourseSid" Type="Int32" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ChatRecord" Relationship="Self.FK_ChatRecord_Course_Map_ChatRecord" FromRole="ChatRecord_Course_Map" ToRole="ChatRecord" />
           <NavigationProperty Name="Course" Relationship="Self.FK_ChatRecord_Course_Map_Course" FromRole="ChatRecord_Course_Map" ToRole="Course" />
@@ -538,12 +538,12 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CourseSid" Type="Int32" />
-          <Property Name="Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OriginalFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="CourseSid" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OriginalFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Content_Course" FromRole="Content" ToRole="Course" />
@@ -553,8 +553,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CourseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="CourseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ChatRecord_Course_Map" Relationship="Self.FK_ChatRecord_Course_Map_Course" FromRole="Course" ToRole="ChatRecord_Course_Map" />
@@ -568,7 +568,7 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserSid" Type="Int32" />
+          <Property Name="UserSid" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_Instructor" FromRole="Instructor" ToRole="ChatDetail" />
           <NavigationProperty Name="Instructor_Course_Map" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor" ToRole="Instructor_Course_Map" />
           <NavigationProperty Name="User" Relationship="Self.FK_Instructor_User" FromRole="Instructor" ToRole="User" />
@@ -578,9 +578,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InstructorSid" Type="Int32" />
-          <Property Name="CourseSid" Type="Int32" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="InstructorSid" Type="Int32" Nullable="false" />
+          <Property Name="CourseSid" Type="Int32" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Instructor_Course_Map_Course" FromRole="Instructor_Course_Map" ToRole="Course" />
           <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructor_Course_Map_Instructor" FromRole="Instructor_Course_Map" ToRole="Instructor" />
@@ -590,9 +590,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuizSid" Type="Int32" />
-          <Property Name="CourseSid" Type="Int32" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="QuizSid" Type="Int32" Nullable="false" />
+          <Property Name="CourseSid" Type="Int32" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Quiz_Course_Map_Course" FromRole="Quiz_Course_Map" ToRole="Course" />
           <NavigationProperty Name="QuizRecord" Relationship="Self.FK_Quiz_Course_Map_Quiz" FromRole="Quiz_Course_Map" ToRole="QuizRecord" />
@@ -602,10 +602,10 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuizDetailSid" Type="Int32" />
-          <Property Name="StudentSid" Type="Int32" />
-          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="QuizDetailSid" Type="Int32" Nullable="false" />
+          <Property Name="StudentSid" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="QuizDetail" Relationship="Self.FK_QuizAnswer_QuizDetail" FromRole="QuizAnswer" ToRole="QuizDetail" />
@@ -616,13 +616,13 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuizRecordSid" Type="Int32" />
-          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuizRecordSid" Type="Int32" Nullable="false" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Option1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Option2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Option3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Option4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="QuizAnswers" Relationship="Self.FK_QuizAnswer_QuizDetail" FromRole="QuizDetail" ToRole="QuizAnswer" />
@@ -633,8 +633,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuizName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="QuizName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Quiz_Course_Map" Relationship="Self.FK_Quiz_Course_Map_Quiz" FromRole="QuizRecord" ToRole="Quiz_Course_Map" />
@@ -645,8 +645,8 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserSid" Type="Int32" />
+          <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserSid" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChatDetails" Relationship="Self.FK_ChatDetail_ChatRecord" FromRole="Student" ToRole="ChatDetail" />
           <NavigationProperty Name="QuizAnswers" Relationship="Self.FK_QuizAnswer_Student" FromRole="Student" ToRole="QuizAnswer" />
           <NavigationProperty Name="Student_Course_Map" Relationship="Self.FK_Student_Course_Map_Student" FromRole="Student" ToRole="Student_Course_Map" />
@@ -657,9 +657,9 @@
             <PropertyRef Name="Sid" />
           </Key>
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentSid" Type="Int32" />
-          <Property Name="CourseSid" Type="Int32" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="StudentSid" Type="Int32" Nullable="false" />
+          <Property Name="CourseSid" Type="Int32" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Student_Course_Map_Course" FromRole="Student_Course_Map" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_Course_Map_Student" FromRole="Student_Course_Map" ToRole="Student" />
@@ -681,8 +681,8 @@
           <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreateDT" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDT" Type="DateTime" Precision="3" />
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <Property Name="Role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -715,7 +715,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatDetail_ChatRecord1">
-          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="0..1" />
+          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="1" />
           <End Role="ChatDetail" Type="Self.ChatDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChatRecord">
@@ -739,7 +739,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatRecord_Course_Map_ChatRecord">
-          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="0..1" />
+          <End Role="ChatRecord" Type="Self.ChatRecord" Multiplicity="1" />
           <End Role="ChatRecord_Course_Map" Type="Self.ChatRecord_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChatRecord">
@@ -751,7 +751,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChatRecord_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="ChatRecord_Course_Map" Type="Self.ChatRecord_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -763,7 +763,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Content_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Content" Type="Self.Content" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -775,7 +775,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Instructor_Course_Map" Type="Self.Instructor_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -787,7 +787,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Quiz_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Quiz_Course_Map" Type="Self.Quiz_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -799,7 +799,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Course_Map_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Student_Course_Map" Type="Self.Student_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -811,7 +811,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Course_Map_Instructor">
-          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
           <End Role="Instructor_Course_Map" Type="Self.Instructor_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Instructor">
@@ -823,7 +823,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -835,7 +835,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Quiz_Course_Map_Quiz">
-          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="0..1" />
+          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="1" />
           <End Role="Quiz_Course_Map" Type="Self.Quiz_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizRecord">
@@ -847,7 +847,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizAnswer_QuizDetail">
-          <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="0..1" />
+          <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="1" />
           <End Role="QuizAnswer" Type="Self.QuizAnswer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizDetail">
@@ -859,7 +859,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizAnswer_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
           <End Role="QuizAnswer" Type="Self.QuizAnswer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -871,7 +871,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuizDetail_QuizDetail">
-          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="0..1" />
+          <End Role="QuizRecord" Type="Self.QuizRecord" Multiplicity="1" />
           <End Role="QuizDetail" Type="Self.QuizDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuizRecord">
@@ -883,7 +883,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Course_Map_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
           <End Role="Student_Course_Map" Type="Self.Student_Course_Map" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -895,7 +895,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">

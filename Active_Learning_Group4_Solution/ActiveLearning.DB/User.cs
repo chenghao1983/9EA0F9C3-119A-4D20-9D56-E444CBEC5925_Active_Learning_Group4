@@ -25,8 +25,8 @@ namespace ActiveLearning.DB
         public int Sid { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> CreateDT { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
         public string Role { get; set; }

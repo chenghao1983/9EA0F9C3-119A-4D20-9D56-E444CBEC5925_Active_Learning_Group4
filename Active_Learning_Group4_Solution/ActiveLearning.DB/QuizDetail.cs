@@ -21,13 +21,13 @@ namespace ActiveLearning.DB
         }
     
         public int Sid { get; set; }
-        public Nullable<int> QuizRecordSid { get; set; }
+        public int QuizRecordSid { get; set; }
         public string Question { get; set; }
         public string Option1 { get; set; }
         public string Option2 { get; set; }
         public string Option3 { get; set; }
         public string Option4 { get; set; }
-        public Nullable<System.DateTime> CreateDT { get; set; }
+        public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
     
