@@ -13,10 +13,10 @@ namespace ActiveLearning.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class ENET_Project_Active_Learning_Group4Entities1 : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public ENET_Project_Active_Learning_Group4Entities1()
+            : base("name=ENET_Project_Active_Learning_Group4Entities1")
         {
         }
     

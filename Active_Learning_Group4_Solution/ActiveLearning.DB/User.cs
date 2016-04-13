@@ -18,6 +18,7 @@ namespace ActiveLearning.DB
         public User()
         {
             this.Admins = new HashSet<Admin>();
+            this.Instructors = new HashSet<Instructor>();
             this.Students = new HashSet<Student>();
         }
     
@@ -32,7 +33,8 @@ namespace ActiveLearning.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admin> Admins { get; set; }
-        public virtual Instructor Instructor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Instructor> Instructors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
     }

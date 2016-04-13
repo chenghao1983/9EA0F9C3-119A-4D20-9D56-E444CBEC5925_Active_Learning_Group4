@@ -283,14 +283,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Instructor">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -687,7 +687,7 @@
           <Property Name="DeleteDT" Type="DateTime" Precision="3" />
           <Property Name="Role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Admins" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
-          <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructor_User" FromRole="User" ToRole="Instructor" />
+          <NavigationProperty Name="Instructors" Relationship="Self.FK_Instructor_User" FromRole="User" ToRole="Instructor" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
         </EntityType>
         <Association Name="FK_Admin_User">
@@ -823,14 +823,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Sid" />
             </Principal>
             <Dependent Role="Instructor">
-              <PropertyRef Name="Sid" />
+              <PropertyRef Name="UserSid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -906,7 +906,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ENET_Project_Active_Learning_Group4Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="ChatDetails" EntityType="Self.ChatDetail" />
           <EntitySet Name="ChatRecords" EntityType="Self.ChatRecord" />
@@ -1001,7 +1001,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ActiveLearningModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ActiveLearningModelStoreContainer" CdmEntityContainer="ENET_Project_Active_Learning_Group4Entities1">
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="ActiveLearningModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
