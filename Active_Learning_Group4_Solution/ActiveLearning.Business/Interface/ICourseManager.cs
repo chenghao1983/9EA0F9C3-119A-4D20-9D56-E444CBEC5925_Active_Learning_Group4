@@ -9,7 +9,6 @@ namespace ActiveLearning.Business.Interface
 {
     public interface ICourseManager
     {
-
         void AddCourse(Course course);
 
         IEnumerable<Course> GetCoursesByStudent(int studentID);

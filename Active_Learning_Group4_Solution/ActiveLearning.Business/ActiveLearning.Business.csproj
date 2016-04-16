@@ -36,7 +36,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +56,8 @@
     <Compile Include="Implementation\ChatManager.cs" />
     <Compile Include="Implementation\CourseManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
+    <Compile Include="Interface\IContentManager.cs" />
+    <Compile Include="Implementation\ContentManager.cs" />
     <Compile Include="Interface\IChatManager.cs" />
     <Compile Include="Implementation\InstructorManager.cs" />
     <Compile Include="Interface\IInstructorManager.cs" />

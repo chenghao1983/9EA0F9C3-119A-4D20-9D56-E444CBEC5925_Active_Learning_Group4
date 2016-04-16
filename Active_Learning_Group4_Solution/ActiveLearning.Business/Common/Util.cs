@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Common
 {
@@ -44,6 +42,23 @@ namespace ActiveLearning.Business.Common
                                                 // Debug.WriteLine(toProp.Name + " = from." + fromProp.Name + ";");
                 if (fromProp.GetValue(from, null) == null) continue;
                 toProp.SetValue(to, fromProp.GetValue(from, null), null);
+            }
+        }
+
+        public string HashString(string str)
+        {
+            try
+            {
+                byte[] array = Encoding.ASCII.GetBytes(str);
+                SHA256Managed sha256 = new SHA256Managed();
+                byte[] hash = sha256.ComputeHash(array);
+                string hashStr = Encoding.ASCII.GetString(hash);
+
+                return hashStr;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

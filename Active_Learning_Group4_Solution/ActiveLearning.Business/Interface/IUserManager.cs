@@ -10,20 +10,24 @@ namespace ActiveLearning.Business.Interface
     public interface IUserManager
     {
         Student AddStudent(Student student);
-        Student GetStudent(int sid);
-        Student GetActiveStudent(int sid);
+        Student GetStudentBySid(int sid);
+        Student GetActiveStudentBySid(int sid);
+        IEnumerator<Student> GetAllStudent();
+        IEnumerator<Student> GetAllActiveStudent();
         bool UpdateStudent(Student student);
         bool DeleteStudent(Student student);
         Instructor AddInstructor(Instructor instructor);
-        Instructor GetInstructor(int sid);
-        Instructor GetActiveInstructor(int sid);
+        Instructor GetInstructorBySid(int sid);
+        Instructor GetActiveInstructorBySid(int sid);
+        IEnumerator<Instructor> GetAllInstructor(int pageSize, int pageNum);
+        IEnumerator<Instructor> GetAllActiveInstructor(int pageSize, int pageNum);
         bool UpdateInstructor(Instructor instructor);
         bool DeleteInstructor(Instructor instructor);
         Admin AddAdmin(Admin admin);
-        Admin GetAdmin(int sid);
-        Admin GetActiveAdmin(int sid);
+        Admin GetAdminBySid(int sid);
+        Admin GetActiveAdminBySid(int sid);
         bool UpdateAdmin(Admin admin);
         bool DeleteAdmin(Admin admin);
-        User IsAuthenticated(string userID, string pass);
+        User IsAuthenticated(string userID, string pass, out string messge);
     }
 }
