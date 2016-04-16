@@ -44,18 +44,30 @@ namespace ActiveLearning.Web.Controllers
 
         public bool IsUserAuthenticated()
         {
+            if (Session[UserSessionParam] == null)
+            {
+                return false;
+            }
+            return true;
 
-            return false;
         }
 
         public User GetLoginUser()
         {
-            return null;
+            if (Session[UserSessionParam] == null)
+            {
+                return null;
+            }
+            return Session[UserSessionParam] as User;
         }
 
-        public string GetLoginUserType()
+        public string GetLoginUserRole()
         {
-            return null;
+            if (Session[UserSessionParam] == null)
+            {
+                return null;
+            }
+            return (Session[UserSessionParam] as User).Role;
         }
 
         public void LogUserIn(User user)
