@@ -10,6 +10,5 @@ namespace ActiveLearning.Repository.Interface
 {
     public interface IChatDetailRepository : IRepository<ChatDetail>
     {
-
     }
 }

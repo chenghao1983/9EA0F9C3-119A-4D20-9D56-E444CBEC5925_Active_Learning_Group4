@@ -17,6 +17,5 @@ namespace ActiveLearning.Repository.Repository
         {
 
         }
-
     }
 }

@@ -17,5 +17,7 @@ namespace ActiveLearning.Repository.Repository
         public CourseRepository(DbContext context) : base(context)
         {
         }
-     }
+
+
+    }
 }
