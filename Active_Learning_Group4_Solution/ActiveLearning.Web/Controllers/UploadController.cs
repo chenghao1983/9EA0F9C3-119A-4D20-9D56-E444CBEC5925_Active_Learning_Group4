@@ -25,6 +25,7 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (file.ContentLength > 0)
                 {
+                    string guid = Guid.NewGuid().ToString();
 
                     var fileName = Path.GetFileName(file.FileName);
                     Content fileDetail = new Content()
@@ -33,7 +34,7 @@ namespace ActiveLearning.Web.Controllers
                         CourseSid = 2,
                         Path = "~/App_Data/Upload/",
                         OriginalFileName = fileName,
-                        FileName = Guid.NewGuid().ToString() + Path.GetExtension(fileName),
+                        FileName = guid + Path.GetExtension(fileName),
                         Type = "",
                         CreateDT = DateTime.Now
                     };
@@ -43,7 +44,7 @@ namespace ActiveLearning.Web.Controllers
                     fileManager.AddFile(fileDetail);
 
 
-                    var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), fileDetail.FileName + Path.GetExtension(fileName));
+                    var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));
                     file.SaveAs(path);
                 }
                 ViewBag.Message = "Upload successful";
@@ -51,7 +52,7 @@ namespace ActiveLearning.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = "Upload failed";
+                ViewBag.Message = "Upload failed. " + ex.Message;
                 return View();
             }
         }

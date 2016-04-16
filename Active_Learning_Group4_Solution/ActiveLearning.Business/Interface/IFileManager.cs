@@ -13,9 +13,9 @@ namespace ActiveLearning.Business.Interface
 
         void DeleteFile();
 
+        IEnumerable<Content> GetFiles(int courseID);
 
-
-
+        string GetGUIDFile(string originalFilename, int courseID);
 
     }
 }
