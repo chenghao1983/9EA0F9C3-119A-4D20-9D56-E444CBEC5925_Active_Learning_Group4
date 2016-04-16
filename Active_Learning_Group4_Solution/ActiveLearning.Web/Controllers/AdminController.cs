@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using ActiveLearning.Business.Implementation;
 using ActiveLearning.DB;
+using System.Security.Principal;
+using System.Security.Claims;
+using ActiveLearning.Web.Filter;
+using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -21,18 +25,24 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult CreateCourse()
         {
+            User user = new User();
+            user.Role = Constants.User_Role_Student_Code;
+            user.Username = "Joe";
+
+            LogUserIn(user);
+
             ViewBag.Title = "Create Course";
             return View();
         }
 
-
+        [CustomAuthorize(Roles = Constants.User_Role_Admin_Code + "," + Constants.User_Role_Instructor_Code)]
         [HttpPost]
         public ActionResult CreateCourse(Course course)
         {
-           using( var courseManager = new CourseManager())
-           {
-               courseManager.AddCourse(course);
-           }
+            using (var courseManager = new CourseManager())
+            {
+                courseManager.AddCourse(course);
+            }
             ViewBag.Message = "Course Created !";
             return View();
         }
@@ -45,14 +55,27 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult CreateInstructor()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            using (var userManager = new UserManager())
+            {
+                userManager.GetAllInstructor();
+            }
+
             ViewBag.Title = "Create Instructor";
             return View();
         }
 
 
+
         [HttpPost]
         public ActionResult CreateInstructor(Instructor instructor)
         {
+            // HttpContext.User.Identity
+
+
             using (var userManager = new UserManager())
             {
                 userManager.AddInstructor(instructor);
