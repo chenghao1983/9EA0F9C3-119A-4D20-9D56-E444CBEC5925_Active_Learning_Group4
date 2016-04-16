@@ -11,7 +11,7 @@ namespace ActiveLearning.Repository.Context
     public class ActiveLearningContext : DbContext
     {
         public ActiveLearningContext()
-            : base("name=ENET_Project_Active_Learning_Group4Entities")
+            : base("name=Active_Learning_Group4")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
