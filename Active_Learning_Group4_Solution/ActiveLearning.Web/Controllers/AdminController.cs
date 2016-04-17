@@ -55,13 +55,15 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult CreateInstructor()
         {
+            string message = string.Empty;
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
             using (var userManager = new UserManager())
             {
-                userManager.GetAllInstructor();
+
+                userManager.GetAllActiveInstructor(out message);
             }
 
             ViewBag.Title = "Create Instructor";
@@ -74,11 +76,11 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult CreateInstructor(Instructor instructor)
         {
             // HttpContext.User.Identity
-
+            string message = string.Empty;
 
             using (var userManager = new UserManager())
             {
-                userManager.AddInstructor(instructor);
+                userManager.AddInstructor(instructor, out message);
             }
             ViewBag.Message = "Instructor Created !";
             return View();

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ActiveLearning.Business;
+using ActiveLearning.DB;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -14,6 +16,12 @@ namespace ActiveLearning.Web.Controllers
     {
         public ActionResult Index()
         {
+            using (var userManager = new UserManager())
+            {
+                string messge = string.Empty;
+                var user = userManager.IsAuthenticated("123123", "1234", out messge);
+            }
+
             return View();
         }
 
