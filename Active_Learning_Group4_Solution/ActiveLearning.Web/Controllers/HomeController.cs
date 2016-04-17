@@ -16,12 +16,6 @@ namespace ActiveLearning.Web.Controllers
     {
         public ActionResult Index()
         {
-            using (var userManager = new UserManager())
-            {
-                string messge = string.Empty;
-                var user = userManager.IsAuthenticated("123123", "1234", out messge);
-            }
-
             return View();
         }
 

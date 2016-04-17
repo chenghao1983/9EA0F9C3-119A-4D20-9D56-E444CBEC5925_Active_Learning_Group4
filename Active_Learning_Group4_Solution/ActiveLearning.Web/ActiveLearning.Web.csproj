@@ -170,7 +170,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\TestAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,8 +219,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Admin\CreateCourse.cshtml" />
-    <Content Include="Views\Admin\CreateInstructor.cshtml" />
+    <Content Include="Views\TestAdmin\CreateCourse.cshtml" />
+    <Content Include="Views\TestAdmin\CreateInstructor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

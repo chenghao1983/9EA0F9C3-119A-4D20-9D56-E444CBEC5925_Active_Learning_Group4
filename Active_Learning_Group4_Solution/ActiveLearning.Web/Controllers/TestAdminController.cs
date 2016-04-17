@@ -12,11 +12,12 @@ using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Web.Controllers
 {
-    public class AdminController : BaseController
+    public class TestAdminController : BaseController
     {
         // GET: Course
         public ActionResult Index()
         {
+
 
             return View();
         }
@@ -25,11 +26,16 @@ namespace ActiveLearning.Web.Controllers
 
         public ActionResult CreateCourse()
         {
-            User user = new User();
-            user.Role = Constants.User_Role_Student_Code;
-            user.Username = "Joe";
 
-            LogUserIn(user);
+
+            using (var userManager = new UserManager())
+            {
+                string messge = string.Empty;
+                var user = userManager.IsAuthenticated("123123", "1234", out messge);
+                LogUserIn(user);
+            }
+
+                
 
             ViewBag.Title = "Create Course";
             return View();
