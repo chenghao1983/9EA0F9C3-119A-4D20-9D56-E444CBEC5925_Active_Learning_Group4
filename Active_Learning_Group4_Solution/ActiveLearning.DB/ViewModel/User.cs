@@ -13,14 +13,17 @@ namespace ActiveLearning.DB
     {
         private class UserMetadata
         {
-            [Required(ErrorMessage = "*")]
-            [Display(Name = "Login Name")]
-            public string Username;
+            [Required(ErrorMessage = Common.Constants.Please_Enter + "User Name")]
+            [Display(Name = "User Name")]
+            public string Username { get; set; }
 
-
-            [Required(ErrorMessage = "*")]
+            [Required(ErrorMessage = Common.Constants.Please_Enter + "Password")]
             [Display(Name = "Password")]
             public string Password { get; set; }
+
+            [Required(ErrorMessage = Common.Constants.Please_Enter + "Full Name")]
+            [Display(Name = "Full Name")]
+            public string Fullname { get; set; }
         }
     }
 }
