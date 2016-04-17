@@ -7,23 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class HomeController : BaseController
     {
 
-        UserManager userManager = null;
-        
         public ActionResult Index()
+
         {
-            using(var userManager=new UserManager())
-            {
-                //string message = string.Empty;
-                //var user = userManager.IsAuthenticated("Admin1", "1234", out message);
-                return View();
-            }
-            
+            return Redirect("~/Home/login");
         }
 
         public ActionResult About()
@@ -60,7 +54,6 @@ namespace ActiveLearning.Web.Controllers
 
 
         #region login
-
         // GET: /Home/Login
         [HttpGet]
         public ActionResult Login()
@@ -73,36 +66,31 @@ namespace ActiveLearning.Web.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            using(var userManager = new UserManager())
+            ActionResult result = View();
+            using (var userManager = new UserManager())
             {
                 string message = string.Empty;
-
-                BaseController baseController = new BaseController();
-                if (userManager.IsAuthenticated(user.Username, user.Password, out message) != null)
+                var authenticatedUser = userManager.IsAuthenticated(user.Username, user.Password, out message);
+                if (authenticatedUser != null)
                 {
-                    LogUserIn(user);
-                    switch (baseController.GetLoginUserRole())
+                    LogUserIn(authenticatedUser);
+                    switch (GetLoginUserRole())
                     {
-                        case "Admin":
-                            Redirect("~/Admin");
+                        case Constants.User_Role_Admin_Code:
+                            result = Redirect("~/Admin");
                             break;
-                        case "Instructor":
-                            Redirect("~/Instructor");
+                        case Constants.User_Role_Instructor_Code:
+                            result = Redirect("~/Instructor");
                             break;
-                        case "Student":
-                            Redirect("~/Student");
+                        case Constants.User_Role_Student_Code:
+                            result = Redirect("~/Student");
                             break;
-
                     }
-                   
                 }
-
                 ViewBag.Message = message;
-                return View();
+                return result;
             }
-
         }
-        
         #endregion
     }
 }

@@ -11,12 +11,6 @@ namespace ActiveLearning.Web.Controllers
     {
         public static string UserSessionParam = "LoginUser";
 
-
-        public BaseController()
-        {
-
-        }
-
         public RedirectResult RedirectToLogin()
         {
             return Redirect("~/home");
@@ -60,14 +54,14 @@ namespace ActiveLearning.Web.Controllers
             {
                 return null;
             }
-            //return Session[UserSessionParam] as User;
+           //return Session[UserSessionParam] as User;
             return TempData.Peek(UserSessionParam) as User;
         }
 
         public string GetLoginUserRole()
         {
             if (TempData.Peek(UserSessionParam) == null)
-            //    if (Session[UserSessionParam] == null)
+                //if (Session[UserSessionParam] == null)
             {
                 return null;
             }
@@ -77,10 +71,9 @@ namespace ActiveLearning.Web.Controllers
 
         public void LogUserIn(User user)
         {
-            // Session[UserSessionParam] = user;
+            //Session[UserSessionParam] = user;
             if (!TempData.Keys.Contains(UserSessionParam))
             {
-                TempData.Keep(UserSessionParam);
                 TempData.Add(UserSessionParam, user);
             }
             TempData.Keep(UserSessionParam);
