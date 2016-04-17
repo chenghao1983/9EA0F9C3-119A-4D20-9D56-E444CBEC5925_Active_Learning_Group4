@@ -25,6 +25,8 @@ namespace ActiveLearning.Business.Common
         public const string Invalid_Username_Or_Password = "Invalid Usernamd or Password";
         public const string Not_Found = " not found";
         public const string No = "No ";
+        public const string Empty = "Empty ";
+        public const string Already_Exists = " already exists";
         #endregion
 
     }
