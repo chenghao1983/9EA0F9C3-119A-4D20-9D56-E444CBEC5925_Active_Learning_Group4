@@ -15,47 +15,107 @@ namespace ActiveLearning.Business.Implementation
 {
     public class CourseManager : BaseManager, ICourseManager
     {
-        public void AddCourse(Course course)
+        #region Course
+      public  Course GetCourseByCourseSid(int courseSid, out string message)
         {
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                unitOfWork.Courses.Add(course);
-
-                unitOfWork.Complete();
-            }
-        }
-
-        public void EnrolInstructorToCourse(int courseID, int instructorID)
-        {
-
-        }
-
-        public void EnrolStudentToCourse(int courseID, int studentID)
-        {
-
-        }
-
-        public IEnumerable<Course> GetCoursesByInstructor(int instructorID)
-        {
-            // TODO
+            message = string.Empty;
             return null;
         }
-
-        public IEnumerable<Course> GetCoursesByStudent(int studentID)
+        public IEnumerable<Course> GetAllCourses(out string message)
         {
-            // TODO
+            message = string.Empty;
             return null;
-
         }
-
-        public void RemoveInstructorFromCourse(int courseID, int instructorID)
+        public void AddCourse(Course course, out string message)
         {
-
+            message = string.Empty;
         }
-
-        public void RemoveStudentFromCourse(int courseID, int studentID)
+        public bool UpdateCourse(Course course, out string message)
         {
-
+            message = string.Empty;
+            return false;
         }
+        public bool DeleteCourse(Course course, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        #endregion
+
+        #region Student Enrolment
+        public IEnumerable<Student> GetEnrolledStudentsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public IEnumerable<Student> GetNonEnrolledStudentsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public IEnumerable<Course> GetEnrolledCoursesByStudentSid(int studentSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public  IEnumerable<Course> GetNonEnrolledCoursesByStudentSid(int studentSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        public bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        public bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        #endregion
+
+        #region Instructor Enrolment
+        public IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public IEnumerable<Student> GetNonEnrolledInstructorsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public IEnumerable<Course> GetEnrolledCoursesByInstructorSid(int instructorSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public IEnumerable<Course> GetNonEnrolledCoursesByInstructorSid(int instructorSid, out string message)
+        {
+            message = string.Empty;
+            return null;
+        }
+        public bool EnrolInstructorsToCourse(IEnumerable<Instructor> instructor, int courseSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        public bool RemoveInstructorsFromCourse(IEnumerable<Instructor> instructor, int courseSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        public bool UpdateInstructorCourseEnrolment(IEnumerable<Instructor> instructors, int courseSid, out string message)
+        {
+            message = string.Empty;
+            return false;
+        }
+        #endregion
     }
 }

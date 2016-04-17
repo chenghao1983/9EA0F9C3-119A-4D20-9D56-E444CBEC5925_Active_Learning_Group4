@@ -81,7 +81,7 @@ namespace ActiveLearning.Business.Implementation
             }
             return student;
         }
-        public IEnumerator<Student> GetAllActiveStudent(out string message)
+        public IEnumerable<Student> GetAllActiveStudent(out string message)
         {
             message = string.Empty;
             List<Student> list = new List<Student>();
@@ -111,7 +111,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list as IEnumerator<Student>;
+                    return list;
                 }
             }
             catch (Exception ex)
@@ -274,7 +274,7 @@ namespace ActiveLearning.Business.Implementation
             }
             return instructor;
         }
-        public IEnumerator<Instructor> GetAllActiveInstructor(out string message)
+        public IEnumerable<Instructor> GetAllActiveInstructor(out string message)
         {
             message = string.Empty;
             List<Instructor> list = new List<Instructor>();
@@ -304,7 +304,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list as IEnumerator<Instructor>;
+                    return list;
                 }
             }
             catch (Exception ex)
@@ -467,7 +467,7 @@ namespace ActiveLearning.Business.Implementation
             }
             return admin;
         }
-        public IEnumerator<Admin> GetAllActiveAdmin(out string message)
+        public IEnumerable<Admin> GetAllActiveAdmin(out string message)
         {
             message = string.Empty;
             List<Admin> list = new List<Admin>();
@@ -497,7 +497,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list as IEnumerator<Admin>;
+                    return list;
                 }
             }
             catch (Exception ex)
@@ -691,7 +691,6 @@ namespace ActiveLearning.Business.Implementation
                 return authenticatedUser;
             }
         }
-
         #endregion
     }
 }
