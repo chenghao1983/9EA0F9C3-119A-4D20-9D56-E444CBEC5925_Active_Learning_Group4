@@ -8,7 +8,7 @@ using ActiveLearning.Repository.Interface.Core;
 
 namespace ActiveLearning.Repository.Interface
 {
-    public interface IChatDetailRepository : IRepository<ChatDetail>
+    public interface IQuizRepository : IRepository<Quiz>
     {
     }
 }

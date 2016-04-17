@@ -22,9 +22,7 @@ namespace ActiveLearning.Repository
             _context = context;
 
             Admins = new AdminRepository(_context);
-            ChatDetails = new ChatDetailRepository(_context);
-            ChatRecord_Course_Maps = new ChatRecord_Course_MapRepository(_context);
-            ChatRecords = new ChatRecordRepository(_context);
+            Chats = new ChatRepository(_context);
             Contents = new ContentRepository(_context);
             Courses = new CourseRepository(_context);
             Instructor_Course_Maps = new Instructor_Course_MapRepository(_context);
@@ -32,15 +30,13 @@ namespace ActiveLearning.Repository
             Quiz_Course_Maps = new Quiz_Course_MapRepository(_context);
             QuizAnswers = new QuizAnswerRepository(_context);
             QuizDetails = new QuizDetailRepository(_context);
-            QuizRecors = new QuizRecordRepository(_context);
+            Quizs = new QuizRepository(_context);
             Student_Course_Maps = new Student_Course_MapRepository(_context);
             Students = new StudentRepository(_context);
             Users = new UserRepository(_context);
         }
         public IAdminRepository Admins { get; private set; }
-        public IChatDetailRepository ChatDetails { get; private set; }
-        public IChatRecord_Course_MapRepository ChatRecord_Course_Maps { get; private set; }
-        public IChatRecordRepository ChatRecords { get; private set; }
+        public IChatRepository Chats { get; private set; }
         public IContentRepository Contents { get; private set; }
         public ICourseRepository Courses { get; private set; }
         public IInstructor_Course_MapRepository Instructor_Course_Maps { get; private set; }
@@ -48,7 +44,7 @@ namespace ActiveLearning.Repository
         public IQuiz_Course_MapRepository Quiz_Course_Maps { get; private set; }
         public IQuizAnswerRepository QuizAnswers { get; private set; }
         public IQuizDetailRepository QuizDetails { get; private set; }
-        public IQuizRecordRepository QuizRecors { get; private set; }
+        public IQuizRepository Quizs { get; private set; }
         public IStudent_Course_MapRepository Student_Course_Maps { get; private set; }
         public IStudentRepository Students { get; private set; }
         public IUserRepository Users { get; private set; }

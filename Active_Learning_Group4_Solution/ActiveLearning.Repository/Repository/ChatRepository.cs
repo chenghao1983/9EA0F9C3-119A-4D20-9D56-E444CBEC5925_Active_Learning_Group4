@@ -11,10 +11,9 @@ using ActiveLearning.DB;
 
 namespace ActiveLearning.Repository.Repository
 {
-    public class ChatRecord_Course_MapRepository : Repository<ChatRecord_Course_Map>, IChatRecord_Course_MapRepository
+    public class ChatRepository : Repository<Chat>, IChatRepository
     {
-        public ChatRecord_Course_MapRepository(DbContext context)
-            : base(context)
+        public ChatRepository(DbContext context) : base(context)
         {
         }
 

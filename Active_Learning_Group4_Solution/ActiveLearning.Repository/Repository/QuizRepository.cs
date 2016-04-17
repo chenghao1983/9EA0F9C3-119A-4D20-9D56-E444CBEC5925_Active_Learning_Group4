@@ -11,11 +11,11 @@ using ActiveLearning.DB;
 
 namespace ActiveLearning.Repository.Repository
 {
-    public class ChatDetailRepository : Repository<ChatDetail>, IChatDetailRepository
+    public class QuizRepository : Repository<Quiz>, IQuizRepository
     {
-        public ChatDetailRepository(DbContext context) : base(context)
+        public QuizRepository(DbContext context)
+            : base(context)
         {
-
         }
     }
 }
