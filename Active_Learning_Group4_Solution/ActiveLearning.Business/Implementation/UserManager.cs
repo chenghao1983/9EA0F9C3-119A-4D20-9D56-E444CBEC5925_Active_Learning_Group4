@@ -12,12 +12,6 @@ namespace ActiveLearning.Business.Implementation
 {
     public class UserManager : BaseManager, IUserManager
     {
-        public const string user_str = "User";
-        public const string student_str = "Student";
-        public const string instructor_str = "Instructor";
-        public const string admin_str = "Admin";
-        public const string userName_str = "User Name";
-
         #region user
         public bool UserNameExists(string userName, out string message)
         {
@@ -642,7 +636,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userID, StringComparison.CurrentCultureIgnoreCase) && u.Password == pass && u.IsActive);
+                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.Password == pass && u.IsActive);
 
                     if (user != null)
                     {

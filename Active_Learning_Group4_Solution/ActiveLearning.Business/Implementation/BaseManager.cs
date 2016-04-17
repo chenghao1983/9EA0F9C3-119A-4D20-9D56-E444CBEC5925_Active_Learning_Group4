@@ -10,6 +10,14 @@ namespace ActiveLearning.Business.Implementation
 {
     public class BaseManager : IDisposable
     {
+        public const string user_str = "User";
+        public const string student_str = "Student";
+        public const string instructor_str = "Instructor";
+        public const string admin_str = "Admin";
+        public const string userName_str = "User Name";
+
+        public const string chat_str = "Chat";
+
         // Flag: Has Dispose already been called?
         bool disposed = false;
         // Instantiate a SafeHandle instance.
