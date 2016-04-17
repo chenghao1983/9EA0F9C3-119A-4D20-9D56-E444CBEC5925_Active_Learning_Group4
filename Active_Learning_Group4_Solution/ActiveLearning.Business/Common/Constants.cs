@@ -23,6 +23,8 @@ namespace ActiveLearning.Business.Common
         public const string Operation_Failed_Duing = "Operation failed during ";
         public const string Contact_System_Admin = ". Please contact system admin";
         public const string Invalid_Username_Or_Password = "Invalid Usernamd or Password";
+        public const string Not_Found = " not found";
+        public const string No = "No ";
         #endregion
 
     }

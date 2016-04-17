@@ -9,50 +9,90 @@ using System.Threading.Tasks;
 using ActiveLearning.Repository.Context;
 using System.Transactions;
 using ActiveLearning.Business.Common;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ActiveLearning.Business.Implementation
 {
     public class UserManager : BaseManager, IUserManager
     {
         #region Student
-        public Student GetStudentBySid(int sid)
+        public Student GetActiveStudentByStudentSid(int studentSid, out string message)
         {
+            message = string.Empty;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var student = unitOfWork.Students.Get(sid);
-                    student.User = unitOfWork.Users.Get(student.UserSid);
+                    var student = unitOfWork.Students.Get(studentSid);
+                    if (student != null)
+                    {
+                        student.User = unitOfWork.Users.Find(u => u.Sid == student.UserSid && !u.DeleteDT.HasValue).SingleOrDefault();
+                    }
+                    else
+                    {
+                        message = "Student" + Constants.Not_Found;
+                        return null;
+                    }
                     return student;
                 }
             }
             catch (Exception ex)
             {
                 ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "retrieving student" + Constants.Contact_System_Admin;
                 return null;
             }
         }
+        public IEnumerator<Student> GetAllActiveStudent(out string message)
+        {
+            message = string.Empty;
+            List<Student> list = new List<Student>();
 
-        public Student GetActiveStudentBySid(int sid)
-        {
-            var student = GetStudentBySid(sid);
-            if (student.User == null || !student.User.IsActive || student.User.DeleteDT.HasValue)
+            try
             {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    var students = unitOfWork.Students.GetAll();
+                    if (students != null && students.Count() > 0)
+                    {
+                        foreach (var student in students)
+                        {
+                            student.User = unitOfWork.Users.Find(u => u.Sid == student.UserSid && !u.DeleteDT.HasValue).SingleOrDefault();
+                            if (student.User != null)
+                            {
+                                list.Add(student);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        message = Constants.No + "student";
+                        return null;
+                    }
+                    if (list.Count == 0)
+                    {
+                        message = Constants.No + "student";
+                        return null;
+                    }
+
+                    return list as IEnumerator<Student>;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "retrieving student" + Constants.Contact_System_Admin;
                 return null;
             }
-            return student;
         }
-        public IEnumerator<Student> GetAllStudent(int pageSize, int pageNum)
+        public Student AddStudent(Student student, out string message)
         {
-            throw new NotImplementedException();
-        }
-        public IEnumerator<Student> GetAllActiveStudent(int pageSize, int pageNum)
-        {
-            throw new NotImplementedException();
-        }
-        public bool AddStudent(Student student, out string msg)
-        {
-            msg = string.Empty;
+            message = string.Empty;
+            if (student == null || student.User == null)
+            {
+                message = Constants.Operation_Failed_Duing + "added student" + Constants.Contact_System_Admin;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -65,18 +105,24 @@ namespace ActiveLearning.Business.Implementation
                         unitOfWork.Complete();
                         scope.Complete();
                     }
-                    return true;
+                    return student;
                 }
             }
             catch (Exception ex)
             {
                 ErrorLog(ex);
-                msg = "";
-                return false;
+                message = Constants.Operation_Failed_Duing + "added student" + Constants.Contact_System_Admin;
+                return null;
             }
+
         }
-        public bool UpdateStudent(Student student)
+        public bool UpdateStudent(Student student, out string message)
         {
+            message = string.Empty;
+            if (student == null || student.User == null)
+            {
+                message = Constants.Operation_Failed_Duing + "updating student" + Constants.Contact_System_Admin;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -95,11 +141,17 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "updating student" + Constants.Contact_System_Admin;
                 return false;
             }
         }
-        public bool DeleteStudent(Student student)
+        public bool DeleteStudent(Student student, out string message)
         {
+            message = string.Empty;
+            if (student == null || student.User == null)
+            {
+                message = Constants.Operation_Failed_Duing + "deleting student" + Constants.Contact_System_Admin;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -116,198 +168,89 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "deleting student" + Constants.Contact_System_Admin;
                 return false;
             }
         }
         #endregion
 
         #region Instructor
-        public Instructor GetInstructorBySid(int sid)
+        public Instructor GetActiveInstructorByInstructorSid(int sid, out string message)
         {
+            message = string.Empty;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
                     var instructor = unitOfWork.Instructors.Get(sid);
-                    instructor.User = unitOfWork.Users.Find(u => !u.DeleteDT.HasValue && u.Sid == instructor.UserSid).FirstOrDefault();
+                    if (instructor != null)
+                    {
+                        instructor.User = unitOfWork.Users.Find(u => !u.DeleteDT.HasValue && u.Sid == instructor.UserSid).FirstOrDefault();
+                        if (instructor.User == null)
+                        {
+                            message = "Instructor" + Constants.Not_Found;
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        message = "Instructor" + Constants.Not_Found;
+                        return null;
+                    }
+
                     return instructor;
                 }
             }
             catch (Exception ex)
             {
                 ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "retrieving instructor" + Constants.Contact_System_Admin;
                 return null;
             }
         }
-        public Instructor GetActiveInstructorBySid(int sid)
+        public IEnumerator<Instructor> GetAllActiveInstructor(out string message)
         {
             throw new NotImplementedException();
         }
-        public IEnumerator<Instructor> GetAllInstructor()
-        {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    var instructors = unitOfWork.Instructors.GetAll();
-
-                    return instructors as IEnumerator<Instructor>;
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return null;
-            }
-        }
-        public IEnumerator<Instructor> GetAllActiveInstructor(int pageSize, int pageNum)
+        public Instructor AddInstructor(Instructor instructor, out string message)
         {
             throw new NotImplementedException();
         }
-        public Instructor AddInstructor(Instructor instructor)
+        public bool UpdateInstructor(Instructor instructor, out string message)
         {
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    instructor.User.CreateDT = DateTime.Now;
-                    unitOfWork.Users.Add(instructor.User);
-                    unitOfWork.Instructors.Add(instructor);
-                    unitOfWork.Complete();
-                    scope.Complete();
-                }
-                return instructor;
-            }
-
+            throw new NotImplementedException();
         }
-        public bool UpdateInstructor(Instructor instructor)
+        public bool DeleteInstructor(Instructor instructor, out string message)
         {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        instructor.User.UpdateDT = DateTime.Now;
-                        Util.CopyNonNullProperty(instructor.User, unitOfWork.Users.Get(instructor.UserSid));
-                        Util.CopyNonNullProperty(instructor, unitOfWork.Students.Get(instructor.Sid));
-                        unitOfWork.Complete();
-                        scope.Complete();
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteInstructor(Instructor instructor)
-        {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        unitOfWork.Users.Get(instructor.UserSid).DeleteDT = DateTime.Now;
-                        unitOfWork.Complete();
-                        scope.Complete();
-                    }
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return false;
-            }
-        }
         #endregion
 
         #region Admin
-        public Admin GetAdminBySid(int sid)
-        {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    var admin = unitOfWork.Admins.Get(sid);
-                    admin.User = unitOfWork.Users.Get(admin.UserSid);
-                    return admin;
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return null;
-            }
-        }
-        public Admin GetActiveAdminBySid(int sid)
+        public Admin AddAdmin(Admin admin, out string message)
         {
             throw new NotImplementedException();
         }
-        public Admin AddAdmin(Admin admin)
+        public Admin GetActiveAdminByAdminSid(int sid, out string message)
         {
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    admin.User.CreateDT = DateTime.Now;
-                    unitOfWork.Users.Add(admin.User);
-                    unitOfWork.Admins.Add(admin);
-                    unitOfWork.Complete();
-                    scope.Complete();
-                }
-                return admin;
-            }
+            throw new NotImplementedException();
         }
-        public bool UpdateAdmin(Admin admin)
+
+        public IEnumerator<Admin> GetAllActiveAdmin(out string message)
         {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        admin.User.UpdateDT = DateTime.Now;
-                        Util.CopyNonNullProperty(admin.User, unitOfWork.Users.Get(admin.UserSid));
-                        Util.CopyNonNullProperty(admin, unitOfWork.Students.Get(admin.Sid));
-                        unitOfWork.Complete();
-                        scope.Complete();
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return false;
-            }
+            throw new NotImplementedException();
         }
-        public bool DeleteAdmin(Admin admin)
+        public bool UpdateAdmin(Admin admin, out string message)
         {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-                {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        unitOfWork.Users.Get(admin.UserSid).DeleteDT = DateTime.Now;
-                        unitOfWork.Complete();
-                        scope.Complete();
-                    }
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorLog(ex);
-                return false;
-            }
+
+            throw new NotImplementedException();
         }
+        public bool DeleteAdmin(Admin admin, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
 
@@ -389,38 +332,6 @@ namespace ActiveLearning.Business.Implementation
                 return authenticatedUser;
             }
         }
-
-        public Student AddStudent(Student student)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<Student> GetAllStudent()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<Student> GetAllActiveStudent()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<Instructor> GetAllInstructor(int pageSize, int pageNum)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
 
         #endregion
     }
