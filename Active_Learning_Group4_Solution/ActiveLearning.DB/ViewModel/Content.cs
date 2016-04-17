@@ -8,8 +8,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.DB
 {
+    [MetadataType(typeof(ContentMetadata))]
     public partial class Content
     {
-    
+        public class ContentMetadata
+        {
+
+        }
     }
 }
