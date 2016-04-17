@@ -7,16 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ActiveLearning.Business;
-using ActiveLearning.DB;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class HomeController : BaseController
     {
+
+        UserManager userManager = null;
+        
         public ActionResult Index()
         {
-            return View();
+            using(var userManager=new UserManager())
+            {
+                //string message = string.Empty;
+                //var user = userManager.IsAuthenticated("Admin1", "1234", out message);
+                return View();
+            }
+            
         }
 
         public ActionResult About()
@@ -50,5 +57,52 @@ namespace ActiveLearning.Web.Controllers
 
             return View();
         }
+
+
+        #region login
+
+        // GET: /Home/Login
+        [HttpGet]
+        public ActionResult Login()
+        {
+            //Session.Clear();
+            return View();
+        }
+
+        //POST: /Home/Login
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            using(var userManager = new UserManager())
+            {
+                string message = string.Empty;
+
+                BaseController baseController = new BaseController();
+                if (userManager.IsAuthenticated(user.Username, user.Password, out message) != null)
+                {
+                    LogUserIn(user);
+                    switch (baseController.GetLoginUserRole())
+                    {
+                        case "Admin":
+                            Redirect("~/Admin");
+                            break;
+                        case "Instructor":
+                            Redirect("~/Instructor");
+                            break;
+                        case "Student":
+                            Redirect("~/Student");
+                            break;
+
+                    }
+                   
+                }
+
+                ViewBag.Message = message;
+                return View();
+            }
+
+        }
+        
+        #endregion
     }
 }

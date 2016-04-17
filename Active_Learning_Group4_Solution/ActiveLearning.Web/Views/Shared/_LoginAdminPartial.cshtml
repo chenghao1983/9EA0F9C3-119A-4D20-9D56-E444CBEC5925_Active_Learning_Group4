@@ -1,0 +1,35 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using ActiveLearning.Web.Controllers
+
+
+@{
+
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+
+        @*@html.antiforgerytoken();*@
+
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Manage Student</a></li>
+                <li><a href="#">Manage Instructor</a></li>
+                <li><a href="#">Manage Course</a></li>
+            </ul>
+        </li>
+
+    }
+
+}
+
+
+
+
+
+
+
+
+

@@ -44,7 +44,8 @@ namespace ActiveLearning.Web.Controllers
 
         public bool IsUserAuthenticated()
         {
-            if (Session[UserSessionParam] == null)
+            if (TempData.Peek(UserSessionParam) == null)
+            //if (Session[UserSessionParam] == null)
             {
                 return false;
             }
@@ -54,25 +55,35 @@ namespace ActiveLearning.Web.Controllers
 
         public User GetLoginUser()
         {
-            if (Session[UserSessionParam] == null)
+            if (TempData.Peek(UserSessionParam) == null)
+            //if (Session ==null || Session[UserSessionParam] == null)
             {
                 return null;
             }
-            return Session[UserSessionParam] as User;
+            //return Session[UserSessionParam] as User;
+            return TempData.Peek(UserSessionParam) as User;
         }
 
         public string GetLoginUserRole()
         {
-            if (Session[UserSessionParam] == null)
+            if (TempData.Peek(UserSessionParam) == null)
+            //    if (Session[UserSessionParam] == null)
             {
                 return null;
             }
-            return (Session[UserSessionParam] as User).Role;
+            //return (Session[UserSessionParam] as User).Role;
+            return (TempData.Peek(UserSessionParam) as User).Role;
         }
 
         public void LogUserIn(User user)
         {
-            Session[UserSessionParam] = user;
+            // Session[UserSessionParam] = user;
+            if (!TempData.Keys.Contains(UserSessionParam))
+            {
+                TempData.Keep(UserSessionParam);
+                TempData.Add(UserSessionParam, user);
+            }
+            TempData.Keep(UserSessionParam);
         }
     }
 }
