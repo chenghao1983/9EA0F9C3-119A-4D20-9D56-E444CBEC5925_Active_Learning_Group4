@@ -8,8 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.DB
 {
-    public partial class ChatRecord_Course_Map
+    public partial class Quiz
     {
-
     }
 }

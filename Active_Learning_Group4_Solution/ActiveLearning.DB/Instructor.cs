@@ -17,7 +17,7 @@ namespace ActiveLearning.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Instructor()
         {
-            this.ChatDetails = new HashSet<ChatDetail>();
+            this.Chats = new HashSet<Chat>();
             this.Instructor_Course_Map = new HashSet<Instructor_Course_Map>();
         }
     
@@ -25,7 +25,7 @@ namespace ActiveLearning.DB
         public int UserSid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChatDetail> ChatDetails { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Instructor_Course_Map> Instructor_Course_Map { get; set; }
         public virtual User User { get; set; }

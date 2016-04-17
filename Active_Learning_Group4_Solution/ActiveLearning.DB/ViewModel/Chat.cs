@@ -9,14 +9,14 @@ using ActiveLearning.DB.Common;
 
 namespace ActiveLearning.DB
 {
-    [MetadataType(typeof(ChatRecordMetadata))]
-    public partial class ChatRecord
+    [MetadataType(typeof(ChatMetadata))]
+    public partial class Chat
     {
-        public class ChatRecordMetadata
+        public class ChatMetadata
         {
-            [Required(ErrorMessage = Constants.Please_Enter + "Topic")]
-            [Display(Name = "Topic")]
-            public string Topic { get; set; }
+            [Required(ErrorMessage = Constants.Please_Enter + "message")]
+            [Display(Name = "Message")]
+            public string Message { get; set; }
         }
         
     }

@@ -21,7 +21,7 @@ namespace ActiveLearning.DB
         }
     
         public int Sid { get; set; }
-        public int QuizRecordSid { get; set; }
+        public int QuizSid { get; set; }
         public string Question { get; set; }
         public string Option1 { get; set; }
         public string Option2 { get; set; }
@@ -31,8 +31,8 @@ namespace ActiveLearning.DB
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
     
+        public virtual Quiz Quiz { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuizAnswer> QuizAnswers { get; set; }
-        public virtual QuizRecord QuizRecord { get; set; }
     }
 }

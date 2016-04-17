@@ -26,17 +26,15 @@ namespace ActiveLearning.DB
         }
     
         public virtual DbSet<Admin> Admins { get; set; }
-        public virtual DbSet<ChatDetail> ChatDetails { get; set; }
-        public virtual DbSet<ChatRecord> ChatRecords { get; set; }
-        public virtual DbSet<ChatRecord_Course_Map> ChatRecord_Course_Map { get; set; }
+        public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Instructor_Course_Map> Instructor_Course_Map { get; set; }
+        public virtual DbSet<Quiz> Quizs { get; set; }
         public virtual DbSet<Quiz_Course_Map> Quiz_Course_Map { get; set; }
         public virtual DbSet<QuizAnswer> QuizAnswers { get; set; }
         public virtual DbSet<QuizDetail> QuizDetails { get; set; }
-        public virtual DbSet<QuizRecord> QuizRecords { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Student_Course_Map> Student_Course_Map { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

@@ -21,6 +21,6 @@ namespace ActiveLearning.DB
         public Nullable<System.DateTime> UpdateDT { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual QuizRecord QuizRecord { get; set; }
+        public virtual Quiz Quiz { get; set; }
     }
 }
