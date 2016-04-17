@@ -39,5 +39,8 @@ namespace ActiveLearning.DB
         public virtual DbSet<Student_Course_Map> Student_Course_Map { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<TriviaAnswer> TriviaAnswers { get; set; }
+        public virtual DbSet<TriviaOption> TriviaOptions { get; set; }
+        public virtual DbSet<TriviaQuestion> TriviaQuestions { get; set; }
     }
 }

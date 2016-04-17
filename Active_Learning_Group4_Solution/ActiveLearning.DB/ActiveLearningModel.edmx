@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ActiveLearning.DB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ActiveLearning.DB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Sid" />
@@ -141,6 +141,32 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="TriviaAnswers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="OptionId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TriviaOptions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TriviaQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Sid" />
@@ -148,6 +174,7 @@
           <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDT" Type="datetime" Nullable="false" />
           <Property Name="UpdateDT" Type="datetime" />
@@ -211,6 +238,36 @@
             </Principal>
             <Dependent Role="Content">
               <PropertyRef Name="CourseSid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId">
+          <End Role="TriviaOptions" Type="Self.TriviaOptions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TriviaAnswers" Type="Self.TriviaAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TriviaOptions">
+              <PropertyRef Name="QuestionId" />
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TriviaAnswers">
+              <PropertyRef Name="QuestionId" />
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId">
+          <End Role="TriviaQuestions" Type="Self.TriviaQuestions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TriviaOptions" Type="Self.TriviaOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TriviaQuestions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TriviaOptions">
+              <PropertyRef Name="QuestionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -360,6 +417,9 @@
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student_Course_Map" EntityType="Self.Student_Course_Map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TriviaAnswers" EntityType="Self.TriviaAnswers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TriviaOptions" EntityType="Self.TriviaOptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TriviaQuestions" EntityType="Self.TriviaQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
             <End Role="User" EntitySet="User" />
@@ -380,6 +440,14 @@
           <AssociationSet Name="FK_Content_Course" Association="Self.FK_Content_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="Content" EntitySet="Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId" Association="Self.FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId">
+            <End Role="TriviaOptions" EntitySet="TriviaOptions" />
+            <End Role="TriviaAnswers" EntitySet="TriviaAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId" Association="Self.FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId">
+            <End Role="TriviaQuestions" EntitySet="TriviaQuestions" />
+            <End Role="TriviaOptions" EntitySet="TriviaOptions" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Course_Map_Course" Association="Self.FK_Instructor_Course_Map_Course">
             <End Role="Course" EntitySet="Course" />
@@ -426,8 +494,7 @@
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ActiveLearning.DB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -611,6 +678,7 @@
           <NavigationProperty Name="Admins" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
           <NavigationProperty Name="Instructors" Relationship="Self.FK_Instructor_User" FromRole="User" ToRole="Instructor" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Student_User" FromRole="User" ToRole="Student" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Admin_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -883,7 +951,78 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <EntitySet Name="TriviaAnswers" EntityType="ActiveLearning.DB.TriviaAnswer" />
+          <EntitySet Name="TriviaOptions" EntityType="ActiveLearning.DB.TriviaOption" />
+          <EntitySet Name="TriviaQuestions" EntityType="ActiveLearning.DB.TriviaQuestion" />
+          <AssociationSet Name="FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId" Association="ActiveLearning.DB.FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId">
+            <End Role="TriviaOption" EntitySet="TriviaOptions" />
+            <End Role="TriviaAnswer" EntitySet="TriviaAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId" Association="ActiveLearning.DB.FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId">
+            <End Role="TriviaQuestion" EntitySet="TriviaQuestions" />
+            <End Role="TriviaOption" EntitySet="TriviaOptions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TriviaAnswer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="OptionId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TriviaOption" Relationship="ActiveLearning.DB.FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId" FromRole="TriviaAnswer" ToRole="TriviaOption" />
+        </EntityType>
+        <EntityType Name="TriviaOption">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TriviaAnswers" Relationship="ActiveLearning.DB.FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId" FromRole="TriviaOption" ToRole="TriviaAnswer" />
+          <NavigationProperty Name="TriviaQuestion" Relationship="ActiveLearning.DB.FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId" FromRole="TriviaOption" ToRole="TriviaQuestion" />
+        </EntityType>
+        <EntityType Name="TriviaQuestion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TriviaOptions" Relationship="ActiveLearning.DB.FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId" FromRole="TriviaQuestion" ToRole="TriviaOption" />
+        </EntityType>
+        <Association Name="FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId">
+          <End Type="ActiveLearning.DB.TriviaOption" Role="TriviaOption" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ActiveLearning.DB.TriviaAnswer" Role="TriviaAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TriviaOption">
+              <PropertyRef Name="QuestionId" />
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TriviaAnswer">
+              <PropertyRef Name="QuestionId" />
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId">
+          <End Type="ActiveLearning.DB.TriviaQuestion" Role="TriviaQuestion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ActiveLearning.DB.TriviaOption" Role="TriviaOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TriviaQuestion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TriviaOption">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1042,6 +1181,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ActiveLearning.DB.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1050,6 +1190,34 @@
                 <ScalarProperty Name="UpdateDT" ColumnName="UpdateDT" />
                 <ScalarProperty Name="DeleteDT" ColumnName="DeleteDT" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TriviaAnswers">
+            <EntityTypeMapping TypeName="ActiveLearning.DB.TriviaAnswer">
+              <MappingFragment StoreEntitySet="TriviaAnswers">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TriviaOptions">
+            <EntityTypeMapping TypeName="ActiveLearning.DB.TriviaOption">
+              <MappingFragment StoreEntitySet="TriviaOptions">
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TriviaQuestions">
+            <EntityTypeMapping TypeName="ActiveLearning.DB.TriviaQuestion">
+              <MappingFragment StoreEntitySet="TriviaQuestions">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

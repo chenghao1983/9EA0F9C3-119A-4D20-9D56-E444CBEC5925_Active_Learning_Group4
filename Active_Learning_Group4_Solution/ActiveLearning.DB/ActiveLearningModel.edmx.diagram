@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c1e4252686474794ae5035d07199d93e" Name="Diagram1">
+      <Diagram DiagramId="c1e4252686474794ae5035d07199d93e" Name="Diagram1" ShowGrid="true">
         <EntityTypeShape EntityType="ActiveLearning.DB.Admin" Width="1.5" PointX="3.75" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Chat" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Content" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="ActiveLearning.DB.Instructor_Course_Map" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Quiz" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Quiz_Course_Map" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearning.DB.QuizAnswer" Width="1.5" PointX="9" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActiveLearning.DB.QuizAnswer" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.QuizDetail" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Student" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Student_Course_Map" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
@@ -35,6 +35,11 @@
         <AssociationConnector Association="ActiveLearning.DB.FK_QuizAnswer_Student" ManuallyRouted="false" />
         <AssociationConnector Association="ActiveLearning.DB.FK_Student_Course_Map_Student" ManuallyRouted="false" />
         <AssociationConnector Association="ActiveLearning.DB.FK_Student_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ActiveLearning.DB.TriviaAnswer" Width="1.5" PointX="10.375" PointY="7.125" />
+        <EntityTypeShape EntityType="ActiveLearning.DB.TriviaOption" Width="1.5" PointX="10.25" PointY="4.375" />
+        <EntityTypeShape EntityType="ActiveLearning.DB.TriviaQuestion" Width="1.5" PointX="10.25" PointY="2.125" />
+        <AssociationConnector Association="ActiveLearning.DB.FK_dbo_TriviaAnswers_dbo_TriviaOptions_QuestionId_OptionId" />
+        <AssociationConnector Association="ActiveLearning.DB.FK_dbo_TriviaOptions_dbo_TriviaQuestions_QuestionId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

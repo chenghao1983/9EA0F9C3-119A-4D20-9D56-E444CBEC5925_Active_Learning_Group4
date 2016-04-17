@@ -114,6 +114,15 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TriviaAnswer.cs">
+      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TriviaOption.cs">
+      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TriviaQuestion.cs">
+      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
