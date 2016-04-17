@@ -39,9 +39,10 @@ namespace ActiveLearning.Web.Controllers
         [HttpPost]
         public ActionResult CreateCourse(Course course)
         {
+            string message = string.Empty;
             using (var courseManager = new CourseManager())
             {
-                courseManager.AddCourse(course);
+                courseManager.AddCourse(course, out message);
             }
             ViewBag.Message = "Course Created !";
             return View();
