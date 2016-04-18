@@ -21,9 +21,9 @@ namespace ActiveLearning.DB
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            [Required(ErrorMessage = Common.Constants.Please_Enter + "Full Name")]
-            [Display(Name = "Full Name")]
-            public string Fullname { get; set; }
+            //[Required(ErrorMessage = Common.Constants.Please_Enter + "Full Name")]
+           // [Display(Name = "Full Name")]
+           // public string Fullname { get; set; }
         }
     }
 }
