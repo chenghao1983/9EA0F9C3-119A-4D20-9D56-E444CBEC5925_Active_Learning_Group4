@@ -20,7 +20,7 @@ namespace ActiveLearning.Business.Implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerator<Chat> GetAllChat(out string message)
+        public IEnumerable<Chat> GetAllChat(out string message)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@ namespace ActiveLearning.Business.Interface
     {
         Chat GetChatByChatSid(int chatSid, out string message);
         //ChatRecord GetChatRecordByChatRecordSid(int chatRecordSid, out string message);
-        IEnumerator<Chat> GetAllChat(out string message);
+        IEnumerable<Chat> GetAllChat(out string message);
         Chat AddChat(Chat chat, out string message);
         bool UpdateChat(Chat chat, out string message);
         bool DeleteChat(Chat chat, out string message);

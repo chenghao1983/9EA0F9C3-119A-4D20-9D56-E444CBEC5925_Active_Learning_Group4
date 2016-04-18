@@ -28,6 +28,7 @@ namespace ActiveLearning.Business.Interface
         Admin AddAdmin(Admin admin, out string message);
         bool UpdateAdmin(Admin admin, out string message);
         bool DeleteAdmin(Admin admin, out string message);
-        User IsAuthenticated(string userName, string password, out string messge);
+        User IsAuthenticated(string userName, string password, out string message);
+        User IsAuthenticated(User user, out string message);
     }
 }

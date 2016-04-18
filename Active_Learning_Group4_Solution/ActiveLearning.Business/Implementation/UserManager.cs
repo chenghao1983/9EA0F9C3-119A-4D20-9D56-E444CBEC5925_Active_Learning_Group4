@@ -22,7 +22,7 @@ namespace ActiveLearning.Business.Implementation
             }
             using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
             {
-                var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
+                var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue);
                 if (user != null)
                 {
                     message = userName + Constants.Already_Exists;
@@ -546,10 +546,10 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
         }
-       /*
-       *Will NOT check whether username exists
-       *Username is not allowed to be changed
-       */
+        /*
+        *Will NOT check whether username exists
+        *Username is not allowed to be changed
+        */
         public bool UpdateAdmin(Admin admin, out string message)
         {
             message = string.Empty;
@@ -636,7 +636,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.Password == pass && u.IsActive);
+                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.Password.Equals(pass) && u.IsActive && !u.DeleteDT.HasValue);
 
                     if (user != null)
                     {
@@ -690,6 +690,15 @@ namespace ActiveLearning.Business.Implementation
                 messge = Constants.Operation_Failed_Duing + "anthenticating user" + Constants.Contact_System_Admin;
                 return authenticatedUser;
             }
+        }
+        public User IsAuthenticated(User user, out string message)
+        {
+            if (user == null)
+            {
+                message = Constants.Empty + user_str;
+                return null;
+            }
+            return IsAuthenticated(user.Username, user.Password, out message);
         }
         #endregion
     }
