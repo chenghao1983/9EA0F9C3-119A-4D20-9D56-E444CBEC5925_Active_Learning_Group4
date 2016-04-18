@@ -18,6 +18,7 @@ namespace ActiveLearning.DB
             public string Username { get; set; }
 
             [Required(ErrorMessage = Common.Constants.Please_Enter + "Password")]
+            [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 

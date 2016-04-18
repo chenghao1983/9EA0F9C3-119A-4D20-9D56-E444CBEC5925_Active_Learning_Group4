@@ -28,9 +28,17 @@
                 @{
 
                     string url = Request.Path;
-                    if (url.Contains("Admin"))
+                    if (url.IndexOf("Admin", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        @Html.Partial("_LoginAdminPartial") 
+                        @Html.Partial("_LoginAdminPartial")
+                    }
+                    else if (url.IndexOf("Instructor", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        @Html.Partial("_LoginInstructorPartial")
+                    }
+                    else if (url.IndexOf("Student", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        @Html.Partial("_LoginStudentPartial")
                     }
 
 

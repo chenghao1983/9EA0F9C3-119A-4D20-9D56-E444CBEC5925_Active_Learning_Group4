@@ -92,5 +92,13 @@ namespace ActiveLearning.Web.Controllers
             }
         }
         #endregion
+
+
+        // POST: /Home/LogOff
+        public ActionResult LogOff()
+        {
+            TempData.Clear();
+            return RedirectToLogin();
+        }
     }
 }
