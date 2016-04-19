@@ -15,14 +15,14 @@ namespace ActiveLearning.DB
     public partial class QuizAnswer
     {
         public int Sid { get; set; }
-        public int QuizDetailSid { get; set; }
+        public int QuizQuestionSid { get; set; }
+        public int QuizOptionSid { get; set; }
         public int StudentSid { get; set; }
-        public string Answer { get; set; }
         public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
         public Nullable<System.DateTime> DeleteDT { get; set; }
     
-        public virtual QuizDetail QuizDetail { get; set; }
+        public virtual QuizOption QuizOption { get; set; }
         public virtual Student Student { get; set; }
     }
 }

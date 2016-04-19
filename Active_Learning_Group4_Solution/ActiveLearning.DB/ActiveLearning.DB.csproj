@@ -93,16 +93,13 @@
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quiz.cs">
-      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="QuizAnswer.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="QuizDetail.cs">
+    <Compile Include="QuizOption.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Quiz_Course_Map.cs">
+    <Compile Include="QuizQuestion.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Student.cs">
@@ -112,15 +109,6 @@
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TriviaAnswer.cs">
-      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TriviaOption.cs">
-      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TriviaQuestion.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

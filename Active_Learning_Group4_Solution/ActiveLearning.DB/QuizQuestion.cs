@@ -12,15 +12,23 @@ namespace ActiveLearning.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Quiz_Course_Map
+    public partial class QuizQuestion
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public QuizQuestion()
+        {
+            this.QuizOptions = new HashSet<QuizOption>();
+        }
+    
         public int Sid { get; set; }
-        public int QuizSid { get; set; }
-        public int CourseSid { get; set; }
+        public string Title { get; set; }
         public System.DateTime CreateDT { get; set; }
         public Nullable<System.DateTime> UpdateDT { get; set; }
+        public Nullable<System.DateTime> DeleteDT { get; set; }
+        public int CourseSid { get; set; }
     
         public virtual Course Course { get; set; }
-        public virtual Quiz Quiz { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QuizOption> QuizOptions { get; set; }
     }
 }

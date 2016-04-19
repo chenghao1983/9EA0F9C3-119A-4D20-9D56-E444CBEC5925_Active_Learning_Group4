@@ -31,16 +31,12 @@ namespace ActiveLearning.DB
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Instructor_Course_Map> Instructor_Course_Map { get; set; }
-        public virtual DbSet<Quiz> Quizs { get; set; }
-        public virtual DbSet<Quiz_Course_Map> Quiz_Course_Map { get; set; }
         public virtual DbSet<QuizAnswer> QuizAnswers { get; set; }
-        public virtual DbSet<QuizDetail> QuizDetails { get; set; }
+        public virtual DbSet<QuizOption> QuizOptions { get; set; }
+        public virtual DbSet<QuizQuestion> QuizQuestions { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Student_Course_Map> Student_Course_Map { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<TriviaAnswer> TriviaAnswers { get; set; }
-        public virtual DbSet<TriviaOption> TriviaOptions { get; set; }
-        public virtual DbSet<TriviaQuestion> TriviaQuestions { get; set; }
     }
 }
