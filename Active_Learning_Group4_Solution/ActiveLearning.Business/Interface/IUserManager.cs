@@ -12,6 +12,7 @@ namespace ActiveLearning.Business.Interface
         bool UserNameExists(string userName, out string message);
         Student GetStudentByStudentSid(int studentSid, out string message);
         Student GetActiveStudentByStudentSid(int studentSid, out string message);
+        IEnumerable<Student> GetAllStudent(out string message);
         IEnumerable<Student> GetAllActiveStudent(out string message);
         Student AddStudent(Student student, out string message);
         bool UpdateStudent(Student student, out string message);

@@ -81,7 +81,7 @@ namespace ActiveLearning.Business.Implementation
             }
             return student;
         }
-        public IEnumerable<Student> GetAllActiveStudent(out string message)
+        public IEnumerable<Student> GetAllStudent(out string message)
         {
             message = string.Empty;
             List<Student> list = new List<Student>();
@@ -120,6 +120,10 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + "retrieving " + student_str + Constants.Contact_System_Admin;
                 return null;
             }
+        }
+        public IEnumerable<Student> GetAllActiveStudent(out string message)
+        {
+            return GetAllStudent(out message).Where(s => s.User.IsActive);
         }
         /*
          *Will check username
