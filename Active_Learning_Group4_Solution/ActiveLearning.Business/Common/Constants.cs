@@ -20,6 +20,21 @@ namespace ActiveLearning.Business.Common
         #endregion
 
         #region Error Message
+        public const string user_str = "User";
+        public const string student_str = "Student";
+        public const string EnrolledStudent_str = "Enrolled Student";
+        public const string NonEnrolledStudent_str = "Non Enrolled Student";
+        public const string instructor_str = "Instructor";
+        public const string EnrolledInstructor_str = "Enrolled Instructor";
+
+        public const string admin_str = "Admin";
+        public const string userName_str = "User Name";
+        public const string course_str = "Course";
+        public const string courseName_str = "Course Name";
+        public const string EnrolledCourse_str = "Enrolled Course";
+        public const string NonEnrolledCourse_str = "Non Enrolled Course";
+        public const string chat_str = "Chat";
+
         public const string Operation_Failed_Duing = "Operation failed during ";
         public const string Contact_System_Admin = ". Please contact system admin";
         public const string Invalid_Username_Or_Password = "Invalid Usernamd or Password";
@@ -29,5 +44,7 @@ namespace ActiveLearning.Business.Common
         public const string Already_Exists = " already exists";
         #endregion
 
+
+        
     }
 }
