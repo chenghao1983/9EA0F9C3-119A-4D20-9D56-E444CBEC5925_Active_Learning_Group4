@@ -6,15 +6,15 @@ DELETE FROM  [dbo].[User]
 GO
 SET IDENTITY_INSERT [dbo].[User] ON 
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (1, N'Admin1', N'1234', 'Super Admin', 1, CAST(N'2016-04-13 23:15:17.527' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'A',N'')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (1, N'Admin1', N'/pgdZNxfSu2XUHjBNgaB4PlwinBAUmTH', 'Super Admin', 1, CAST(N'2016-04-13 23:15:17.527' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'A',N'ZB/sYHfiuxnSFd/ZoMZMfNqAW+MpQu5x ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (2, N'Instructor1', N'1234', 'Kent White', 1, CAST(N'2016-04-13 23:17:34.010' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (2, N'Instructor1', N'Knn5u702hV4P2EqaUDzadGiPZ4zuT79n', 'Kent White', 1, CAST(N'2016-04-13 23:17:34.010' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (3, N'Instructor2', N'1234', 'Eric Johnson', 0, CAST(N'2016-04-13 23:17:41.910' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (3, N'Instructor2', N'XofVKJP8RDq8YzvKGD/iAsLJeXfZ5Rjq', 'Eric Johnson', 0, CAST(N'2016-04-13 23:17:41.910' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (4, N'Student1', N'1234', 'Tom Cruise', 1, CAST(N'2016-04-13 23:18:59.883' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (4, N'Student1', N'AoXSVf0r1gWxZ/CDMetgnEkUHwtcYNnK', 'Tom Cruise', 1, CAST(N'2016-04-13 23:18:59.883' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'XKNeMNMgPoVjx6oZcIQb50fIfYL3UCdC ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Student2', N'1234', 'Walker Smith', 0, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Student2', N'xdGMVptwdgRfXywbtvE0NiOd1J7cja78', 'Walker Smith', 0, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ')
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
