@@ -4,12 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ActiveLearning.DB;
+using System.Reflection;
+using log4net;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class BaseController : Controller
     {
         public static string UserSessionParam = "LoginUser";
+        protected const string LF = "\r\n";
+        private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public RedirectResult RedirectToLogin()
         {
@@ -18,22 +24,78 @@ namespace ActiveLearning.Web.Controllers
 
 
         //log error
-        public void ErrorLog(string error)
+        public static void ExceptionLog(Exception ex)
         {
+            string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            ILog logEngine = LogManager.GetLogger(loggerName);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
-
+            if (logEngine.IsFatalEnabled && !ex.Message.Contains("Thread was being aborted"))
+            {
+                sb.Append(ex.Message);
+                sb.Append(LF);
+                sb.Append(ex.StackTrace);
+                sb.Append(LF);
+                sb.Append(SEPARATOR);
+                logEngine.Error(sb.ToString());
+            }
         }
 
-        //log warning
-        public void WarningLog(string warning)
+        public static void ExceptionLog(string userLog, Exception ex)
         {
+            string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            ILog logEngine = LogManager.GetLogger(loggerName);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
+            if (logEngine.IsFatalEnabled && !ex.Message.Contains("Thread was being aborted"))
+            {
+                sb.Append(userLog);
+                sb.Append(LF);
+                sb.Append(ex.Message);
+                sb.Append(LF);
+                sb.Append(ex.StackTrace);
+                sb.Append(LF);
+                sb.Append(SEPARATOR);
+                logEngine.Error(sb.ToString());
+            }
         }
 
-        //log information
-        public void InfoLog(string info)
+        public static void InfoLog(string message)
         {
+            string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            ILog logEngine = LogManager.GetLogger(loggerName);
 
+            if (logEngine.IsInfoEnabled)
+            {
+                message += LF;
+                message += SEPARATOR;
+                logEngine.Error(message);
+            }
+        }
+
+        public static void DebugLog(string message)
+        {
+            string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            ILog logEngine = LogManager.GetLogger(loggerName);
+            if (logEngine.IsDebugEnabled)
+            {
+                message += LF;
+                message += SEPARATOR;
+                logEngine.Debug(message);
+            }
+        }
+
+        public static void ExceptionLog(string message)
+        {
+            string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            ILog logEngine = LogManager.GetLogger(loggerName);
+
+            if (logEngine.IsDebugEnabled)
+            {
+                message += LF;
+                message += SEPARATOR;
+                logEngine.Debug(message);
+            }
         }
 
         public bool IsUserAuthenticated()
@@ -54,14 +116,14 @@ namespace ActiveLearning.Web.Controllers
             {
                 return null;
             }
-           //return Session[UserSessionParam] as User;
+            //return Session[UserSessionParam] as User;
             return TempData.Peek(UserSessionParam) as User;
         }
 
         public string GetLoginUserRole()
         {
             if (TempData.Peek(UserSessionParam) == null)
-                //if (Session[UserSessionParam] == null)
+            //if (Session[UserSessionParam] == null)
             {
                 return null;
             }
@@ -75,6 +137,7 @@ namespace ActiveLearning.Web.Controllers
             if (!TempData.Keys.Contains(UserSessionParam))
             {
                 TempData.Add(UserSessionParam, user);
+                InfoLog("User: " + user.Username + " logged in");
             }
             TempData.Keep(UserSessionParam);
         }

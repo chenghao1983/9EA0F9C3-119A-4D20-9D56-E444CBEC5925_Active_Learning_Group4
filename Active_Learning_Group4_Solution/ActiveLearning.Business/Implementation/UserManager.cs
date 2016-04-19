@@ -59,7 +59,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "adding " + Constants.user_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -95,7 +95,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving " + Constants.student_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -148,7 +148,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving " + Constants.student_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -203,7 +203,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "adding " + Constants.student_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -238,7 +238,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "updating " + Constants.student_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -268,7 +268,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "deleting " + Constants.student_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -304,7 +304,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving" + Constants.instructor_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -357,7 +357,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving " + Constants.instructor_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -402,7 +402,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "adding " + Constants.instructor_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -437,7 +437,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "updating " + Constants.instructor_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -467,7 +467,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "deleting " + Constants.instructor_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -503,7 +503,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving " + Constants.admin_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -556,7 +556,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "retrieving " + Constants.admin_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -601,7 +601,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "adding " + Constants.admin_str + Constants.Contact_System_Admin;
                 return null;
             }
@@ -636,7 +636,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "updating " + Constants.admin_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -666,7 +666,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                ExceptionLog(ex);
                 message = Constants.Operation_Failed_Duing + "deleting " + Constants.admin_str + Constants.Contact_System_Admin;
                 return false;
             }
@@ -711,7 +711,7 @@ namespace ActiveLearning.Business.Implementation
                             messge = Constants.Invalid_Username_Or_Password;
                             return authenticatedUser;
                         }
-
+                        InfoLog("User: " + user.Username + " authenticated");
                         switch (user.Role)
                         {
                             case Constants.User_Role_Student_Code:
@@ -760,6 +760,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 messge = Constants.Operation_Failed_Duing + "anthenticating user" + Constants.Contact_System_Admin;
+                ExceptionLog(ex);
                 return authenticatedUser;
             }
         }

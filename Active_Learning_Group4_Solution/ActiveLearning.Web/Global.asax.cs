@@ -16,6 +16,8 @@ namespace ActiveLearning.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            log4net.Config.XmlConfigurator.Configure();
         }
         void Session_Start(object sender, EventArgs e)
         {
