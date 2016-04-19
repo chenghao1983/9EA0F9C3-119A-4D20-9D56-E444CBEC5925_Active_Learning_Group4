@@ -123,7 +123,13 @@ namespace ActiveLearning.Business.Implementation
         }
         public IEnumerable<Student> GetAllActiveStudent(out string message)
         {
-            return GetAllStudent(out message).Where(s => s.User.IsActive);
+            var allStudents = GetAllStudent(out message);
+            if (allStudents == null || allStudents.Count() == 0)
+            {
+                return null;
+            }
+            message = string.Empty;
+            return allStudents.Where(s => s.User.IsActive);
         }
         /*
          *Will check username
