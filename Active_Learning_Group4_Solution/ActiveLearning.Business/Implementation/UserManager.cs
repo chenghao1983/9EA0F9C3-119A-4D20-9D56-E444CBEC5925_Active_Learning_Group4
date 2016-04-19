@@ -32,6 +32,38 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             return false;
         }
+        public User GenerateHashedUser(User user, out string message)
+        {
+            if (user == null)
+            {
+                message = Constants.Empty + Constants.user_str;
+                return null;
+            }
+            if (string.IsNullOrEmpty(user.Username))
+            {
+                message = Constants.Empty + Constants.userName_str;
+                return null;
+            }
+            if (string.IsNullOrEmpty(user.Password))
+            {
+                message = Constants.Empty + Constants.Password_str;
+                return null;
+            }
+            try
+            {
+                string salt = Util.GenerateSalt();
+                user.PasswordSalt = salt;
+                user.Password = Util.CreateHash(user.Password, salt);
+                message = string.Empty;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog(ex);
+                message = Constants.Operation_Failed_Duing + "adding " + Constants.user_str + Constants.Contact_System_Admin;
+                return null;
+            }
+        }
         #endregion
 
         #region Student
@@ -147,6 +179,12 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
+            var hasedUser = GenerateHashedUser(student.User, out message);
+            if (hasedUser == null)
+            {
+                return null;
+            }
+            student.User = hasedUser;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -340,6 +378,12 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
+            var hasedUser = GenerateHashedUser(instructor.User, out message);
+            if (hasedUser == null)
+            {
+                return null;
+            }
+            instructor.User = hasedUser;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -533,6 +577,12 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
+            var hasedUser = GenerateHashedUser(admin.User, out message);
+            if (hasedUser == null)
+            {
+                return null;
+            }
+            admin.User = hasedUser;
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -646,10 +696,22 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.Password.Equals(pass) && u.IsActive && !u.DeleteDT.HasValue);
+                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue);
 
                     if (user != null)
                     {
+                        if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.PasswordSalt))
+                        {
+                            messge = user_str + "corrupted" + Constants.Contact_System_Admin;
+                            return null;
+                        }
+
+                        if (!Util.ValidatePassword(pass, user.Password, user.PasswordSalt))
+                        {
+                            messge = Constants.Invalid_Username_Or_Password;
+                            return authenticatedUser;
+                        }
+
                         switch (user.Role)
                         {
                             case Constants.User_Role_Student_Code:

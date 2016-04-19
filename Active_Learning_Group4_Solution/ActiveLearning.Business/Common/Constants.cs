@@ -29,6 +29,7 @@ namespace ActiveLearning.Business.Common
 
         public const string admin_str = "Admin";
         public const string userName_str = "User Name";
+        public const string Password_str = "Password";
         public const string course_str = "Course";
         public const string courseName_str = "Course Name";
         public const string EnrolledCourse_str = "Enrolled Course";
@@ -37,7 +38,7 @@ namespace ActiveLearning.Business.Common
 
         public const string Operation_Failed_Duing = "Operation failed during ";
         public const string Contact_System_Admin = ". Please contact system admin";
-        public const string Invalid_Username_Or_Password = "Invalid Usernamd or Password";
+        public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Not_Found = " not found";
         public const string No = "No ";
         public const string Empty = "Empty ";

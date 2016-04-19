@@ -9,6 +9,7 @@ namespace ActiveLearning.Business.Interface
 {
     public interface IUserManager
     {
+        User GenerateHashedUser(User user, out string message);
         bool UserNameExists(string userName, out string message);
         Student GetStudentByStudentSid(int studentSid, out string message);
         Student GetActiveStudentByStudentSid(int studentSid, out string message);

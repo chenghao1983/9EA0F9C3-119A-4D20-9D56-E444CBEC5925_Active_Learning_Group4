@@ -7,6 +7,7 @@ namespace ActiveLearning.Business.Common
 {
     public class Util
     {
+        #region Copy values
         //public static void CopyNonNullProperty(ref object from, ref object to)
         //{
         //    if (from == null || to == null) return;
@@ -25,7 +26,6 @@ namespace ActiveLearning.Business.Common
         //        toProp.SetValue(to, fromProp.GetValue(from, null), null);
         //    }
         //}
-
         public static void CopyNonNullProperty(object from, object to)
         {
             if (from == null || to == null) return;
@@ -44,15 +44,17 @@ namespace ActiveLearning.Business.Common
                 toProp.SetValue(to, fromProp.GetValue(from, null), null);
             }
         }
+        #endregion
+
+        #region Hash Password
 
         public const int SALT_BYTE_SIZE = 24;
         public const int HASH_BYTE_SIZE = 24;
         public const int PBKDF2_ITERATIONS = 1000;
 
-        public const int ITERATION_INDEX = 0;
-        public const int SALT_INDEX = 1;
-        public const int PBKDF2_INDEX = 2;
-
+        //public const int ITERATION_INDEX = 0;
+        //public const int SALT_INDEX = 1;
+        //public const int PBKDF2_INDEX = 2;
 
         public static string GenerateSalt()
         {
@@ -71,16 +73,18 @@ namespace ActiveLearning.Business.Common
             return Convert.ToBase64String(hash);
         }
 
-        public static bool ValidatePassword(string password, string correctHash)
+        public static bool ValidatePassword(string password, string correctHash, string correctSalt)
         {
             // Extract the parameters from the hash
-            char[] delimiter = { ':' };
-            string[] split = correctHash.Split(delimiter);
-            int iterations = Int32.Parse(split[ITERATION_INDEX]);
-            byte[] salt = Convert.FromBase64String(split[SALT_INDEX]);
-            byte[] hash = Convert.FromBase64String(split[PBKDF2_INDEX]);
+            //char[] delimiter = { ':' };
+            //string[] split = correctHash.Split(delimiter);
+            //int iterations = Int32.Parse(split[ITERATION_INDEX]);
+            //byte[] salt = Convert.FromBase64String(split[SALT_INDEX]);
+            byte[] salt = Convert.FromBase64String(correctSalt);
+            //byte[] hash = Convert.FromBase64String(split[PBKDF2_INDEX]);
+            byte[] hash = Convert.FromBase64String(correctHash);
 
-            byte[] testHash = PBKDF2(password, salt, iterations, hash.Length);
+            byte[] testHash = PBKDF2(password, salt, PBKDF2_ITERATIONS, hash.Length);
             return SlowEquals(hash, testHash);
         }
 
@@ -98,5 +102,6 @@ namespace ActiveLearning.Business.Common
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
         }
+        #endregion
     }
 }
