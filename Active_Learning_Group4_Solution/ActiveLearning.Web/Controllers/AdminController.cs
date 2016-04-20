@@ -95,13 +95,13 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult ManageStudent()
         {
             string message = string.Empty;
-            using(var userManager=new UserManager())
+            using (var userManager = new UserManager())
             {
 
                 List<Student> listStudent = (List<Student>)userManager.GetAllStudent(out message);
                 return View(listStudent);
             }
-            
+
         }
 
         public ActionResult CreateStudent()
@@ -110,7 +110,7 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
-      
+
         [HttpPost]
         public ActionResult CreateStudent(Student student)
         {
@@ -120,7 +120,11 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var userManager = new UserManager())
                 {
-                    userManager.AddStudent(student, out message);
+                    if (userManager.AddStudent(student, out message) == null)
+                    {
+                        ViewBag.Message = message;
+                        return View();
+                    }
                 }
                 ViewBag.Message = "Student Created !";
 
@@ -133,7 +137,6 @@ namespace ActiveLearning.Web.Controllers
             return View(student);
         }
         #endregion
-
 
     }
 }
