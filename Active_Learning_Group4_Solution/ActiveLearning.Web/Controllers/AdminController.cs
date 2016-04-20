@@ -92,6 +92,9 @@ namespace ActiveLearning.Web.Controllers
 
 
         #region Student
+
+
+        // GET: ManageStudent
         public ActionResult ManageStudent()
         {
             string message = string.Empty;
@@ -104,13 +107,14 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
+        // GET: ManageStudent/CreateStudent
         public ActionResult CreateStudent()
         {
             return View();
 
         }
 
-
+        // POST: ManageStudent/CreateStudent
         [HttpPost]
         public ActionResult CreateStudent(Student student)
         {
@@ -136,6 +140,53 @@ namespace ActiveLearning.Web.Controllers
             }
             return View(student);
         }
+
+
+        // GET: ManageStudent/EditStudent/6
+        public ActionResult EditStudent(int id)
+        {
+            string message = string.Empty;
+            using (var getStudent = new UserManager())
+            {
+                Student student = getStudent.GetStudentByStudentSid(id, out message);
+                if (student == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(student);
+            };
+        }
+
+        // POST: ManageStudent/EditStudent/6
+        [HttpPost,ActionName("EditStudent")]
+        public ActionResult update(Student student)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var updateStudent=new UserManager())
+                {
+                    if(updateStudent.UpdateStudent(student,out message))
+                    {
+                        return RedirectToAction("ManageStudent");
+                    }
+                    ViewBag.Message = message;
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+        }
+
         #endregion
 
     }
