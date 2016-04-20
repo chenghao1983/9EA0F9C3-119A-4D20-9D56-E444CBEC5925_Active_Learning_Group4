@@ -5,10 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ActiveLearning.DB;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+
 
 namespace ActiveLearning.DB
 {
     public partial class QuizAnswer
     {
+
+
+
+
+
+
+
     }
 }
