@@ -63,15 +63,11 @@
     <Compile Include="Interface\IContentManager.cs" />
     <Compile Include="Implementation\ContentManager.cs" />
     <Compile Include="Interface\IChatManager.cs" />
-    <Compile Include="Implementation\InstructorManager.cs" />
     <Compile Include="Interface\IFileManager.cs" />
-    <Compile Include="Interface\IInstructorManager.cs" />
     <Compile Include="Interface\IQuizManager.cs" />
     <Compile Include="Implementation\QuizManager.cs" />
-    <Compile Include="Implementation\StudentManager.cs" />
     <Compile Include="Implementation\UserManager.cs" />
     <Compile Include="Interface\ICourseManager.cs" />
-    <Compile Include="Interface\IStudentManager.cs" />
     <Compile Include="Interface\IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

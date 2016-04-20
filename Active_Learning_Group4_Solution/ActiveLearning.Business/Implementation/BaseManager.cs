@@ -17,18 +17,6 @@ namespace ActiveLearning.Business.Implementation
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
-        public const string user_str = "User";
-        public const string student_str = "Student";
-        public const string EnrolledStudent_str = "Enrolled Student";
-        public const string NonEnrolledStudent_str = "Non Enrolled Student";
-        public const string instructor_str = "Instructor";
-        public const string EnrolledInstructor_str = "Enrolled Instructor";
-        public const string admin_str = "Admin";
-        public const string userName_str = "User Name";
-        public const string course_str = "Course";
-        public const string courseName_str = "Course Name";
-        public const string chat_str = "Chat";
-
         // Flag: Has Dispose already been called?
         bool disposed = false;
         // Instantiate a SafeHandle instance.
