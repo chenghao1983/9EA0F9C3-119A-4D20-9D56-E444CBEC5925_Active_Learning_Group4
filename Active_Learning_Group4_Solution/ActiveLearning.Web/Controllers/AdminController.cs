@@ -92,7 +92,46 @@ namespace ActiveLearning.Web.Controllers
 
 
         #region Student
+        public ActionResult ManageStudent()
+        {
+            string message = string.Empty;
+            using(var userManager=new UserManager())
+            {
 
+                List<Student> listStudent = (List<Student>)userManager.GetAllStudent(out message);
+                return View(listStudent);
+            }
+            
+        }
+
+        public ActionResult CreateStudent()
+        {
+            return View();
+
+        }
+
+      
+        [HttpPost]
+        public ActionResult CreateStudent(Student student)
+        {
+
+            try
+            {
+                string message = string.Empty;
+                using (var userManager = new UserManager())
+                {
+                    userManager.AddStudent(student, out message);
+                }
+                ViewBag.Message = "Student Created !";
+
+                return RedirectToAction("ManageStudent");
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(student);
+        }
         #endregion
 
 
