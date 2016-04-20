@@ -168,6 +168,8 @@ namespace ActiveLearning.Business.Implementation
                     {
                         course.DeleteDT = DateTime.Now;
                         Util.CopyNonNullProperty(course, unitOfWork.Users.Get(course.Sid));
+                        unitOfWork.Student_Course_Maps.RemoveRange(unitOfWork.Student_Course_Maps.Find(m => m.CourseSid == course.Sid));
+                        unitOfWork.Instructor_Course_Maps.RemoveRange(unitOfWork.Instructor_Course_Maps.Find(m => m.CourseSid == course.Sid));
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -193,13 +195,13 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var students_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.CourseSid == courseSid);
-                    if (students_Course_Map == null || students_Course_Map.Count() == 0)
+                    var student_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.CourseSid == courseSid);
+                    if (student_Course_Map == null || student_Course_Map.Count() == 0)
                     {
                         message = Constants.No + Constants.EnrolledStudent_str;
                         return null;
                     }
-                    foreach (var map in students_Course_Map)
+                    foreach (var map in student_Course_Map)
                     {
                         using (var userManager = new UserManager())
                         {
@@ -280,7 +282,6 @@ namespace ActiveLearning.Business.Implementation
                         }
                         else
                         {
-
                             list = allActiveStudents.SkipWhile(a => enrolledStudents.Select(e => e.Sid).Contains(a.Sid));
                             if (list == null || list.Count() == 0)
                             {
@@ -433,19 +434,127 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             return nonEnrolledCourse.Select(e => e.Sid);
         }
-        public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courSid, out string message)
+        //public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message)
+        //{
+        //throw new NotImplementedException();
+        //}
+        //public bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courseSid, out string message)
+        //{
+        //throw new NotImplementedException();
+        //}
+        //public bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message)
+        //{
+        //throw new NotImplementedException();
+        //}
+        //public bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message)
+        //{
+        //throw new NotImplementedException();
+        //}
+        public bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message)
         {
             throw new NotImplementedException();
         }
-        public bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courSid, out string message) { throw new NotImplementedException(); }
-        public bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message) { throw new NotImplementedException(); }
-        public bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message) { throw new NotImplementedException(); }
-        public bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message) { throw new NotImplementedException(); }
-        public bool UpdateStudentsCourseEnrolment(IEnumerable<int> studentSids, int courseSid, out string message) { throw new NotImplementedException(); }
+        public bool UpdateStudentsCourseEnrolment(IEnumerable<int> studentSids, int courseSid, out string message)
+        {
+            if (studentSids == null || studentSids.Count() == 0)
+            {
+                message = Constants.Empty + student_str;
+                return false;
+            }
+
+            IEnumerable<int> studentSidsToEnrol = new List<int>();
+            IEnumerable<int> studentSidsToRemove = new List<int>();
+
+            var currentStudentSids = GetEnrolledStudentSidsByCourseSid(courseSid, out message);
+
+            // no student enrolled in the course
+            if (currentStudentSids == null || currentStudentSids.Count() == 0)
+            {
+                studentSidsToEnrol = studentSids;
+            }
+            try
+            {
+                studentSidsToEnrol = studentSids.SkipWhile(s => currentStudentSids.Contains(s));
+                studentSidsToRemove = currentStudentSids.SkipWhile(s => studentSids.Contains(s));
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.Operation_Failed_Duing + "updating student enrollment" + Constants.Contact_System_Admin;
+                return false;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        foreach (int sid in studentSidsToEnrol)
+                        {
+                            unitOfWork.Student_Course_Maps.Add(new Student_Course_Map() { StudentSid = sid, CourseSid = courseSid, CreateDT = DateTime.Now });
+                        }
+                        unitOfWork.Student_Course_Maps.RemoveRange(unitOfWork.Student_Course_Maps.Find(m => studentSidsToRemove.Contains(m.StudentSid) && m.CourseSid == courseSid));
+                        unitOfWork.Complete();
+                        scope.Complete();
+
+                        message = string.Empty;
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.Operation_Failed_Duing + "saving student enrollment update" + Constants.Contact_System_Admin;
+                return false;
+            }
+        }
         #endregion
 
         #region Instructor Enrolment
-        public IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
+        public IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            List<Instructor> list = new List<Instructor>();
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    var instructor_Course_Map = unitOfWork.Instructor_Course_Maps.Find(m => m.CourseSid == courseSid);
+                    if (instructor_Course_Map == null || instructor_Course_Map.Count() == 0)
+                    {
+                        message = Constants.No + Constants.EnrolledInstructor_str;
+                        return null;
+                    }
+                    foreach (var map in instructor_Course_Map)
+                    {
+                        using (var userManager = new UserManager())
+                        {
+                            var Instructor = userManager.GetActiveInstructorByInstructorSid(map.InstructorSid, out message);
+                            {
+                                if (Instructor != null)
+                                {
+                                    list.Add(Instructor);
+                                }
+                            }
+                        }
+                    }
+                    if (list.Count == 0)
+                    {
+                        message = Constants.No + Constants.EnrolledInstructor_str;
+                        return null;
+                    }
+                    message = string.Empty;
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.Operation_Failed_Duing + "retrieving " + Constants.EnrolledInstructor_str + Constants.Contact_System_Admin;
+                return null;
+            }
+        }
         public IEnumerable<int> GetEnrolledInstructorSidsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<int> GetEnrolledInstructorUserSidsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<Instructor> GetNonEnrolledInstructorsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
@@ -455,10 +564,10 @@ namespace ActiveLearning.Business.Implementation
         public IEnumerable<int> GetEnrolledCourseSidsByInstructorSid(int InstructorSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<Course> GetNonEnrolledCoursesByInstructorSid(int InstructorSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<int> GetNonEnrolledCourseSidsByInstructorSid(int InstructorSid, out string message) { throw new NotImplementedException(); }
-        public bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courSid, out string message) { throw new NotImplementedException(); }
-        public bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courSid, out string message) { throw new NotImplementedException(); }
-        public bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message) { throw new NotImplementedException(); }
-        public bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message) { throw new NotImplementedException(); }
+        //public bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courSid, out string message) { throw new NotImplementedException(); }
+        //public bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courSid, out string message) { throw new NotImplementedException(); }
+        //public bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message) { throw new NotImplementedException(); }
+        //public bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message) { throw new NotImplementedException(); }
         public bool UpdateInstructorsCourseEnrolment(IEnumerable<Instructor> Instructors, int courseSid, out string message) { throw new NotImplementedException(); }
         public bool UpdateInstructorsCourseEnrolment(IEnumerable<int> InstructorSids, int courseSid, out string message) { throw new NotImplementedException(); }
         #endregion
