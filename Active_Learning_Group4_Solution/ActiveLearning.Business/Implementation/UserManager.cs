@@ -22,7 +22,7 @@ namespace ActiveLearning.Business.Implementation
             }
             using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
             {
-                var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue);
+                var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).SingleOrDefault();
                 if (user != null)
                 {
                     message = userName + Constants.Already_Exists;
