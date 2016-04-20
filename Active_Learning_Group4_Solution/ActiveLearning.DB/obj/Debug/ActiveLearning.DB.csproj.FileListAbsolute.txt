@@ -1,0 +1,12 @@
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\ActiveLearning.DB.dll.config
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\ActiveLearning.DB.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\ActiveLearning.DB.pdb
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\EntityFramework.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\Newtonsoft.Json.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\EntityFramework.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\bin\Debug\Newtonsoft.Json.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\obj\Debug\ActiveLearning.DB.csprojResolveAssemblyReference.cache
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\obj\Debug\ActiveLearning.DB.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB\obj\Debug\ActiveLearning.DB.pdb

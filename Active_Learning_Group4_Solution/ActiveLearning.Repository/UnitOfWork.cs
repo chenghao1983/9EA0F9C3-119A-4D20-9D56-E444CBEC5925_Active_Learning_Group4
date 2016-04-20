@@ -29,7 +29,6 @@ namespace ActiveLearning.Repository
             Instructors = new InstructorRepository(_context);
             Quiz_Course_Maps = new Quiz_Course_MapRepository(_context);
             QuizAnswers = new QuizAnswerRepository(_context);
-            QuizDetails = new QuizDetailRepository(_context);
             Quizs = new QuizRepository(_context);
             Student_Course_Maps = new Student_Course_MapRepository(_context);
             Students = new StudentRepository(_context);
@@ -43,7 +42,7 @@ namespace ActiveLearning.Repository
         public IInstructorRepository Instructors { get; private set; }
         public IQuiz_Course_MapRepository Quiz_Course_Maps { get; private set; }
         public IQuizAnswerRepository QuizAnswers { get; private set; }
-        public IQuizDetailRepository QuizDetails { get; private set; }
+
         public IQuizRepository Quizs { get; private set; }
         public IStudent_Course_MapRepository Student_Course_Maps { get; private set; }
         public IStudentRepository Students { get; private set; }

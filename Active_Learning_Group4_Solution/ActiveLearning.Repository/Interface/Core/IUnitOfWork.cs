@@ -16,7 +16,7 @@ namespace ActiveLearning.Repository.Interface.Core
         IInstructorRepository Instructors { get; }
         IQuiz_Course_MapRepository Quiz_Course_Maps { get; }
         IQuizAnswerRepository QuizAnswers { get; }
-        IQuizDetailRepository QuizDetails { get; }
+
         IQuizRepository Quizs { get; }
         IStudent_Course_MapRepository Student_Course_Maps { get; }
         IStudentRepository Students { get; }

@@ -61,7 +61,6 @@
     <Compile Include="Interface\IInstructorRepository.cs" />
     <Compile Include="Interface\IInstructor_Course_MapRepository.cs" />
     <Compile Include="Interface\IQuizAnswerRepository.cs" />
-    <Compile Include="Interface\IQuizDetailRepository.cs" />
     <Compile Include="Interface\IQuizRepository.cs" />
     <Compile Include="Interface\IQuiz_Course_MapRepository.cs" />
     <Compile Include="Interface\Core\IRepository.cs" />
@@ -79,7 +78,6 @@
     <Compile Include="Repository\InstructorRepository.cs" />
     <Compile Include="Repository\Instructor_Course_MapRepository.cs" />
     <Compile Include="Repository\QuizAnswerRepository.cs" />
-    <Compile Include="Repository\QuizDetailRepository.cs" />
     <Compile Include="Repository\QuizRepository.cs" />
     <Compile Include="Repository\Quiz_Course_MapRepository.cs" />
     <Compile Include="Repository\Core\Repository.cs" />
