@@ -192,6 +192,7 @@ namespace ActiveLearning.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         student.User.CreateDT = DateTime.Now;
+                        student.User.Role = Constants.User_Role_Student_Code;
                         unitOfWork.Students.Add(student);
                         unitOfWork.Users.Add(student.User);
                         unitOfWork.Complete();
@@ -391,6 +392,7 @@ namespace ActiveLearning.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         instructor.User.CreateDT = DateTime.Now;
+                        instructor.User.Role = Constants.User_Role_Instructor_Code;
                         unitOfWork.Instructors.Add(instructor);
                         unitOfWork.Users.Add(instructor.User);
                         unitOfWork.Complete();
@@ -590,6 +592,7 @@ namespace ActiveLearning.Business.Implementation
                     using (TransactionScope scope = new TransactionScope())
                     {
                         admin.User.CreateDT = DateTime.Now;
+                        admin.User.Role = Constants.User_Role_Admin_Code;
                         unitOfWork.Admins.Add(admin);
                         unitOfWork.Users.Add(admin.User);
                         unitOfWork.Complete();
