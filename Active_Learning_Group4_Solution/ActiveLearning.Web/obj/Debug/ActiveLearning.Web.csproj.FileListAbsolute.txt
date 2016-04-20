@@ -70,3 +70,9 @@ C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Lea
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\Newtonsoft.Json.xml
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\obj\Debug\ActiveLearning.Web.dll
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\obj\Debug\ActiveLearning.Web.pdb
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Net.Http.Formatting.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Web.Http.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Web.Http.WebHost.dll
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Net.Http.Formatting.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Web.Http.xml
+C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.Web\bin\System.Web.Http.WebHost.xml
