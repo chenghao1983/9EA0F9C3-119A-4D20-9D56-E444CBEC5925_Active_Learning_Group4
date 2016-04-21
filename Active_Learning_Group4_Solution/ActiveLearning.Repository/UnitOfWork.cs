@@ -27,9 +27,9 @@ namespace ActiveLearning.Repository
             Courses = new CourseRepository(_context);
             Instructor_Course_Maps = new Instructor_Course_MapRepository(_context);
             Instructors = new InstructorRepository(_context);
-            Quiz_Course_Maps = new Quiz_Course_MapRepository(_context);
             QuizAnswers = new QuizAnswerRepository(_context);
-            Quizs = new QuizRepository(_context);
+            QuizOptions = new QuizOptionRepository(_context);
+            QuizQuestions = new QuizQuestionRepository(_context);
             Student_Course_Maps = new Student_Course_MapRepository(_context);
             Students = new StudentRepository(_context);
             Users = new UserRepository(_context);
@@ -40,10 +40,9 @@ namespace ActiveLearning.Repository
         public ICourseRepository Courses { get; private set; }
         public IInstructor_Course_MapRepository Instructor_Course_Maps { get; private set; }
         public IInstructorRepository Instructors { get; private set; }
-        public IQuiz_Course_MapRepository Quiz_Course_Maps { get; private set; }
         public IQuizAnswerRepository QuizAnswers { get; private set; }
-
-        public IQuizRepository Quizs { get; private set; }
+        public IQuizOptionRepository QuizOptions { get; private set; }
+        public IQuizQuestionRepository QuizQuestions { get; private set; }
         public IStudent_Course_MapRepository Student_Course_Maps { get; private set; }
         public IStudentRepository Students { get; private set; }
         public IUserRepository Users { get; private set; }

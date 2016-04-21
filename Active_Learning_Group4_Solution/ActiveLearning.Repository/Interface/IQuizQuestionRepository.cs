@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ActiveLearning.DB;
 using ActiveLearning.Repository.Interface.Core;
-
 namespace ActiveLearning.Repository.Interface
 {
-    public interface IQuizRepository : IRepository<Quiz>
+    public interface IQuizQuestionRepository : IRepository<QuizQuestion>
     {
     }
 }
