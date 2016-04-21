@@ -25,6 +25,49 @@ namespace ActiveLearning.Web.Controllers
             this.statisticsService = new StatisticsService();
         }
 
+        public async Task<QuizQuestion> Get()
+        {
+            //var userId = User.Identity.Name;
+
+            int userId = 1;
+
+            QuizQuestion nextQuestion = await this.quizManager.NextQuestionAsync(userId);
+
+            if (nextQuestion == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+
+            return nextQuestion;
+        }
+
+        public async Task<HttpResponseMessage> Post(QuizAnswer answer)
+        {
+            if (ModelState.IsValid)
+            {
+                //answer.StudentSid = User.Identity.Name;
+
+                //TODO
+                answer.StudentSid = 1;
+
+                answer.CreateDT = DateTime.Now;
+                var isCorrect = await this.quizManager.StoreAsync(answer);
+
+                await this.statisticsService.NotifyUpdates();
+
+                return Request.CreateResponse(HttpStatusCode.Created, isCorrect);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            this.db.Dispose();
+            base.Dispose(disposing);
+        }
 
 
 
