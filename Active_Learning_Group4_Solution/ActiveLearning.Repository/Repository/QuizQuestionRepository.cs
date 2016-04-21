@@ -11,10 +11,9 @@ using ActiveLearning.DB;
 
 namespace ActiveLearning.Repository.Repository
 {
-    public class QuizRepository : Repository<Quiz>, IQuizRepository
+    public class QuizQuestionRepository : Repository<QuizQuestion>, IQuizQuestionRepository
     {
-        public QuizRepository(DbContext context)
-            : base(context)
+        public QuizQuestionRepository(DbContext context) : base(context)
         {
         }
     }

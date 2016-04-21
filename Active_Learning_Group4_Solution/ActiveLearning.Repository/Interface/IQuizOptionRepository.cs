@@ -8,7 +8,7 @@ using ActiveLearning.Repository.Interface.Core;
 
 namespace ActiveLearning.Repository.Interface
 {
-    public interface IQuiz_Course_MapRepository : IRepository<Quiz_Course_Map>
+  public  interface IQuizOptionRepository : IRepository<QuizOption>
     {
     }
 }

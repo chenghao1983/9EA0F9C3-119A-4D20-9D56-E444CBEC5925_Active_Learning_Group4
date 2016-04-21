@@ -22,13 +22,9 @@ namespace ActiveLearning.Repository.Context
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Instructor_Course_Map> Instructor_Course_Maps { get; set; }
-        public virtual DbSet<Quiz_Course_Map> Quiz_Course_Maps { get; set; }
         public virtual DbSet<QuizAnswer> QuizAnswers { get; set; }
-
         public virtual DbSet<QuizQuestion> QuizQuestions { get; set; }
-
         public virtual DbSet<QuizOption> QuizOptions { get; set; }
-        public virtual DbSet<Quiz> Quizs { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Student_Course_Map> Student_Course_Maps { get; set; }
         public virtual DbSet<User> Users { get; set; }

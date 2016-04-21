@@ -14,14 +14,12 @@ namespace ActiveLearning.Repository.Interface.Core
         ICourseRepository Courses { get; }
         IInstructor_Course_MapRepository Instructor_Course_Maps { get; }
         IInstructorRepository Instructors { get; }
-        IQuiz_Course_MapRepository Quiz_Course_Maps { get; }
         IQuizAnswerRepository QuizAnswers { get; }
-
-        IQuizRepository Quizs { get; }
+        IQuizOptionRepository QuizOptions { get; }
+        IQuizQuestionRepository QuizQuestions { get; }
         IStudent_Course_MapRepository Student_Course_Maps { get; }
         IStudentRepository Students { get; }
         IUserRepository Users { get; }
-
         int Complete();
     }
 }
