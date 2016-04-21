@@ -345,10 +345,24 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteStudent(Student student, out string message)
         {
-            message = string.Empty;
-            if (student == null || student.User == null)
+            if (student == null || student.Sid == 0)
             {
                 message = Constants.Empty + Constants.Student_str;
+                return false;
+            }
+            return DeleteStudent(student.Sid, out message);
+        }
+        public bool DeleteStudent(int studentSid, out string message)
+        {
+            message = string.Empty;
+            if (studentSid == 0)
+            {
+                message = Constants.Empty + Constants.Student_str;
+                return false;
+            }
+            var student = GetStudentByStudentSid(studentSid, out message);
+            if (student == null || student.User == null)
+            {
                 return false;
             }
             try
@@ -357,8 +371,7 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        student.User.DeleteDT = DateTime.Now;
-                        Util.CopyNonNullProperty(student.User, unitOfWork.Users.Get(student.User.Sid));
+                        unitOfWork.Users.Get(student.UserSid).DeleteDT = DateTime.Now;
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -372,15 +385,6 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Student_str + Constants.Contact_System_Admin;
                 return false;
             }
-        }
-        public bool DeleteStudent(int studentSid, out string message)
-        {
-            var student = GetStudentByStudentSid(studentSid, out message);
-            if (student == null)
-            {
-                return false;
-            }
-            return DeleteStudent(student, out message);
         }
         #endregion
 
