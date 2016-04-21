@@ -16,6 +16,7 @@ namespace ActiveLearning.Business.Interface
         Course AddCourse(Course course, out string message);
         bool UpdateCourse(Course course, out string message);
         bool DeleteCourse(Course course, out string message);
+        bool DeleteCourse(int courseSid, out string message);
         #endregion
 
         #region Student Enrolment

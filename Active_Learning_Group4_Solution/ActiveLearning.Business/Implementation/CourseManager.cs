@@ -154,10 +154,24 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteCourse(Course course, out string message)
         {
-            message = string.Empty;
-            if (course == null)
+            if (course == null || course.Sid == 0)
             {
                 message = Constants.Empty + Constants.Course_str;
+                return false;
+            }
+            return DeleteCourse(course.Sid, out message);
+        }
+        public bool DeleteCourse(int courseSid, out string message)
+        {
+            message = string.Empty;
+            if (courseSid == 0)
+            {
+                message = Constants.Empty + Constants.Course_str;
+                return false;
+            }
+            var course = GetCourseByCourseSid(courseSid, out message);
+            if (course == null)
+            {
                 return false;
             }
             try
@@ -166,8 +180,7 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        course.DeleteDT = DateTime.Now;
-                        Util.CopyNonNullProperty(course, unitOfWork.Users.Get(course.Sid));
+                        unitOfWork.Courses.Get(courseSid).DeleteDT = DateTime.Now;
                         unitOfWork.Student_Course_Maps.RemoveRange(unitOfWork.Student_Course_Maps.Find(m => m.CourseSid == course.Sid));
                         unitOfWork.Instructor_Course_Maps.RemoveRange(unitOfWork.Instructor_Course_Maps.Find(m => m.CourseSid == course.Sid));
                         unitOfWork.Complete();

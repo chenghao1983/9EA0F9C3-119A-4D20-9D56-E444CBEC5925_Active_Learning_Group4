@@ -263,10 +263,24 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteChat(Chat chat, out string message)
         {
+            if (chat == null || chat.Sid == 0)
+            {
+                message = message = Constants.Empty + Constants.Chat_str;
+                return false;
+            }
+            return DeleteChat(chat.Sid, out message);
+        }
+        public bool DeleteChat(int chatSid, out string message)
+        {
             message = string.Empty;
-            if (chat == null)
+            if (chatSid == 0)
             {
                 message = Constants.Empty + Constants.Chat_str;
+                return false;
+            }
+            var chat = GetChatByChatSid(chatSid, out message);
+            if (chat == null)
+            {
                 return false;
             }
             try
@@ -275,8 +289,7 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        chat.DeleteDT = DateTime.Now;
-                        Util.CopyNonNullProperty(chat, unitOfWork.Chats.Get(chat.Sid));
+                        unitOfWork.Chats.Get(chatSid).DeleteDT = DateTime.Now;
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -290,15 +303,6 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Chat_str + Constants.Contact_System_Admin;
                 return false;
             }
-        }
-        public bool DeleteChat(int chatSid, out string message)
-        {
-            var chat = GetChatByChatSid(chatSid, out message);
-            if(chat ==null)
-            {
-                return false;
-            }
-            return DeleteChat(chat, out message);
         }
         public bool SendMessageToGroup(string groupName, string messge, out string message)
         {
