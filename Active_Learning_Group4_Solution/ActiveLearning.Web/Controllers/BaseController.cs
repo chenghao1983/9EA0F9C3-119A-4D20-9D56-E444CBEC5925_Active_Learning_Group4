@@ -141,5 +141,10 @@ namespace ActiveLearning.Web.Controllers
             }
             TempData.Keep(UserSessionParam);
         }
+
+        public void LogUserOut()
+        {
+            TempData.Clear();
+        }
     }
 }

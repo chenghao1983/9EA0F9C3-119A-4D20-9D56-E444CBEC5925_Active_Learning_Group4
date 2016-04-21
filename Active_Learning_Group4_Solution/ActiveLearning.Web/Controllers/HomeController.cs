@@ -97,7 +97,7 @@ namespace ActiveLearning.Web.Controllers
         // POST: /Home/LogOff
         public ActionResult LogOff()
         {
-            TempData.Clear();
+            LogUserOut();
             return RedirectToLogin();
         }
     }
