@@ -187,6 +187,57 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
+        // GET: ManageStudent/DeleteStudent/6
+        public ActionResult DeleteStudent(int id)
+        {
+            string message = string.Empty;
+            using (var deleteStudent = new UserManager())
+            {
+                Student student = deleteStudent.GetStudentByStudentSid(id, out message);
+                if (student == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(student);
+            };
+
+        }
+
+
+        // POST: ManageStudent/DeleteStudent/6
+        [HttpPost, ActionName("DeleteStudent")]
+        public ActionResult Delete(Student student)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var deleteStudent = new UserManager())
+                {
+                    //if (student == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    if (deleteStudent.DeleteStudent(student, out message))
+                    {
+                        return RedirectToAction("ManageStudent");
+                    }
+                    return View(student);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
         #endregion
 
     }
