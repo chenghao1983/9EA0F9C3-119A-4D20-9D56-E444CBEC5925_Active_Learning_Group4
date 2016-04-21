@@ -558,10 +558,24 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteInstructor(Instructor instructor, out string message)
         {
-            message = string.Empty;
-            if (instructor == null || instructor.User == null)
+            if (instructor == null || instructor.Sid == 0)
             {
                 message = Constants.Empty + Constants.Instructor_str;
+                return false;
+            }
+            return DeleteInstructor(instructor.Sid, out message);
+        }
+        public bool DeleteInstructor(int instructorSid, out string message)
+        {
+            message = string.Empty;
+            if (instructorSid == 0)
+            {
+                message = Constants.Empty + Constants.Instructor_str;
+                return false;
+            }
+            var instructor = GetInstructorByInstructorSid(instructorSid, out message);
+            if (instructor == null || instructor.User == null)
+            {
                 return false;
             }
             try
@@ -570,8 +584,7 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        instructor.User.DeleteDT = DateTime.Now;
-                        Util.CopyNonNullProperty(instructor.User, unitOfWork.Users.Get(instructor.User.Sid));
+                        unitOfWork.Users.Get(instructor.UserSid).DeleteDT = DateTime.Now;
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -585,15 +598,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Instructor_str + Constants.Contact_System_Admin;
                 return false;
             }
-        }
-        public bool DeleteInstructor(int instructorSid, out string message)
-        {
-            var instructor = GetInstructorByInstructorSid(instructorSid, out message);
-            if (instructor == null)
-            {
-                return false;
-            }
-            return DeleteInstructor(instructorSid, out message);
+
         }
         #endregion
 
@@ -767,10 +772,24 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteAdmin(Admin admin, out string message)
         {
-            message = string.Empty;
-            if (admin == null || admin.User == null)
+            if (admin == null || admin.Sid == 0)
             {
                 message = Constants.Empty + Constants.Admin_str;
+                return false;
+            }
+            return DeleteAdmin(admin.Sid, out message);
+        }
+        public bool DeleteAdmin(int adminSid, out string message)
+        {
+            message = string.Empty;
+            if (adminSid == 0)
+            {
+                message = Constants.Empty + Constants.Admin_str;
+                return false;
+            }
+            var admin = GetAdminByAdminSid(adminSid, out message);
+            if (admin == null || admin.User == null)
+            {
                 return false;
             }
             try
@@ -779,8 +798,7 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        admin.User.DeleteDT = DateTime.Now;
-                        Util.CopyNonNullProperty(admin.User, unitOfWork.Users.Get(admin.User.Sid));
+                        unitOfWork.Users.Get(admin.UserSid).DeleteDT = DateTime.Now;
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -794,15 +812,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Admin_str + Constants.Contact_System_Admin;
                 return false;
             }
-        }
-        public bool DeleteAdmin(int adminSid, out string message)
-        {
-            var admin = GetAdminByAdminSid(adminSid, out message);
-            if (admin == null)
-            {
-                return false;
-            }
-            return DeleteAdmin(admin, out message);
+
         }
         #endregion
 
