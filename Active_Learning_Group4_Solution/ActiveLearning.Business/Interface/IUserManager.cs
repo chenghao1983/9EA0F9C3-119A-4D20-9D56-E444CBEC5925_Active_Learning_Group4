@@ -24,6 +24,7 @@ namespace ActiveLearning.Business.Interface
         Student AddStudent(Student student, out string message);
         bool UpdateStudent(Student student, out string message);
         bool DeleteStudent(Student student, out string message);
+        bool DeleteStudent(int studentSid, out string message);
         #endregion
 
         #region Instructor
@@ -33,6 +34,7 @@ namespace ActiveLearning.Business.Interface
         Instructor AddInstructor(Instructor instructor, out string message);
         bool UpdateInstructor(Instructor instructor, out string message);
         bool DeleteInstructor(Instructor instructor, out string message);
+        bool DeleteInstructor(int instructorSid, out string message);
         #endregion
 
         #region Admin
@@ -42,6 +44,7 @@ namespace ActiveLearning.Business.Interface
         Admin AddAdmin(Admin admin, out string message);
         bool UpdateAdmin(Admin admin, out string message);
         bool DeleteAdmin(Admin admin, out string message);
+        bool DeleteAdmin(int adminSid, out string message);
         #endregion
     }
 }

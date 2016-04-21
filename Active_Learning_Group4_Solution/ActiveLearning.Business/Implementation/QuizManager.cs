@@ -18,6 +18,31 @@ namespace ActiveLearning.Business.Implementation
     {
         ActiveLearningContext db = new ActiveLearningContext();
 
+        public QuizQuestion GetQuizByQuizSid(int quizSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<QuizQuestion> GetQuizsByCourseSid(int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<QuizQuestion> GetQuizsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<int> GetQuizSidsByCourseSid(int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<int> GetQuizSidsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<QuizQuestion> NextQuestionAsync(int userId)
         {
 

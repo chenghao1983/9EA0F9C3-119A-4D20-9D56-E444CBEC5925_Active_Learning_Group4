@@ -373,6 +373,15 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
+        public bool DeleteStudent(int studentSid, out string message)
+        {
+            var student = GetStudentByStudentSid(studentSid, out message);
+            if (student == null)
+            {
+                return false;
+            }
+            return DeleteStudent(student, out message);
+        }
         #endregion
 
         #region Instructor
@@ -573,6 +582,15 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
+        public bool DeleteInstructor(int instructorSid, out string message)
+        {
+            var instructor = GetInstructorByInstructorSid(instructorSid, out message);
+            if (instructor == null)
+            {
+                return false;
+            }
+            return DeleteInstructor(instructorSid, out message);
+        }
         #endregion
 
         #region Admin
@@ -772,6 +790,15 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Admin_str + Constants.Contact_System_Admin;
                 return false;
             }
+        }
+        public bool DeleteAdmin(int adminSid, out string message)
+        {
+            var admin = GetAdminByAdminSid(adminSid, out message);
+            if (admin == null)
+            {
+                return false;
+            }
+            return DeleteAdmin(admin, out message);
         }
         #endregion
 
