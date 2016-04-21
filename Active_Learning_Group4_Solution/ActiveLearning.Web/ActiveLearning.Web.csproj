@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
@@ -268,6 +269,7 @@
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
