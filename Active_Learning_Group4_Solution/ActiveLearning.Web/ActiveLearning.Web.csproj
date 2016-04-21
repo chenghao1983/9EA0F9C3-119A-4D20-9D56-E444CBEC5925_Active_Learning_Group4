@@ -190,6 +190,7 @@
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
+    <Compile Include="Controllers\QuizStatisticsController.cs" />
     <Compile Include="Controllers\TestAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
@@ -269,6 +270,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Quiz\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\QuizStatistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
