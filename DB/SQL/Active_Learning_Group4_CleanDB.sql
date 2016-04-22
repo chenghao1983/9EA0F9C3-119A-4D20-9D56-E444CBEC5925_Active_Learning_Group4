@@ -571,8 +571,13 @@ INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (12, 'Agile Softwa
 GO
 
 SET IDENTITY_INSERT [dbo].[Course] OFF
-GO--------------------------Others---------------------- 
+GO
 
-DECLARE @DBVersion varchar(255)
-SET @DBVersion='Schema revision 1.4'
-update DBVersion set DBVersion = @DBVersion, CreateDT = '2016-04-19';
+--------------------------Others---------------------- 
+-- DB version --
+
+delete from DBVersion
+go
+
+insert into DBVersion ( DBVersion, CreateDT) values ('Schema revision 1.4.1', '2016-04-22')
+go

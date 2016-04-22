@@ -1,4 +1,7 @@
+-- DB version --
 
-DECLARE @DBVersion varchar(255)
-SET @DBVersion='Schema revision 1.4.1'
-update DBVersion set DBVersion = @DBVersion, CreateDT = '2016-04-22';
+delete from DBVersion
+go
+
+insert into DBVersion ( DBVersion, CreateDT) values ('Schema revision 1.4.1', '2016-04-22')
+go

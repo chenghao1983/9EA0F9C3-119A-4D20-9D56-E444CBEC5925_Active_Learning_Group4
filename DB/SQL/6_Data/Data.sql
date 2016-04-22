@@ -94,3 +94,4 @@ GO
 
 SET IDENTITY_INSERT [dbo].[Course] OFF
 GO
+
