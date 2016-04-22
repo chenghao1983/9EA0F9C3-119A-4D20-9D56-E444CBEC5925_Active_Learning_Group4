@@ -43,28 +43,24 @@ namespace ActiveLearning.Business.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task<QuizQuestion> NextQuestionAsync(int userId)
+        public async Task<QuizQuestion> NextQuestionAsync(int userId, int CourseSid)
         {
 
 
             var lastQuestionId = await db.QuizAnswers
-                .Where(a => a.StudentSid == userId)
+                .Where(a => a.StudentSid == userId  )
                 .GroupBy(a => a.QuizQuestionSid)
                 .Select(g => new { QuestionId = g.Key, Count = g.Count() })
                 .OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId })
                 .Select(q => q.QuestionId)
                 .FirstOrDefaultAsync();
 
-            var questionsCount = await db.QuizQuestions.CountAsync();
+            var questionsCount = await db.QuizQuestions.Where(x=> x.CourseSid == CourseSid).CountAsync();
 
             var nextQuestionId = (lastQuestionId % questionsCount) + 1;
 
-            //var p = db.TriviaQuestions.Include(e => e.TriviaOptions).FirstOrDefault(c => c.Id == nextQuestionId);
-
             return await db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
 
-
-            //return await db.TriviaQuestions.FindAsync(CancellationToken.None, nextQuestionId);
         }
 
         public async Task<bool> StoreAsync(QuizAnswer answer)

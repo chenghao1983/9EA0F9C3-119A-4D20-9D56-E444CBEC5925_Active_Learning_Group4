@@ -30,8 +30,9 @@ namespace ActiveLearning.Web.Controllers
             //var userId = User.Identity.Name;
 
             int userId = 1;
+            int courseID = 1;
 
-            QuizQuestion nextQuestion = await this.quizManager.NextQuestionAsync(userId);
+            QuizQuestion nextQuestion = await this.quizManager.NextQuestionAsync(userId, courseID);
 
             if (nextQuestion == null)
             {
