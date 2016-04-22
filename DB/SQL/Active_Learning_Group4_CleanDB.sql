@@ -264,7 +264,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuizOption]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[QuizOption](
-	[Sid] [int] NOT NULL,
+	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[QuizQuestionSid] [int] NOT NULL,
 	[Title] [nvarchar](max) NOT NULL,
 	[IsCorrect] [bit] NOT NULL,
@@ -477,11 +477,16 @@ GO
 --------------------------SP------------------------ 
 --------------------------Data---------------------- 
 ---  [dbo].[User]  --
-DELETE  from [dbo].[Admin]
-DELETE from [dbo].[Instructor]
+
 DELETE from [dbo].[Student]
+GO
+DELETE from [dbo].[Instructor]
+Go
+DELETE from [dbo].[Admin]
+GO
 DELETE FROM  [dbo].[User] 
 GO
+
 SET IDENTITY_INSERT [dbo].[User] ON 
 GO
 INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (1, N'Admin1', N'/pgdZNxfSu2XUHjBNgaB4PlwinBAUmTH', 'Super Admin', 1, CAST(N'2016-04-13 23:15:17.527' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'A',N'ZB/sYHfiuxnSFd/ZoMZMfNqAW+MpQu5x ')
@@ -534,8 +539,39 @@ GO
 SET IDENTITY_INSERT [dbo].[Student] OFF
 GO
 
+-- [dbo].[Course] --
 
---------------------------Others---------------------- 
+DELETE FROM [dbo].[Course]
+SET IDENTITY_INSERT [dbo].[Course] ON
+GO
+
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (1, 'Enterprise .NET - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (2, 'Object Oriented Software Development- SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (3, 'Project Initiation and Scope Management - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (4, 'Scope Management and Risk Management - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (5, 'Risk Management and Work Breakdown Structure - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (6, 'Object Oriented Software Development - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (7, 'Scheduling and Producing Project Plans - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (8, 'Advanced Project Estimation - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (9, 'Project Tracking and Control - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (10, 'People Management - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (11, 'Computational Intelligence - SE24', GETDATE())
+GO
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (12, 'Agile Software Project Management - SE24', GETDATE())
+GO
+
+SET IDENTITY_INSERT [dbo].[Course] OFF
+GO--------------------------Others---------------------- 
 
 DECLARE @DBVersion varchar(255)
 SET @DBVersion='Schema revision 1.4'

@@ -263,7 +263,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuizOption]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[QuizOption](
-	[Sid] [int] NOT NULL,
+	[Sid] [int] IDENTITY(1,1) NOT NULL,
 	[QuizQuestionSid] [int] NOT NULL,
 	[Title] [nvarchar](max) NOT NULL,
 	[IsCorrect] [bit] NOT NULL,
