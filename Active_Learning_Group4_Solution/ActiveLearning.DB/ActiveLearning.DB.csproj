@@ -112,9 +112,6 @@
     <Compile Include="Student_Course_Map.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>ActiveLearningModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>ActiveLearningModel.tt</DependentUpon>
     </Compile>
@@ -125,10 +122,8 @@
     <Compile Include="ViewModel\Instructor.cs" />
     <Compile Include="ViewModel\Instructor_Course_Map.cs" />
     <Compile Include="ViewModel\QuizAnswer.cs" />
-    <Compile Include="ViewModel\Quiz.cs" />
     <Compile Include="ViewModel\QuizOption.cs" />
     <Compile Include="ViewModel\QuizQuestion.cs" />
-    <Compile Include="ViewModel\Quiz_Course_Map.cs" />
     <Compile Include="ViewModel\Student.cs" />
     <Compile Include="ViewModel\Student_Course_Map.cs" />
     <Compile Include="ViewModel\User.cs" />

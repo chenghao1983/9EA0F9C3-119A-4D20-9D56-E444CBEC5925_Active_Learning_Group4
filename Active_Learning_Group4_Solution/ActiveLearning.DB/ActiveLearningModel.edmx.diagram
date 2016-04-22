@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cc31c89f142545a78bd4384bd8709c07" Name="Diagram1">
+      <Diagram DiagramId="d42de952612b462599547a37dc43fc1f" Name="Diagram1">
         <EntityTypeShape EntityType="ActiveLearning.DB.Admin" Width="1.5" PointX="3.75" PointY="20.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Chat" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Content" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="ActiveLearning.DB.QuizQuestion" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Student" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.Student_Course_Map" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ActiveLearning.DB.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ActiveLearning.DB.User" Width="1.5" PointX="1.5" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="ActiveLearning.DB.FK_Admin_User" ManuallyRouted="false" />
         <AssociationConnector Association="ActiveLearning.DB.FK_Chat_Course" ManuallyRouted="false" />

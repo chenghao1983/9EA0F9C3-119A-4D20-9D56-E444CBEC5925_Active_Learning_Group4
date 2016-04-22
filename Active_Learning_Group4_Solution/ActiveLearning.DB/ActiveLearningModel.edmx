@@ -83,7 +83,7 @@
             <PropertyRef Name="Sid" />
             <PropertyRef Name="QuizQuestionSid" />
           </Key>
-          <Property Name="Sid" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuizQuestionSid" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsCorrect" Type="bit" Nullable="false" />
@@ -118,16 +118,6 @@
           <Property Name="StudentSid" Type="int" Nullable="false" />
           <Property Name="CourseSid" Type="int" Nullable="false" />
           <Property Name="CreateDT" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -338,7 +328,6 @@
           <EntitySet Name="QuizQuestion" EntityType="Self.QuizQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student_Course_Map" EntityType="Self.Student_Course_Map" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
             <End Role="User" EntitySet="User" />
@@ -501,7 +490,7 @@
             <PropertyRef Name="Sid" />
             <PropertyRef Name="QuizQuestionSid" />
           </Key>
-          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuizQuestionSid" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
@@ -546,16 +535,6 @@
           <Property Name="CreateDT" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Student_Course_Map_Course" FromRole="Student_Course_Map" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_Course_Map_Student" FromRole="Student_Course_Map" ToRole="Student" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -769,7 +748,6 @@
           <EntitySet Name="QuizQuestions" EntityType="Self.QuizQuestion" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Student_Course_Map" EntityType="Self.Student_Course_Map" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
             <End Role="User" EntitySet="Users" />
@@ -959,17 +937,6 @@
                 <ScalarProperty Name="StudentSid" ColumnName="StudentSid" />
                 <ScalarProperty Name="CourseSid" ColumnName="CourseSid" />
                 <ScalarProperty Name="CreateDT" ColumnName="CreateDT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ActiveLearning.DB.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
