@@ -242,7 +242,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -260,7 +260,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return allStudents.Where(s => s.User.IsActive);
+            return allStudents.Where(s => s.User.IsActive).ToList();
         }
         /*
          *Will check username
@@ -551,7 +551,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -853,7 +853,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)

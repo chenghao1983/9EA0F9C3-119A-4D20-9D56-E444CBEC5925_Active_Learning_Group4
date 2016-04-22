@@ -57,7 +57,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return chats;
+                    return chats.ToList();
                 }
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return chats.Select(c => c.Sid);
+            return chats.Select(c => c.Sid).ToList();
         }
         public IEnumerable<Chat> GetChatsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message)
         {
@@ -92,7 +92,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return chats;
+                    return chats.ToList();
                 }
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return chats.Select(c => c.Sid);
+            return chats.Select(c => c.Sid).ToList();
         }
         public IEnumerable<Chat> GetChatsByInstructorSidAndCourseSid(int instructorSid, int courseSid, out string message)
         {
@@ -127,7 +127,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return chats;
+                    return chats.ToList();
                 }
             }
             catch (Exception ex)
@@ -145,7 +145,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return chats.Select(c => c.Sid);
+            return chats.Select(c => c.Sid).ToList();
         }
         public Chat AddStudentChatToCourse(Chat chat, int studentSid, int courseSid, out string message)
         {

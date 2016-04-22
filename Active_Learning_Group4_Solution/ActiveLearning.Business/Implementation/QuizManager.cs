@@ -17,7 +17,27 @@ namespace ActiveLearning.Business.Implementation
     public class QuizManager : BaseManager, IQuizManager
     {
         ActiveLearningContext db = new ActiveLearningContext();
-       public bool QuizQuestionTitleExists(string quizTitle, out string message) { throw new NotImplementedException(); }
+
+        #region Normal
+        public bool QuizQuestionTitleExists(string quizTitle, out string message)
+        {
+            if (string.IsNullOrEmpty(quizTitle))
+            {
+                message = Constants.Empty + Constants.QuizTitle;
+                return true;
+            }
+            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+            {
+                var quizQuestion = unitOfWork.QuizQuestions.Find(q => q.Title.Equals(quizTitle, StringComparison.CurrentCultureIgnoreCase) && !q.DeleteDT.HasValue).FirstOrDefault();
+                if (quizQuestion != null)
+                {
+                    message = quizTitle + Constants.Already_Exists;
+                    return true;
+                }
+            }
+            message = string.Empty;
+            return false;
+        }
         public QuizQuestion GetQuizQuestionByQuizQuestionSid(int quizQuestionSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<QuizQuestion> GetActiveQuizQuestionsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
         public IEnumerable<int> GetActiveQuizQuestionSidsByCourseSid(int courseSid, out string message) { throw new NotImplementedException(); }
@@ -41,19 +61,20 @@ namespace ActiveLearning.Business.Implementation
         public bool UpdateQuizAnswer(QuizAnswer quizAnswer, out string message) { throw new NotImplementedException(); }
         public bool DeleteQuizAnswer(QuizAnswer quizAnswer, out string message) { throw new NotImplementedException(); }
         public bool DeleteQuizAnswer(int quizAnswerSid, out string message) { throw new NotImplementedException(); }
+        #endregion
+
+        #region Async
         public async Task<QuizQuestion> NextQuestionAsync(int userId, int CourseSid)
         {
-
-
             var lastQuestionId = await db.QuizAnswers
-                .Where(a => a.StudentSid == userId  )
+                .Where(a => a.StudentSid == userId)
                 .GroupBy(a => a.QuizQuestionSid)
                 .Select(g => new { QuestionId = g.Key, Count = g.Count() })
                 .OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId })
                 .Select(q => q.QuestionId)
                 .FirstOrDefaultAsync();
 
-            var questionsCount = await db.QuizQuestions.Where(x=> x.CourseSid == CourseSid).CountAsync();
+            var questionsCount = await db.QuizQuestions.Where(x => x.CourseSid == CourseSid).CountAsync();
 
             var nextQuestionId = (lastQuestionId % questionsCount) + 1;
 
@@ -71,10 +92,10 @@ namespace ActiveLearning.Business.Implementation
 
             return selectedOption.IsCorrect;
         }
-
         public Task<QuizQuestion> NextQuestionAsync(int userId)
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

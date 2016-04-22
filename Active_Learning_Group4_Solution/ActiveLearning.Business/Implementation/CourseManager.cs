@@ -77,7 +77,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return Course;
+                    return Course.ToList();
                 }
             }
             catch (Exception ex)
@@ -232,7 +232,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -250,7 +250,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledStudents.Select(s => s.Sid);
+            return enrolledStudents.Select(s => s.Sid).ToList();
         }
         public IEnumerable<int> GetEnrolledStudentUserSidsByCourseSid(int courseSid, out string message)
         {
@@ -260,7 +260,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledStudents.Select(s => s.User.Sid);
+            return enrolledStudents.Select(s => s.User.Sid).ToList();
 
         }
         public IEnumerable<Student> GetNonEnrolledStudentsByCourseSid(int courseSid, out string message)
@@ -303,7 +303,7 @@ namespace ActiveLearning.Business.Implementation
                             else
                             {
                                 message = string.Empty;
-                                return list;
+                                return list.ToList();
                             }
                         }
                     }
@@ -324,7 +324,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledStudents.Select(s => s.Sid);
+            return nonEnrolledStudents.Select(s => s.Sid).ToList();
         }
         public IEnumerable<int> GetNonEnrolledStudentUserSidsByCourseSid(int courseSid, out string message)
         {
@@ -334,7 +334,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledStudents.Select(s => s.User.Sid);
+            return nonEnrolledStudents.Select(s => s.User.Sid).ToList();
 
         }
         public IEnumerable<Course> GetEnrolledCoursesByStudentSid(int studentSid, out string message)
@@ -367,7 +367,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -385,7 +385,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledCourses.Select(c => c.Sid);
+            return enrolledCourses.Select(c => c.Sid).ToList();
         }
         public IEnumerable<Course> GetNonEnrolledCoursesByStudentSid(int studentSid, out string message)
         {
@@ -406,7 +406,7 @@ namespace ActiveLearning.Business.Implementation
                     if (enrolledCourses == null || enrolledCourses.Count() == 0)
                     {
                         message = string.Empty;
-                        return allCourses;
+                        return allCourses.ToList();
                     }
                     if (enrolledCourses.Count() == allCourses.Count())
                     {
@@ -424,7 +424,7 @@ namespace ActiveLearning.Business.Implementation
                         else
                         {
                             message = string.Empty;
-                            return list;
+                            return list.ToList();
                         }
                     }
                 }
@@ -444,7 +444,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledCourse.Select(e => e.Sid);
+            return nonEnrolledCourse.Select(e => e.Sid).ToList();
         }
         public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message)
         {
@@ -577,7 +577,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -595,7 +595,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledInstructors.Select(i => i.Sid);
+            return enrolledInstructors.Select(i => i.Sid).ToList();
         }
         public IEnumerable<int> GetEnrolledInstructorUserSidsByCourseSid(int courseSid, out string message)
         {
@@ -605,7 +605,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledInstructors.Select(i => i.User.Sid);
+            return enrolledInstructors.Select(i => i.User.Sid).ToList();
         }
         public IEnumerable<Instructor> GetNonEnrolledInstructorsByCourseSid(int courseSid, out string message)
         {
@@ -629,7 +629,7 @@ namespace ActiveLearning.Business.Implementation
                         if (enrolledInstructors == null || enrolledInstructors.Count() == 0)
                         {
                             message = string.Empty;
-                            return allActiveInstructors;
+                            return allActiveInstructors.ToList();
                         }
                         if (enrolledInstructors.Count() == allActiveInstructors.Count())
                         {
@@ -647,7 +647,7 @@ namespace ActiveLearning.Business.Implementation
                             else
                             {
                                 message = string.Empty;
-                                return list;
+                                return list.ToList();
                             }
                         }
                     }
@@ -668,7 +668,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledInstructors.Select(i => i.Sid);
+            return nonEnrolledInstructors.Select(i => i.Sid).ToList();
         }
         public IEnumerable<int> GetNonEnrolledInstructorUserSidsByCourseSid(int courseSid, out string message)
         {
@@ -678,7 +678,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledInstructors.Select(i => i.User.Sid);
+            return nonEnrolledInstructors.Select(i => i.User.Sid).ToList();
         }
         public IEnumerable<Course> GetEnrolledCoursesByInstructorSid(int InstructorSid, out string message)
         {
@@ -710,7 +710,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return list;
+                    return list.ToList();
                 }
             }
             catch (Exception ex)
@@ -728,7 +728,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return enrolledCourses.Select(c => c.Sid);
+            return enrolledCourses.Select(c => c.Sid).ToList();
         }
         public IEnumerable<Course> GetNonEnrolledCoursesByInstructorSid(int InstructorSid, out string message)
         {
@@ -749,7 +749,7 @@ namespace ActiveLearning.Business.Implementation
                     if (enrolledCourses == null || enrolledCourses.Count() == 0)
                     {
                         message = string.Empty;
-                        return allCourses;
+                        return allCourses.ToList();
                     }
                     if (enrolledCourses.Count() == allCourses.Count())
                     {
@@ -767,7 +767,7 @@ namespace ActiveLearning.Business.Implementation
                         else
                         {
                             message = string.Empty;
-                            return list;
+                            return list.ToList();
                         }
                     }
                 }
@@ -787,7 +787,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             message = string.Empty;
-            return nonEnrolledCourse.Select(e => e.Sid);
+            return nonEnrolledCourse.Select(e => e.Sid).ToList();
         }
         public bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message)
         {
