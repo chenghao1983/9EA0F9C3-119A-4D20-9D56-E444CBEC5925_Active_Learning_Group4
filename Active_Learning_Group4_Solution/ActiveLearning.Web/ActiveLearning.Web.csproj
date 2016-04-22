@@ -188,9 +188,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
     <Compile Include="Controllers\QuizStatisticsController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TestAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
@@ -272,14 +274,20 @@
     <Content Include="Views\Quiz\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\QuizStatistics\Index.cshtml" />
+    <Content Include="Views\Admin\CreateStudent.cshtml" />
+    <Content Include="Views\Admin\DeleteStudent.cshtml" />
+    <Content Include="Views\Admin\EditStudent.cshtml" />
+    <Content Include="Views\Admin\ManageStudent.cshtml" />
+    <Content Include="Views\Instructor\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginInstructorPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginStudentPartial.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Log\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Course\" />
-    <Folder Include="Views\Instructor\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -31,8 +31,8 @@ namespace ActiveLearning.Web.Controllers
             using (var courseManager = new CourseManager())
             {
 
-                List<Course> listCourse = (List<Course>)courseManager.GetAllCourses(out message);
-                if (listCourse == null || listCourse.Count == 0)
+                var listCourse = courseManager.GetAllCourses(out message);
+                if (listCourse == null || listCourse.Count() == 0)
                 {
                     ViewBag.Message = "The List is empty !";
                 }
