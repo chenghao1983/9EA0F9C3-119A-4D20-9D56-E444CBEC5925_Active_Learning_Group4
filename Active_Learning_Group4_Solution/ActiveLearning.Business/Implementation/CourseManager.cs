@@ -22,7 +22,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (string.IsNullOrEmpty(courseName))
             {
-                message = Constants.Empty + Constants.CourseName_str;
+                message = Constants.Empty + Constants.CourseName;
                 return true;
             }
             using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -48,7 +48,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (Course == null)
                     {
-                        message = Constants.Course_str + Constants.Not_Found;
+                        message = Constants.Course + Constants.Not_Found;
                         return null;
                     }
                     message = string.Empty;
@@ -58,11 +58,10 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Course_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Course + Constants.Contact_System_Admin;
                 return null;
             }
         }
-
         public IEnumerable<Course> GetAllCourses(out string message)
         {
             message = string.Empty;
@@ -74,7 +73,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (Course == null || Course.Count() == 0)
                     {
-                        message = Constants.Course_str + Constants.Not_Found;
+                        message = Constants.Course + Constants.Not_Found;
                         return null;
                     }
                     message = string.Empty;
@@ -84,7 +83,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Course_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Course + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -93,7 +92,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (course == null)
             {
-                message = Constants.Empty + Constants.Course_str;
+                message = Constants.Empty + Constants.Course;
                 return null;
             }
             if (CourseNameExists(course.CourseName, out message))
@@ -118,7 +117,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Course_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Course + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -127,7 +126,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (course == null)
             {
-                message = Constants.Empty + Constants.Course_str;
+                message = Constants.Empty + Constants.Course;
                 return false;
             }
             try
@@ -148,7 +147,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Course_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Course + Constants.Contact_System_Admin;
                 return false;
             }
         }
@@ -156,7 +155,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (course == null || course.Sid == 0)
             {
-                message = Constants.Empty + Constants.Course_str;
+                message = Constants.Empty + Constants.Course;
                 return false;
             }
             return DeleteCourse(course.Sid, out message);
@@ -166,7 +165,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (courseSid == 0)
             {
-                message = Constants.Empty + Constants.Course_str;
+                message = Constants.Empty + Constants.Course;
                 return false;
             }
             var course = GetCourseByCourseSid(courseSid, out message);
@@ -193,7 +192,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Course_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Course + Constants.Contact_System_Admin;
                 return false;
             }
         }
@@ -211,7 +210,7 @@ namespace ActiveLearning.Business.Implementation
                     var student_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.CourseSid == courseSid);
                     if (student_Course_Map == null || student_Course_Map.Count() == 0)
                     {
-                        message = Constants.No + Constants.EnrolledStudent_str;
+                        message = Constants.No + Constants.EnrolledStudent;
                         return null;
                     }
                     foreach (var map in student_Course_Map)
@@ -229,7 +228,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.EnrolledStudent_str;
+                        message = Constants.No + Constants.EnrolledStudent;
                         return null;
                     }
                     message = string.Empty;
@@ -239,7 +238,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledStudent_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledStudent + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -278,7 +277,7 @@ namespace ActiveLearning.Business.Implementation
 
                         if (allActiveStudents == null || allActiveStudents.Count() == 0)
                         {
-                            message = Constants.No + Constants.Student_str;
+                            message = Constants.No + Constants.Student;
                             return null;
                         }
 
@@ -290,7 +289,7 @@ namespace ActiveLearning.Business.Implementation
                         }
                         if (enrolledStudents.Count() == allActiveStudents.Count())
                         {
-                            message = Constants.No + Constants.NonEnrolledStudent_str;
+                            message = Constants.No + Constants.NonEnrolledStudent;
                             return null;
                         }
                         else
@@ -298,7 +297,7 @@ namespace ActiveLearning.Business.Implementation
                             list = allActiveStudents.SkipWhile(a => enrolledStudents.Select(e => e.Sid).Contains(a.Sid));
                             if (list == null || list.Count() == 0)
                             {
-                                message = Constants.No + Constants.NonEnrolledStudent_str;
+                                message = Constants.No + Constants.NonEnrolledStudent;
                                 return null;
                             }
                             else
@@ -313,7 +312,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledStudent_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledStudent + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -349,7 +348,7 @@ namespace ActiveLearning.Business.Implementation
                     var students_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.StudentSid == studentSid);
                     if (students_Course_Map == null || students_Course_Map.Count() == 0)
                     {
-                        message = Constants.No + Constants.EnrolledCourse_str;
+                        message = Constants.No + Constants.EnrolledCourse;
                         return null;
                     }
                     foreach (var map in students_Course_Map)
@@ -364,7 +363,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.EnrolledCourse_str;
+                        message = Constants.No + Constants.EnrolledCourse;
                         return null;
                     }
                     message = string.Empty;
@@ -374,7 +373,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledCourse_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledCourse + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -399,7 +398,7 @@ namespace ActiveLearning.Business.Implementation
                     var allCourses = GetAllCourses(out message);
                     if (allCourses == null || allCourses.Count() == 0)
                     {
-                        message = Constants.No + Constants.Course_str;
+                        message = Constants.No + Constants.Course;
                         return null;
                     }
 
@@ -411,7 +410,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (enrolledCourses.Count() == allCourses.Count())
                     {
-                        message = Constants.No + Constants.NonEnrolledCourse_str;
+                        message = Constants.No + Constants.NonEnrolledCourse;
                         return null;
                     }
                     else
@@ -419,7 +418,7 @@ namespace ActiveLearning.Business.Implementation
                         list = allCourses.SkipWhile(a => enrolledCourses.Select(e => e.Sid).Contains(a.Sid));
                         if (list == null || list.Count() == 0)
                         {
-                            message = Constants.No + Constants.NonEnrolledCourse_str;
+                            message = Constants.No + Constants.NonEnrolledCourse;
                             return null;
                         }
                         else
@@ -433,7 +432,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledCourse_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledCourse + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -447,27 +446,36 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             return nonEnrolledCourse.Select(e => e.Sid);
         }
-        //public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message)
-        //{
-        //throw new NotImplementedException();
-        //}
-        //public bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courseSid, out string message)
-        //{
-        //throw new NotImplementedException();
-        //}
-        //public bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message)
-        //{
-        //throw new NotImplementedException();
-        //}
-        //public bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message)
-        //{
-        //throw new NotImplementedException();
-        //}
+        public bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message)
+        {
+            return UpdateStudentsCourseEnrolment(students, courseSid, out message);
+        }
+
+        public bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courseSid, out string message)
+        {
+            return UpdateStudentsCourseEnrolment(studentSids, courseSid, out message);
+        }
+
+        public bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message)
+        {
+            return UpdateStudentsCourseEnrolment(students, courseSid, out message);
+        }
+
+        public bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message)
+        {
+            return UpdateStudentsCourseEnrolment(studentSids, courseSid, out message);
+        }
+
         public bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message)
         {
             if (students == null || students.Count() == 0)
             {
-                message = Constants.Empty + Constants.Student_str;
+                message = Constants.Empty + Constants.Student;
+                return false;
+            }
+            if (courseSid == 0)
+            {
+                message = Constants.Empty + Constants.Course;
                 return false;
             }
             return UpdateStudentsCourseEnrolment(students.Select(s => s.Sid), courseSid, out message);
@@ -476,7 +484,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (studentSids == null || studentSids.Count() == 0)
             {
-                message = Constants.Empty + Constants.Student_str;
+                message = Constants.Empty + Constants.Student;
                 return false;
             }
 
@@ -507,11 +515,17 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        foreach (int sid in studentSidsToEnrol)
+                        if (studentSidsToEnrol != null)
                         {
-                            unitOfWork.Student_Course_Maps.Add(new Student_Course_Map() { StudentSid = sid, CourseSid = courseSid, CreateDT = DateTime.Now });
+                            foreach (int sid in studentSidsToEnrol)
+                            {
+                                unitOfWork.Student_Course_Maps.Add(new Student_Course_Map() { StudentSid = sid, CourseSid = courseSid, CreateDT = DateTime.Now });
+                            }
                         }
-                        unitOfWork.Student_Course_Maps.RemoveRange(unitOfWork.Student_Course_Maps.Find(m => studentSidsToRemove.Contains(m.StudentSid) && m.CourseSid == courseSid));
+                        if (studentSidsToRemove != null)
+                        {
+                            unitOfWork.Student_Course_Maps.RemoveRange(unitOfWork.Student_Course_Maps.Find(m => studentSidsToRemove.Contains(m.StudentSid) && m.CourseSid == courseSid));
+                        }
                         unitOfWork.Complete();
                         scope.Complete();
 
@@ -541,7 +555,7 @@ namespace ActiveLearning.Business.Implementation
                     var instructor_Course_Map = unitOfWork.Instructor_Course_Maps.Find(m => m.CourseSid == courseSid);
                     if (instructor_Course_Map == null || instructor_Course_Map.Count() == 0)
                     {
-                        message = Constants.No + Constants.EnrolledInstructor_str;
+                        message = Constants.No + Constants.EnrolledInstructor;
                         return null;
                     }
                     foreach (var map in instructor_Course_Map)
@@ -559,7 +573,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.EnrolledInstructor_str;
+                        message = Constants.No + Constants.EnrolledInstructor;
                         return null;
                     }
                     message = string.Empty;
@@ -569,7 +583,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledInstructor_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledInstructor + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -607,7 +621,7 @@ namespace ActiveLearning.Business.Implementation
 
                         if (allActiveInstructors == null || allActiveInstructors.Count() == 0)
                         {
-                            message = Constants.No + Constants.Instructor_str;
+                            message = Constants.No + Constants.Instructor;
                             return null;
                         }
 
@@ -619,7 +633,7 @@ namespace ActiveLearning.Business.Implementation
                         }
                         if (enrolledInstructors.Count() == allActiveInstructors.Count())
                         {
-                            message = Constants.No + Constants.NonEnrolledInstructor_str;
+                            message = Constants.No + Constants.NonEnrolledInstructor;
                             return null;
                         }
                         else
@@ -627,7 +641,7 @@ namespace ActiveLearning.Business.Implementation
                             list = allActiveInstructors.SkipWhile(a => enrolledInstructors.Select(e => e.Sid).Contains(a.Sid));
                             if (list == null || list.Count() == 0)
                             {
-                                message = Constants.No + Constants.NonEnrolledInstructor_str;
+                                message = Constants.No + Constants.NonEnrolledInstructor;
                                 return null;
                             }
                             else
@@ -642,7 +656,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledInstructor_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledInstructor + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -677,7 +691,7 @@ namespace ActiveLearning.Business.Implementation
                     var Instructors_Course_Map = unitOfWork.Instructor_Course_Maps.Find(m => m.InstructorSid == InstructorSid);
                     if (Instructors_Course_Map == null || Instructors_Course_Map.Count() == 0)
                     {
-                        message = Constants.No + Constants.EnrolledCourse_str;
+                        message = Constants.No + Constants.EnrolledCourse;
                         return null;
                     }
                     foreach (var map in Instructors_Course_Map)
@@ -692,7 +706,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.EnrolledCourse_str;
+                        message = Constants.No + Constants.EnrolledCourse;
                         return null;
                     }
                     message = string.Empty;
@@ -702,7 +716,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledCourse_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.EnrolledCourse + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -727,7 +741,7 @@ namespace ActiveLearning.Business.Implementation
                     var allCourses = GetAllCourses(out message);
                     if (allCourses == null || allCourses.Count() == 0)
                     {
-                        message = Constants.No + Constants.Course_str;
+                        message = Constants.No + Constants.Course;
                         return null;
                     }
 
@@ -739,7 +753,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (enrolledCourses.Count() == allCourses.Count())
                     {
-                        message = Constants.No + Constants.NonEnrolledCourse_str;
+                        message = Constants.No + Constants.NonEnrolledCourse;
                         return null;
                     }
                     else
@@ -747,7 +761,7 @@ namespace ActiveLearning.Business.Implementation
                         list = allCourses.SkipWhile(a => enrolledCourses.Select(e => e.Sid).Contains(a.Sid));
                         if (list == null || list.Count() == 0)
                         {
-                            message = Constants.No + Constants.NonEnrolledCourse_str;
+                            message = Constants.No + Constants.NonEnrolledCourse;
                             return null;
                         }
                         else
@@ -761,7 +775,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledCourse_str + Constants.Contact_System_Admin;
+                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.NonEnrolledCourse + Constants.Contact_System_Admin;
                 return null;
             }
         }
@@ -775,15 +789,27 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             return nonEnrolledCourse.Select(e => e.Sid);
         }
-        //public bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courSid, out string message) { throw new NotImplementedException(); }
-        //public bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courSid, out string message) { throw new NotImplementedException(); }
-        //public bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message) { throw new NotImplementedException(); }
-        //public bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message) { throw new NotImplementedException(); }
+        public bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message)
+        {
+            return UpdateInstructorsCourseEnrolment(Instructors, courseSid, out message);
+        }
+        public bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courseSid, out string message)
+        {
+            return UpdateInstructorsCourseEnrolment(InstructorSids, courseSid, out message);
+        }
+        public bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message)
+        {
+            return UpdateInstructorsCourseEnrolment(Instructors, courseSid, out message);
+        }
+        public bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message)
+        {
+            return UpdateInstructorsCourseEnrolment(InstructorSids, courseSid, out message);
+        }
         public bool UpdateInstructorsCourseEnrolment(IEnumerable<Instructor> Instructors, int courseSid, out string message)
         {
             if (Instructors == null || Instructors.Count() == 0)
             {
-                message = Constants.Empty + Constants.Instructor_str;
+                message = Constants.Empty + Constants.Instructor;
                 return false;
             }
             return UpdateInstructorsCourseEnrolment(Instructors.Select(i => i.Sid), courseSid, out message);
@@ -792,7 +818,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (InstructorSids == null || InstructorSids.Count() == 0)
             {
-                message = Constants.Empty + Constants.Instructor_str;
+                message = Constants.Empty + Constants.Instructor;
                 return false;
             }
 
@@ -823,11 +849,17 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        foreach (int sid in InstructorSidsToEnrol)
+                        if (InstructorSidsToEnrol != null)
                         {
-                            unitOfWork.Instructor_Course_Maps.Add(new Instructor_Course_Map() { InstructorSid = sid, CourseSid = courseSid, CreateDT = DateTime.Now });
+                            foreach (int sid in InstructorSidsToEnrol)
+                            {
+                                unitOfWork.Instructor_Course_Maps.Add(new Instructor_Course_Map() { InstructorSid = sid, CourseSid = courseSid, CreateDT = DateTime.Now });
+                            }
                         }
-                        unitOfWork.Instructor_Course_Maps.RemoveRange(unitOfWork.Instructor_Course_Maps.Find(m => InstructorSidsToRemove.Contains(m.InstructorSid) && m.CourseSid == courseSid));
+                        if (InstructorSidsToRemove != null)
+                        {
+                            unitOfWork.Instructor_Course_Maps.RemoveRange(unitOfWork.Instructor_Course_Maps.Find(m => InstructorSidsToRemove.Contains(m.InstructorSid) && m.CourseSid == courseSid));
+                        }
                         unitOfWork.Complete();
                         scope.Complete();
 

@@ -20,24 +20,26 @@ namespace ActiveLearning.Business.Common
         #endregion
 
         #region Error Message
-        public const string User_str = "User";
-        public const string Student_str = "Student";
-        public const string EnrolledStudent_str = "Enrolled Student";
-        public const string NonEnrolledStudent_str = "Non Enrolled Student";
-        public const string Instructor_str = "Instructor";
-        public const string EnrolledInstructor_str = "Enrolled Instructor";
-        public const string NonEnrolledInstructor_str = "Non Enrolled Instructor";
+        public const string User = "User";
+        public const string Student = "Student";
+        public const string EnrolledStudent = "Enrolled Student";
+        public const string NonEnrolledStudent = "Non Enrolled Student";
+        public const string Instructor = "Instructor";
+        public const string EnrolledInstructor = "Enrolled Instructor";
+        public const string NonEnrolledInstructor = "Non Enrolled Instructor";
         public const string Student_Course_Enrolment = "Student Course Enrolment ";
         public const string Instructor_Course_Enrolment = "Instructor Course Enrolment ";
 
-        public const string Admin_str = "Admin";
-        public const string UserName_str = "User Name";
-        public const string Password_str = "Password";
-        public const string Course_str = "Course";
-        public const string CourseName_str = "Course Name";
-        public const string EnrolledCourse_str = "Enrolled Course";
-        public const string NonEnrolledCourse_str = "Non Enrolled Course";
-        public const string Chat_str = "Chat";
+        public const string Admin = "Admin";
+        public const string UserName = "User Name";
+        public const string Password = "Password";
+        public const string Course = "Course";
+        public const string CourseName = "Course Name";
+        public const string EnrolledCourse = "Enrolled Course";
+        public const string NonEnrolledCourse = "Non Enrolled Course";
+        public const string Chat = "Chat";
+        public const string Quiz = "Quiz";
+        public const string QuizTitle = "Quiz Title";
 
         public const string Operation_Failed_Duing = "Operation failed during ";
         public const string Contact_System_Admin = ". Please contact system admin";

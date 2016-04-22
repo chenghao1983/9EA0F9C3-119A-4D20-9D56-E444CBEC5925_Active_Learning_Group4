@@ -30,10 +30,10 @@ namespace ActiveLearning.Business.Interface
         IEnumerable<int> GetEnrolledCourseSidsByStudentSid(int studentSid, out string message);
         IEnumerable<Course> GetNonEnrolledCoursesByStudentSid(int studentSid, out string message);
         IEnumerable<int> GetNonEnrolledCourseSidsByStudentSid(int studentSid, out string message);
-        //bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message);
-        //bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courseSid, out string message);
-        //bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message);
-        //bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message);
+        bool EnrolStudentsToCourse(IEnumerable<Student> students, int courseSid, out string message);
+        bool EnrolStudentsToCourse(IEnumerable<int> studentSids, int courseSid, out string message);
+        bool RemoveStudentsFromCourse(IEnumerable<Student> students, int courseSid, out string message);
+        bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message);
         bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message);
         bool UpdateStudentsCourseEnrolment(IEnumerable<int> studentSids, int courseSid, out string message);
         #endregion
@@ -49,10 +49,10 @@ namespace ActiveLearning.Business.Interface
         IEnumerable<int> GetEnrolledCourseSidsByInstructorSid(int InstructorSid, out string message);
         IEnumerable<Course> GetNonEnrolledCoursesByInstructorSid(int InstructorSid, out string message);
         IEnumerable<int> GetNonEnrolledCourseSidsByInstructorSid(int InstructorSid, out string message);
-        //bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message);
-        //bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courseSid, out string message);
-        //bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message);
-        //bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message);
+        bool EnrolInstructorsToCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message);
+        bool EnrolInstructorsToCourse(IEnumerable<int> InstructorSids, int courseSid, out string message);
+        bool RemoveInstructorsFromCourse(IEnumerable<Instructor> Instructors, int courseSid, out string message);
+        bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message);
         bool UpdateInstructorsCourseEnrolment(IEnumerable<Instructor> Instructors, int courseSid, out string message);
         bool UpdateInstructorsCourseEnrolment(IEnumerable<int> InstructorSids, int courseSid, out string message);
         #endregion
