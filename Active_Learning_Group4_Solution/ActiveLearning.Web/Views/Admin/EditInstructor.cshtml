@@ -1,16 +1,17 @@
-﻿@model ActiveLearning.DB.Student
+﻿@model ActiveLearning.DB.Instructor
 
 @{
-    ViewBag.Title = "EditStudent";
+    ViewBag.Title = "EditInstructor";
 }
 
-<h2>Edit Student</h2>
+<h2>Edit Instructor</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4>Instructor</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Sid)
@@ -26,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,10 +41,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BatchNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BatchNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BatchNo, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Qualification, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -56,5 +57,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "ManageStudent")
+    @Html.ActionLink("Back to List", "ManageInstructor")
 </div>

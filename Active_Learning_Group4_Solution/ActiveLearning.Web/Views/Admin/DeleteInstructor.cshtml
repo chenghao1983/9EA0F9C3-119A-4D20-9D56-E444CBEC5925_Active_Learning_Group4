@@ -1,22 +1,22 @@
-﻿@model ActiveLearning.DB.Student
+﻿@model ActiveLearning.DB.Instructor
 
 @{
-    ViewBag.Title = "DeleteStudent";
+    ViewBag.Title = "DeleteInstructor";
 }
 
-<h2>Delete Student</h2>
+<h2>Delete Instructor</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Student</h4>
+    <h4>Instructor</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.BatchNo)
+            @Html.DisplayNameFor(model => model.Qualification)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BatchNo)
+            @Html.DisplayFor(model => model.Qualification)
         </dd>
 
         <dt>
@@ -27,14 +27,6 @@
             @Html.DisplayFor(model => model.User.Username)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {
@@ -42,7 +34,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "ManageStudent")
+            @Html.ActionLink("Back to List", "ManageInstructor")
         </div>
     }
 </div>

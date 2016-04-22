@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ActiveLearning.DB.Course>
+
+@{
+    ViewBag.Title = "ManageCourse";
+}
+
+<h2>Manage Course</h2>
+
+<p>
+    @Html.ActionLink("Create New Course", "CreateCourse")
+</p>
+<table class="table">
+    @if (Model == null)
+    {
+        <div>There is no record here.</div>
+    }
+    else
+    {
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeleteDT)
+            </th>
+            <th></th>
+        </tr>
+
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeleteDT)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Sid }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Sid }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Sid })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
