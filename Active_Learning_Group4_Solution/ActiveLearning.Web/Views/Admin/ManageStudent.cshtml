@@ -51,7 +51,7 @@
                 <td>
                     @Html.ActionLink("Edit", "EditStudent", new { id = item.Sid }) |
                     @Html.ActionLink("Details", "StudentDetails", new { id = item.Sid }) |
-                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Sid })
+                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Sid })|
                     @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateStudent" : "ActivateStudent", new { id = item.Sid })
                 </td>
             </tr>
