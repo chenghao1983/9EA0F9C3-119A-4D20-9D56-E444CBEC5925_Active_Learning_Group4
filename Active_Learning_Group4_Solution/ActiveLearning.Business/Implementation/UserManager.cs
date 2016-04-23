@@ -328,7 +328,9 @@ namespace ActiveLearning.Business.Implementation
                     {
                         student.User.UpdateDT = DateTime.Now;
                         Util.CopyNonNullProperty(student, unitOfWork.Students.Get(student.Sid));
-                        Util.CopyNonNullProperty(student.User, unitOfWork.Users.Get(student.User.Sid));
+                        var userToUpdate = unitOfWork.Users.Get(student.User.Sid);
+                        Util.CopyNonNullProperty(student.User, userToUpdate);
+                        userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -627,7 +629,9 @@ namespace ActiveLearning.Business.Implementation
                     {
                         instructor.User.UpdateDT = DateTime.Now;
                         Util.CopyNonNullProperty(instructor, unitOfWork.Instructors.Get(instructor.Sid));
-                        Util.CopyNonNullProperty(instructor.User, unitOfWork.Users.Get(instructor.User.Sid));
+                        var instructorToUpdate = unitOfWork.Users.Get(instructor.User.Sid);
+                        Util.CopyNonNullProperty(instructor.User, instructorToUpdate);
+                        instructorToUpdate.Password = Util.CreateHash(instructorToUpdate.Password, instructorToUpdate.PasswordSalt);
                         unitOfWork.Complete();
                         scope.Complete();
                     }
@@ -929,7 +933,9 @@ namespace ActiveLearning.Business.Implementation
                     {
                         admin.User.UpdateDT = DateTime.Now;
                         Util.CopyNonNullProperty(admin, unitOfWork.Admins.Get(admin.Sid));
-                        Util.CopyNonNullProperty(admin.User, unitOfWork.Users.Get(admin.User.Sid));
+                        var adminToUpdate = unitOfWork.Users.Get(admin.User.Sid);
+                        Util.CopyNonNullProperty(admin.User, adminToUpdate);
+                        adminToUpdate.Password = Util.CreateHash(adminToUpdate.Password, adminToUpdate.PasswordSalt);
                         unitOfWork.Complete();
                         scope.Complete();
                     }
