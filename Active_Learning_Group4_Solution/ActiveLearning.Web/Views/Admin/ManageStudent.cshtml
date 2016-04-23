@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Student>
 
+
 @{
     ViewBag.Title = "ManageStudent";
 }
@@ -19,18 +20,17 @@
     }
     else
     {
+
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BatchNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserSid)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.User.Username)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User.FullName)
+            </th>
+            <th>
+                @Html.Label("IsActivated")
             </th>
             <th></th>
         </tr>
@@ -38,17 +38,15 @@
         foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BatchNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserSid)
-                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.User.Username)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.IsActive)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditStudent", new { id = item.Sid }) |

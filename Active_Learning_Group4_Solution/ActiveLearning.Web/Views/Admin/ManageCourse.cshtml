@@ -26,9 +26,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.UpdateDT)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeleteDT)
-            </th>
             <th></th>
         </tr>
 
@@ -45,12 +42,9 @@
                     @Html.DisplayFor(modelItem => item.UpdateDT)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeleteDT)
-                </td>
-                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Sid }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Sid }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Sid })
+                    @Html.ActionLink("Details", "CourseDetails", new { id = item.Sid }) |
+                    @Html.ActionLink("Delete", "DeleteCourse", new { id = item.Sid })
                 </td>
             </tr>
         }

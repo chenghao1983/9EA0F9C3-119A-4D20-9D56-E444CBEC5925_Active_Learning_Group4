@@ -57,6 +57,7 @@ namespace ActiveLearning.Web.Controllers
             //return View();
         }
 
+        // POST: ManageCourse/CreateCourse
         [HttpPost]
         public ActionResult CreateCourse(Course course)
         {
@@ -90,7 +91,61 @@ namespace ActiveLearning.Web.Controllers
             //return View();
         }
 
+        // GET: ManageCourse/DeleteCourse/6
+        public ActionResult DeleteCourse(int id)
+        {
+            string message = string.Empty;
+            using (var deleteCourse = new CourseManager())
+            {
+                Course course = deleteCourse.GetCourseByCourseSid(id, out message);
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(course);
+            };
 
+        }
+
+
+        // POST: ManageCourse/DeleteCourse/6
+        [HttpPost, ActionName("DeleteCourse")]
+        public ActionResult DeleteCou(int id)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var deleteCourse = new CourseManager())
+                {
+                    //if (course == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    var course = deleteCourse.GetCourseByCourseSid(id, out message);
+                    if (deleteCourse.DeleteCourse(course, out message))
+                    {
+                        return RedirectToAction("ManageCourse");
+                    }
+                    return View(course);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
+
+
+        // POST: ManageCourse/Details/6
         #endregion
 
 
@@ -124,8 +179,46 @@ namespace ActiveLearning.Web.Controllers
                 {
                     return HttpNotFound();
                 }
+                TempData["EditInstructor"] = instructor;
                 return View(instructor);
             };
+        }
+
+        // POST: ManageInstructor/EditInstructor/6
+        [HttpPost, ActionName("EditInstructor")]
+        public ActionResult updateIns(Instructor instructor)
+        {
+            try
+            {
+                string message = string.Empty;
+                var instructorToUpdate = TempData["EditInstructor"] as Instructor;
+                instructorToUpdate.User.Username = instructor.User.Username;
+                instructorToUpdate.User.Password = instructor.User.Password;
+                instructorToUpdate.User.FullName = instructor.User.FullName;
+                instructorToUpdate.Qualification = instructor.Qualification;
+
+                using (var updateInstructor = new UserManager())
+                {
+                    if (updateInstructor.UpdateInstructor(instructorToUpdate,out message))
+                    {
+                        return RedirectToAction("ManageInstructor");
+                    }
+                    ViewBag.Message = message;
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
         }
 
         // GET: ManageInstructor/CreateInstructor
@@ -325,20 +418,27 @@ namespace ActiveLearning.Web.Controllers
                 {
                     return HttpNotFound();
                 }
+                TempData["EditStudent"] = student;
                 return View(student);
             };
         }
 
         // POST: ManageStudent/EditStudent/6
         [HttpPost, ActionName("EditStudent")]
-        public ActionResult update(Student student)
+        public ActionResult updateStu(Student student)
         {
             try
             {
                 string message = string.Empty;
+                var studentToUpdate = TempData["EditStudent"] as Student;
+                studentToUpdate.User.Username = student.User.Username;
+                studentToUpdate.User.Password = student.User.Password;
+                studentToUpdate.User.FullName = student.User.FullName;
+
+                studentToUpdate.BatchNo = student.BatchNo;
                 using (var updateStudent = new UserManager())
                 {
-                    if (updateStudent.UpdateStudent(student, out message))
+                    if (updateStudent.UpdateStudent(studentToUpdate, out message))
                     {
                         return RedirectToAction("ManageStudent");
                     }
