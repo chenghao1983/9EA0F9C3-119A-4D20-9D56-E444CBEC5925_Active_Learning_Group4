@@ -41,26 +41,54 @@ namespace ActiveLearning.Business.Common
         public const string Quiz = "Quiz";
         public const string QuizTitle = "Quiz Title";
 
-        public const string Operation_Failed_Duing = "Operation failed during ";
-        public const string Contact_System_Admin = ". Please contact system admin";
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
-        public const string Not_Found = " not found";
-        public const string No = "No ";
-        public const string Empty = "Empty ";
-        public const string Updating = "Updating ";
-        public const string Saving = "Saving ";
-        public const string Retrieving = "Retrieving ";
-        public const string Adding = "Adding ";
-        public const string Deleting = "Deleting ";
-        public const string Already_Exists = " already exists";
-
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
-        public static string Corrupted = "Corrupted";
-
+        public static string ValueIsEmpty(string value)
+        {
+            return value + " is empty";
+        }
+        public static string ValueNotFound(string value)
+        {
+            return value + " not found";
+        }
+        public static string ThereIsNoValueFound(string value)
+        {
+            return "There is no " + value + " found.";
+        }
+        public static string ValueAlreadyExists(string value)
+        {
+            return value + " already exists";
+        }
+        public static string OperationFailedDuringRetrievingValue(string value)
+        {
+            return "Operation failed during retrieving " + value + ". Please contact system admin";
+        }
+        public static string OperationFailedDuringSavingValue(string value)
+        {
+            return "Operation failed during saving " + value + ". Please contact system admin";
+        }
+        public static string OperationFailedDuringUpdatingValue(string value)
+        {
+            return "Operation failed during updating " + value + ". Please contact system admin";
+        }
+        public static string OperationFailedDuringAddingValue(string value)
+        {
+            return "Operation failed during adding " + value + ". Please contact system admin";
+        }
+        public static string OperationFailedDuringDeletingValue(string value)
+        {
+            return "Operation failed during deleting " + value + ". Please contact system admin";
+        }
+        public static string OperationFailedDuringAuthentingUserValue(string value)
+        {
+            return "Operation failed during authenticating user " + value + ". Please contact system admin";
+        }
+        public static string ValueCorrupted(string value)
+        {
+            return value + " data is corrupted. Please contact system admin";
+        }
         #endregion
-
-
 
     }
 }

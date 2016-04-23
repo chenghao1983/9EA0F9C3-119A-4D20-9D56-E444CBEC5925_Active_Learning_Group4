@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ActiveLearning.DB;
+using ActiveLearning.Business.ViewModel;
 
 namespace ActiveLearning.Business.Interface
 {
@@ -34,7 +35,9 @@ namespace ActiveLearning.Business.Interface
         bool DeleteQuizAnswer(QuizAnswer quizAnswer, out string message);
         bool DeleteQuizAnswer(int quizAnswerSid, out string message);
         //IEnumerable<QuizQuestion> GetActiveQuizQuestionQuizOptionQuizAnswerByStudentSid(int studentSid, out string message);
-        Task<QuizQuestion> NextQuestionAsync(int userId);
+        Task<QuizQuestion> NextQuestionAsync(int userId, int CourseSid);
         Task<bool> StoreAsync(QuizAnswer answer);
+        Task NotifyUpdates(int courseSid);
+        Task<StatisticsViewModel> GenerateStatistics(int courseSid);
     }
 }

@@ -17,7 +17,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (string.IsNullOrEmpty(userName))
             {
-                message = Constants.Empty + Constants.UserName;
+                message = Constants.ValueIsEmpty(Constants.UserName);
                 return true;
             }
             using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -25,7 +25,7 @@ namespace ActiveLearning.Business.Implementation
                 var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
                 if (user != null)
                 {
-                    message = userName + Constants.Already_Exists;
+                    message = Constants.ValueAlreadyExists(userName);
                     return true;
                 }
             }
@@ -36,17 +36,17 @@ namespace ActiveLearning.Business.Implementation
         {
             if (user == null)
             {
-                message = Constants.Empty + Constants.User;
+                message = Constants.ValueIsEmpty(Constants.User);
                 return null;
             }
             if (string.IsNullOrEmpty(user.Username))
             {
-                message = Constants.Empty + Constants.UserName;
+                message = Constants.ValueIsEmpty(Constants.UserName);
                 return null;
             }
             if (string.IsNullOrEmpty(user.Password))
             {
-                message = Constants.Empty + Constants.Password;
+                message = Constants.ValueIsEmpty(Constants.Password);
                 return null;
             }
             try
@@ -60,7 +60,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.User + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.User);
                 return null;
             }
         }
@@ -92,7 +92,7 @@ namespace ActiveLearning.Business.Implementation
                     {
                         if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.PasswordSalt))
                         {
-                            messge = Constants.User + Constants.Corrupted + Constants.Contact_System_Admin;
+                            messge = Constants.ValueCorrupted(Constants.User);
                             return null;
                         }
 
@@ -101,7 +101,7 @@ namespace ActiveLearning.Business.Implementation
                             messge = Constants.Invalid_Username_Or_Password;
                             return authenticatedUser;
                         }
-                        InfoLog(Constants.User + " : " + user.Username + Constants.Authenticated);
+                        InfoLog(Constants.User + " : " + user.Username + " " + Constants.Authenticated);
                         switch (user.Role)
                         {
                             case Constants.User_Role_Student_Code:
@@ -149,7 +149,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                messge = Constants.Operation_Failed_Duing + Constants.Authenticating_User + Constants.Contact_System_Admin;
+                messge = Constants.OperationFailedDuringAuthentingUserValue(userName);
                 ExceptionLog(ex);
                 return authenticatedUser;
             }
@@ -158,7 +158,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (user == null)
             {
-                message = Constants.Empty + Constants.User;
+                message = Constants.ValueIsEmpty(Constants.User);
                 return null;
             }
             return IsAuthenticated(user.Username, user.Password, out message);
@@ -177,7 +177,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (student == null)
                     {
-                        message = Constants.Student + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Student);
                         return null;
                     }
 
@@ -185,7 +185,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (student.User == null)
                     {
-                        message = Constants.Student + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Student);
                         return null;
                     }
                     message = string.Empty;
@@ -195,7 +195,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Student);
                 return null;
             }
         }
@@ -224,7 +224,7 @@ namespace ActiveLearning.Business.Implementation
                     var students = unitOfWork.Students.GetAll();
                     if (students == null || students.Count() == 0)
                     {
-                        message = Constants.No + Constants.Student;
+                        message = Constants.ThereIsNoValueFound(Constants.Student);
                         return null;
                     }
 
@@ -238,7 +238,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.Student;
+                        message = Constants.ThereIsNoValueFound(Constants.Student);
                         return null;
                     }
                     message = string.Empty;
@@ -248,7 +248,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Student);
                 return null;
             }
         }
@@ -271,7 +271,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (student == null || student.User == null)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return null;
             }
             if (UserNameExists(student.User.Username, out message))
@@ -304,7 +304,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.Student);
                 return null;
             }
         }
@@ -317,7 +317,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (student == null || student.User == null)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             try
@@ -341,7 +341,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringUpdatingValue(Constants.Student);
                 return false;
             }
         }
@@ -349,7 +349,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (student == null || student.Sid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             return DeleteStudent(student.Sid, out message);
@@ -359,7 +359,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (studentSid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             var student = GetStudentByStudentSid(studentSid, out message);
@@ -384,7 +384,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Student);
                 return false;
             }
         }
@@ -392,7 +392,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (student == null || student.Sid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             return ActivateStudent(student.Sid, out message);
@@ -402,7 +402,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (studentSid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             var student = GetStudentByStudentSid(studentSid, out message);
@@ -427,7 +427,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Student);
                 return false;
             }
         }
@@ -435,7 +435,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (student == null || student.Sid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             return DeactivateStudent(student.Sid, out message);
@@ -445,7 +445,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (studentSid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             var student = GetStudentByStudentSid(studentSid, out message);
@@ -470,7 +470,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Student + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Student);
                 return false;
             }
         }
@@ -488,7 +488,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (instructor == null)
                     {
-                        message = Constants.Instructor + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Instructor);
                         return null;
                     }
 
@@ -496,7 +496,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (instructor.User == null)
                     {
-                        message = Constants.Instructor + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Instructor);
                         return null;
                     }
                     message = string.Empty;
@@ -506,7 +506,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Instructor);
                 return null;
             }
         }
@@ -535,7 +535,7 @@ namespace ActiveLearning.Business.Implementation
                     var instructors = unitOfWork.Instructors.GetAll();
                     if (instructors == null || instructors.Count() == 0)
                     {
-                        message = Constants.No + Constants.Instructor;
+                        message = Constants.ThereIsNoValueFound(Constants.Instructor);
                         return null;
                     }
 
@@ -549,7 +549,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.Instructor;
+                        message = Constants.ThereIsNoValueFound(Constants.Instructor);
                         return null;
                     }
                     message = string.Empty;
@@ -559,7 +559,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Instructor);
                 return null;
             }
         }
@@ -572,7 +572,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructor == null || instructor.User == null)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return null;
             }
             if (UserNameExists(instructor.User.Username, out message))
@@ -605,7 +605,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.Instructor);
                 return null;
             }
         }
@@ -618,7 +618,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructor == null || instructor.User == null)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             try
@@ -642,7 +642,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringUpdatingValue(Constants.Instructor);
                 return false;
             }
         }
@@ -650,7 +650,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (instructor == null || instructor.Sid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             return DeleteInstructor(instructor.Sid, out message);
@@ -660,7 +660,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructorSid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             var instructor = GetInstructorByInstructorSid(instructorSid, out message);
@@ -685,7 +685,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Instructor);
                 return false;
             }
         }
@@ -693,7 +693,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (instructor == null || instructor.Sid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             return ActivateInstructor(instructor.Sid, out message);
@@ -704,7 +704,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructorSid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             var instructor = GetInstructorByInstructorSid(instructorSid, out message);
@@ -729,7 +729,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Instructor);
                 return false;
             }
         }
@@ -738,7 +738,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (instructor == null || instructor.Sid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             return DeactivateInstructor(instructor.Sid, out message);
@@ -749,7 +749,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructorSid == 0)
             {
-                message = Constants.Empty + Constants.Instructor;
+                message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
             var instructor = GetInstructorByInstructorSid(instructorSid, out message);
@@ -774,7 +774,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Instructor + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Instructor);
                 return false;
             }
         }
@@ -792,7 +792,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (admin == null)
                     {
-                        message = Constants.Admin + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Admin);
                         return null;
                     }
 
@@ -800,7 +800,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (admin.User == null)
                     {
-                        message = Constants.Admin + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Admin);
                         return null;
                     }
                     message = string.Empty;
@@ -810,7 +810,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Admin + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Admin);
                 return null;
             }
         }
@@ -839,7 +839,7 @@ namespace ActiveLearning.Business.Implementation
                     var admins = unitOfWork.Admins.GetAll();
                     if (admins == null || admins.Count() == 0)
                     {
-                        message = Constants.No + Constants.Admin;
+                        message = Constants.ThereIsNoValueFound(Constants.Admin);
                         return null;
                     }
 
@@ -853,7 +853,7 @@ namespace ActiveLearning.Business.Implementation
                     }
                     if (list.Count == 0)
                     {
-                        message = Constants.No + Constants.Admin;
+                        message = Constants.ThereIsNoValueFound(Constants.Admin);
                         return null;
                     }
                     message = string.Empty;
@@ -863,7 +863,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Admin + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Admin);
                 return null;
             }
         }
@@ -876,7 +876,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (admin == null || admin.User == null)
             {
-                message = Constants.Empty + Constants.Admin;
+                message = Constants.ValueIsEmpty(Constants.Admin);
                 return null;
             }
             if (UserNameExists(admin.User.Username, out message))
@@ -909,7 +909,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Admin + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.Admin);
                 return null;
             }
         }
@@ -922,7 +922,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (admin == null || admin.User == null)
             {
-                message = Constants.Empty + Constants.Admin;
+                message = Constants.ValueIsEmpty( Constants.Admin);
                 return false;
             }
             try
@@ -946,7 +946,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Admin + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringUpdatingValue(Constants.Admin);
                 return false;
             }
         }
@@ -954,7 +954,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (admin == null || admin.Sid == 0)
             {
-                message = Constants.Empty + Constants.Admin;
+                message = Constants.ValueIsEmpty(Constants.Admin);
                 return false;
             }
             return DeleteAdmin(admin.Sid, out message);
@@ -964,7 +964,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (adminSid == 0)
             {
-                message = Constants.Empty + Constants.Admin;
+                message = Constants.ValueIsEmpty( Constants.Admin);
                 return false;
             }
             var admin = GetAdminByAdminSid(adminSid, out message);
@@ -989,7 +989,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Admin + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Admin);
                 return false;
             }
 

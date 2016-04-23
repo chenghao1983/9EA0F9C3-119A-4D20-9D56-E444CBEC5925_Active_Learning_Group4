@@ -28,7 +28,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (chat == null)
                     {
-                        message = Constants.Chat + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Chat);
                         return null;
                     }
                     message = string.Empty;
@@ -38,7 +38,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Chat);
                 return null;
             }
         }
@@ -53,7 +53,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (chats == null || chats.Count() == 0)
                     {
-                        message = Constants.Chat + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Chat);
                         return null;
                     }
                     message = string.Empty;
@@ -63,7 +63,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Chat);
                 return null;
             }
         }
@@ -88,7 +88,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (chats == null || chats.Count() == 0)
                     {
-                        message = Constants.Chat + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Chat);
                         return null;
                     }
                     message = string.Empty;
@@ -98,7 +98,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Chat);
                 return null;
             }
         }
@@ -123,7 +123,7 @@ namespace ActiveLearning.Business.Implementation
 
                     if (chats == null || chats.Count() == 0)
                     {
-                        message = Constants.Chat + Constants.Not_Found;
+                        message = Constants.ValueNotFound(Constants.Chat);
                         return null;
                     }
                     message = string.Empty;
@@ -133,7 +133,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Retrieving + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Chat);
                 return null;
             }
         }
@@ -152,17 +152,17 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (chat == null)
             {
-                message = Constants.Empty + Constants.Chat;
+                message = Constants.ValueIsEmpty(Constants.Chat);
                 return null;
             }
             if (studentSid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return null;
             }
             if (courseSid == 0)
             {
-                message = Constants.Empty + Constants.Course;
+                message = Constants.ValueIsEmpty(Constants.Course);
                 return null;
             }
             try
@@ -185,7 +185,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.Chat);
                 return null;
             }
         }
@@ -194,17 +194,17 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (chat == null)
             {
-                message = Constants.Empty + Constants.Chat;
+                message = Constants.ValueIsEmpty(Constants.Chat);
                 return null;
             }
             if (instructorSid == 0)
             {
-                message = Constants.Empty + Constants.Student;
+                message = Constants.ValueIsEmpty(Constants.Student);
                 return null;
             }
             if (courseSid == 0)
             {
-                message = Constants.Empty + Constants.Course;
+                message = Constants.ValueIsEmpty(Constants.Course);
                 return null;
             }
             try
@@ -227,7 +227,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Adding + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringAddingValue(Constants.Chat);
                 return null;
             }
         }
@@ -236,7 +236,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (chat == null)
             {
-                message = Constants.Empty + Constants.Chat;
+                message = Constants.ValueIsEmpty(Constants.Chat);
                 return false;
             }
             try
@@ -257,7 +257,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Updating + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringUpdatingValue(Constants.Chat);
                 return false;
             }
         }
@@ -265,7 +265,7 @@ namespace ActiveLearning.Business.Implementation
         {
             if (chat == null || chat.Sid == 0)
             {
-                message = message = Constants.Empty + Constants.Chat;
+                message = message = Constants.ValueIsEmpty(Constants.Chat);
                 return false;
             }
             return DeleteChat(chat.Sid, out message);
@@ -275,7 +275,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (chatSid == 0)
             {
-                message = Constants.Empty + Constants.Chat;
+                message = Constants.ValueIsEmpty(Constants.Chat);
                 return false;
             }
             var chat = GetChatByChatSid(chatSid, out message);
@@ -300,7 +300,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.Operation_Failed_Duing + Constants.Deleting + Constants.Chat + Constants.Contact_System_Admin;
+                message = Constants.OperationFailedDuringDeletingValue(Constants.Chat);
                 return false;
             }
         }
