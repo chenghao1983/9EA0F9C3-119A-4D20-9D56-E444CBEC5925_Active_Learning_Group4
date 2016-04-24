@@ -493,11 +493,43 @@ INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [Cre
 GO
 INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (2, N'Instructor1', N'Knn5u702hV4P2EqaUDzadGiPZ4zuT79n', 'Kent White', 1, CAST(N'2016-04-13 23:17:34.010' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'C0xyFiz5b3ZacMTRPwKleI0eFaSy0x8C ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (3, N'Instructor2', N'XofVKJP8RDq8YzvKGD/iAsLJeXfZ5Rjq', 'Eric Johnson', 0, CAST(N'2016-04-13 23:17:41.910' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (3, N'Instructor2', N'XofVKJP8RDq8YzvKGD/iAsLJeXfZ5Rjq', 'Eric Johnson', 1, CAST(N'2016-04-13 23:17:41.910' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'0OTW6ch2NjxC1q7sIYl586hQMzftY+Wd ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (4, N'Student1', N'AoXSVf0r1gWxZ/CDMetgnEkUHwtcYNnK', 'Tom Cruise', 1, CAST(N'2016-04-13 23:18:59.883' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'XKNeMNMgPoVjx6oZcIQb50fIfYL3UCdC ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (4, N'Instructor3', N'mY02CzdWEumV7hYOrzBhzbubActepQ0n', 'Tom Cruise', 1, CAST(N'2016-04-13 23:18:59.883' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Student2', N'xdGMVptwdgRfXywbtvE0NiOd1J7cja78', 'Walker Smith', 0, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Instructor4', N'nK8GhoBWuqQJOUawnZyf5ASlcztJShys', 'Walker Smith', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (6, N'Instructor5', N'g1F5dl6j/L8eidvFTwCQ2upXAssmyOUd', 'Celestino Douglas', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (7, N'Instructor6', N'cBX1eOFJAIBG3NhFqatFXLsULpOin03N', 'Alexandros Hafiz', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (8, N'Instructor7', N'JlZ0WHX4WWV9Kt6yN+pCRXt7tjpqcojP', 'Dimas Channing', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (9, N'Instructor8', N'c+4gS/HEc6jWPhOCLTTfHFkhrW3acoKr', 'Codie Lucinda', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (10, N'Instructor9', N'WVXy4pzZyPi8+Y96P9I3efun1hG2Cth1', 'Torger Kayleen',1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'VJkbnSovc1BtPy04RybAo8B8sAAwTn2J ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (11, N'Instructor10', N'1b9xGQFHIJP23C0TneF6Prk7vwzl13h/', 'Filippa Cynbel', 0, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'I',N'cZZ7m8Sj5pv4Ag7hP8ot9ZqDCHbrOooI ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (12, N'Student1', N'cqetgRDPjq08inW+s8qrvR+ziarhTT5K', 'Adil Hayati', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'KrTW84isQkhtiMQxzbwLKfIsLmOhobSY ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (13, N'Student2', N'l9oS2i4DLrNo+LN8xAEX4tlUwrjUBRMU', 'Mette Iris', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'HKjH9qgCG1tyVMVcEIJXdxtxJ5bXYufr ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (14, N'Student3', N'/dO8iUzskF4rg5vcphZ1RM30KVD/XIT3', 'Amelia Funanya', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'8YQJqFAV9xUWwHiXfODFuhuDTS5ukQwt ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (15, N'Student4', N'nidi1WDuq7QGHwhDzYnHVA+MYCJTvS6u', 'Jurgen Sofia', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'yKV616WHc2i8rUKGMXMhskBWkWXm4AQC ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (16, N'Student5', N'Erg+QqPJGkLWqOIBArm0FIdpbq+RvA91', 'Athena Herbert', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'7bDVnI3WlC1q2ApB+ASvPHsZwKjkvBzZ ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (17, N'Student6', N'9npJ2Ze8zn7A8Yy45pPNBh257buakJUU', 'Chrissy Ambre', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'4c08nVFZyiI73vZd9P7bEuBvpvHJhYZO ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (18, N'Student7', N'B8yBLO6nCXHufgWGRpMACnQZrLcYmdWl', 'Faddei Kir', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'FHBd7pjdeFwdNJaRJPzxdfpg/zXWChDx ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (19, N'Student8', N'jvi05pAI/dm8pZjQ9UmKCSKFLH8zgi8E', 'Sima Folke', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'qDzmSff2D9K2BlhQYrZ6YfGB1BETav+j ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (20, N'Student9', N'8Ng1msqgKtsWAzZKUt1giB5L8WkYjWPt', 'Wendelin Jaci', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'zK1HYfERIWKCtu3djAlZD8SheRXI7w6B ')
+GO
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (21, N'Student10', N'xdGMVptwdgRfXywbtvE0NiOd1J7cja78', 'Valencia Demeter', 0, CAST(N'2016-04-13 23:21:00.933' AS DateTime), CAST(N'2015-01-01 00:00:00.000' AS DateTime), NULL, N'S',N'JolFZ40Wq1Hz3Jfuo4NhIt+BQL06TmFZ ')
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
@@ -520,7 +552,23 @@ GO
 
 INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (1,2,N'Doctorate')
 GO
-INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (2,3,N'Mater degree')
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (2,3,N'Doctorate')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (3,4,N'Doctorate')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (4,5,N'Doctorate')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (5,6,N'Mater degree')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (6,7,N'Mater degree')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (7,8,N'Honor Bachelor')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (8,9,N'Mater degree')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (9,10,N'Mater degree')
+GO
+INSERT [dbo].[Instructor]([Sid],[UserSid], [Qualification]) VALUES (10,11,N'Doctorate')
 GO
 
 SET IDENTITY_INSERT [dbo].[Instructor] OFF
@@ -531,17 +579,39 @@ GO
 SET IDENTITY_INSERT [dbo].[Student] ON 
 GO
 
-INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (1,4,'SE24')
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (1,12,'SE20')
 GO
-INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (2,5,'SE24')
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (2,13,'SE20')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (3,14,'SE20')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (4,15,'SE21')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (5,16,'SE21')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (6,17,'SE22')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (7,18,'SE22')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (8,19,'SE23')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (9,20,'SE23')
+GO
+INSERT [dbo].[Student]([Sid],[UserSid],[BatchNo]) VALUES (10,21,'SE24')
 GO
 
 SET IDENTITY_INSERT [dbo].[Student] OFF
 GO
 
--- [dbo].[Course] --
 
+-- [dbo].[Course] --
+DELETE from [dbo].[QuizOption]
+GO
+DELETE from [dbo].[QuizQuestion]
+GO
 DELETE FROM [dbo].[Course]
+GO
+
 SET IDENTITY_INSERT [dbo].[Course] ON
 GO
 
@@ -576,11 +646,7 @@ GO
 
 -- Quiz Question an Option --
 
-DELETE from [dbo].[QuizOption]
-GO
 
-DELETE from [dbo].[QuizQuestion]
-GO
 
 SET IDENTITY_INSERT [dbo].[QuizQuestion] ON 
 GO
@@ -1031,7 +1097,6 @@ GO
 INSERT [dbo].[QuizOption] ([Sid], [QuizQuestionSid], [Title], [IsCorrect], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (176, 44, N'System.Float', 0, CAST(N'2016-04-20 12:49:50.630' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[QuizOption] OFF
-
 
 --------------------------Others---------------------- 
 -- DB version --
