@@ -20,6 +20,7 @@ namespace ActiveLearning.Web.Tests.Controllers
     public class AdminControllerTest
     {
         private MockCourseManager _mockCourseManager;
+        private MockUserManager _mockUserManager;
         private AdminController _controller;
 
 
@@ -27,8 +28,9 @@ namespace ActiveLearning.Web.Tests.Controllers
         public void TestInitialize()
         {
             _mockCourseManager = new MockCourseManager();
+            _mockUserManager = new MockUserManager();
 
-            _controller = new AdminController(_mockCourseManager);
+            _controller = new AdminController(_mockCourseManager, _mockUserManager);
         }
 
         [TestMethod]

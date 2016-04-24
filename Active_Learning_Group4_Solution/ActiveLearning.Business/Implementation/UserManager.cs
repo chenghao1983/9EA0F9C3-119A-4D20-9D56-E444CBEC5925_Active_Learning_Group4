@@ -10,8 +10,13 @@ using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Business.Implementation
 {
-    public class UserManager : BaseManager, IUserManager
+    public class UserManager : BaseManager, IUserManager, IManagerFactoryBase<IUserManager>
     {
+        public IUserManager Create()
+        {
+            return new UserManager();
+        }
+
         #region user
         public bool UserNameExists(string userName, out string message)
         {

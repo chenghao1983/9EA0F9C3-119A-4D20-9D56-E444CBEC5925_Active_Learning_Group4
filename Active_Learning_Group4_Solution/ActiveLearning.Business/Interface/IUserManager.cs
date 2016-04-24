@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Interface
 {
-    public interface IUserManager
+    public interface IUserManager : IDisposable
     {
         #region User
         User GenerateHashedUser(User user, out string message);

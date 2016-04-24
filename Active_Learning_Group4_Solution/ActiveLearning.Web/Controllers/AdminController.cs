@@ -16,15 +16,18 @@ namespace ActiveLearning.Web.Controllers
     public class AdminController : BaseController
     {
         private IManagerFactoryBase<ICourseManager> _CourseManagerfactory { get; set; }
+        private IManagerFactoryBase<IUserManager> _UserManagerfactory { get; set; }
 
         public AdminController()
         {
             _CourseManagerfactory = new CourseManager();
+            _UserManagerfactory = new UserManager();
         }
 
-        public AdminController(IManagerFactoryBase<ICourseManager> factory)
+        public AdminController(IManagerFactoryBase<ICourseManager> _courseFactory, IManagerFactoryBase<IUserManager> _userFactory)
         {
-            _CourseManagerfactory = factory;
+            _CourseManagerfactory = _courseFactory;
+            _UserManagerfactory = _userFactory;
         }
 
         // GET: Course
