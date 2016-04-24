@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using ActiveLearning.DB;
+using System.Collections.Generic;
+using AutoMapper;
 
 namespace ActiveLearning.Business.Common
 {
@@ -27,27 +29,55 @@ namespace ActiveLearning.Business.Common
         //        toProp.SetValue(to, fromProp.GetValue(from, null), null);
         //    }
         //}
-        public static void CopyNonNullProperty(object from, object to)
+        public static void CopyNonNullProperty(object objFrom, object objTo)
         {
-            //string system_Property_list = "";
-            if (from == null || to == null) return;
-            PropertyInfo[] allProps = from.GetType().GetProperties();
+            List<Type> typeList = new List<Type>() { typeof(byte), typeof(sbyte), typeof(int), typeof(uint), typeof(short), typeof(ushort), typeof(long), typeof(ulong)
+            , typeof(float) , typeof(double),  typeof(char) ,  typeof(bool),  typeof(string), typeof(decimal) ,  typeof(DateTime), typeof(DateTime?), typeof(Enum),  typeof(Guid),
+            typeof(IntPtr), typeof(TimeSpan),  typeof(UIntPtr) };
+            if (objFrom == null || objTo == null) return;
+            PropertyInfo[] allProps = objFrom.GetType().GetProperties();
             PropertyInfo toProp;
             foreach (PropertyInfo fromProp in allProps)
             {
-                if (fromProp.PropertyType.IsPrimitive || fromProp.PropertyType == typeof(string) || fromProp.PropertyType == typeof(decimal))
+                if (typeList.Contains(fromProp.PropertyType))
                 {
                     //find property on "to" with same name
 
-                    toProp = to.GetType().GetProperty(fromProp.Name);
+                    toProp = objTo.GetType().GetProperty(fromProp.Name);
                     if (toProp == null) continue; //not here
                     if (!toProp.CanWrite) continue; //only if writeable
                                                     //set the property value from "from" to "to"
                                                     // Debug.WriteLine(toProp.Name + " = from." + fromProp.Name + ";");
-                    if (fromProp.GetValue(from, null) == null) continue;
-                    toProp.SetValue(to, fromProp.GetValue(from, null), null);
+                    if (fromProp.GetValue(objFrom, null) == null) continue;
+                    toProp.SetValue(objTo, fromProp.GetValue(objFrom, null), null);
                 }
             }
+
+
+            //PropertyInfo[] propertyFrom = objFrom.GetType().GetProperties();
+            //PropertyInfo[] propertyTo = objTo.GetType().GetProperties();
+            //foreach (PropertyInfo pTo in propertyTo)
+            //{
+            //    if (pTo.CanWrite)
+            //    {
+            //        foreach (PropertyInfo pFrom in propertyFrom)
+            //        {
+            //            if (pTo.Name == pFrom.Name && pTo.PropertyType == pFrom.PropertyType)
+            //            {
+            //                object value = pFrom.GetValue(objFrom, null);
+            //                if (value != null)
+            //                    pTo.SetValue(objTo, value, null);
+            //                else if (pTo.PropertyType == typeof(Nullable))
+            //                    pTo.SetValue(objTo, value, null);
+            //                else if (value == null)
+            //                    pTo.SetValue(objTo, null, null);
+
+
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
         }
         #endregion
 
