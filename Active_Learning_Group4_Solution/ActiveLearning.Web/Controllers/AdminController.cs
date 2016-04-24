@@ -77,7 +77,7 @@ namespace ActiveLearning.Web.Controllers
             try
             {
                 string message = string.Empty;
-                using (var courseManager = new CourseManager())
+                using (var courseManager = _CourseManagerfactory.Create())
                 {
                     if (courseManager.AddCourse(course, out message) == null)
                     {
