@@ -20,6 +20,7 @@ namespace ActiveLearning.Business.Common
         #endregion
 
         #region Error Message
+        public const string Role = "Role";
         public const string User = "User";
         public const string Student = "Student";
         public const string EnrolledStudent = "Enrolled Student";
@@ -47,6 +48,10 @@ namespace ActiveLearning.Business.Common
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
+        public static string UnknownValue(string value)
+        {
+            return "Unknown " + value;
+        }
         public static string ValueIsEmpty(string value)
         {
             return value + " is empty";
@@ -90,6 +95,10 @@ namespace ActiveLearning.Business.Common
         public static string ValueCorrupted(string value)
         {
             return value + " data is corrupted. Please contact system admin";
+        }
+        public static string NOAccess(string value)
+        {
+            return "Sorry you don't have access to the " + value;
         }
         #endregion
 

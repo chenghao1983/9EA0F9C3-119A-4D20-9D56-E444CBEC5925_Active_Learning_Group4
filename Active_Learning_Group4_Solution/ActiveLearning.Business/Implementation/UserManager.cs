@@ -26,20 +26,20 @@ namespace ActiveLearning.Business.Implementation
                 return true;
             }
             try
-            { 
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
             {
-                var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
-                if (user != null)
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    message = Constants.ValueAlreadyExists(userName);
-                    return true;
+                    var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
+                    if (user != null)
+                    {
+                        message = Constants.ValueAlreadyExists(userName);
+                        return true;
+                    }
                 }
+                message = string.Empty;
+                return false;
             }
-            message = string.Empty;
-            return false;
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionLog(ex);
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.UserName);
@@ -100,7 +100,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var user = unitOfWork.Users.SingleOrDefault(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue);
+                    var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && u.IsActive && !u.DeleteDT.HasValue).FirstOrDefault();
 
                     if (user != null)
                     {
@@ -176,6 +176,63 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
             return IsAuthenticated(user.Username, user.Password, out message);
+        }
+        public bool HasAccessToCourse(User user, int courseSid, out string message)
+        {
+            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Role))
+            {
+                message = Constants.ValueIsEmpty(Constants.User);
+                return false;
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    switch (user.Role)
+                    {
+                        case Constants.User_Role_Student_Code:
+                            if (user.Students == null || user.Students.Count() == 0)
+                            {
+                                message = Constants.ValueIsEmpty(Constants.Student);
+                                return false;
+                            }
+                            var student_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.StudentSid == user.Students.FirstOrDefault().Sid && m.CourseSid == courseSid);
+                            if (student_Course_Map == null || student_Course_Map.Count() == 0)
+                            {
+                                message = Constants.NOAccess(Constants.Course);
+                                return false;
+                            }
+                            message = string.Empty;
+                            return true;
+                            break;
+                        case Constants.User_Role_Instructor_Code:
+                            if (user.Students == null || user.Students.Count() == 0)
+                            {
+                                message = Constants.ValueIsEmpty(Constants.Instructor);
+                                return false;
+                            }
+                            var instructor_course_map = unitOfWork.Instructor_Course_Maps.Find(m => m.InstructorSid == user.Instructors.FirstOrDefault().Sid && m.CourseSid == courseSid);
+                            if (instructor_course_map == null || instructor_course_map.Count() == 0)
+                            {
+                                message = Constants.NOAccess(Constants.Course);
+                                return false;
+                            }
+                            message = string.Empty;
+                            return true;
+                            break;
+                        default:
+                            message = Constants.UnknownValue(Constants.Role);
+                            return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.User);
+                return false;
+            }
+
         }
         #endregion
 
@@ -336,7 +393,7 @@ namespace ActiveLearning.Business.Implementation
             }
             try
             {
-                
+
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
                     var studentToUpdate = unitOfWork.Students.Get(student.Sid);
@@ -939,7 +996,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (admin == null || admin.User == null)
             {
-                message = Constants.ValueIsEmpty( Constants.Admin);
+                message = Constants.ValueIsEmpty(Constants.Admin);
                 return false;
             }
             try
@@ -981,7 +1038,7 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (adminSid == 0)
             {
-                message = Constants.ValueIsEmpty( Constants.Admin);
+                message = Constants.ValueIsEmpty(Constants.Admin);
                 return false;
             }
             var admin = GetAdminByAdminSid(adminSid, out message);

@@ -10,7 +10,7 @@ using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Business.Mock
 {
-   public class MockUserManager: IUserManager, IManagerFactoryBase<IUserManager>
+    public class MockUserManager : IUserManager, IManagerFactoryBase<IUserManager>
     {
 
         public IUserManager Create()
@@ -60,6 +60,11 @@ namespace ActiveLearning.Business.Mock
             throw new NotImplementedException();
         }
         public User IsAuthenticated(User user, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasAccessToCourse(User user, int courseSid, out string message)
         {
             throw new NotImplementedException();
         }
@@ -261,6 +266,7 @@ namespace ActiveLearning.Business.Mock
             throw new NotImplementedException();
 
         }
+
 
 
         #endregion

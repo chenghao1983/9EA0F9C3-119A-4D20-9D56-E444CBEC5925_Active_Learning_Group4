@@ -14,6 +14,8 @@ namespace ActiveLearning.Business.Interface
         bool UserNameExists(string userName, out string message);
         User IsAuthenticated(string userName, string password, out string message);
         User IsAuthenticated(User user, out string message);
+        bool HasAccessToCourse(User user, int courseSid, out string message);
+
         #endregion
 
         #region Student
