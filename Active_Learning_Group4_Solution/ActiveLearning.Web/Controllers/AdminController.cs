@@ -43,7 +43,8 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageCourse
-        [CustomAuthorize(Roles = Constants.Admin)]
+        //[CustomAuthorize(Roles =Constants.Admin)]
+
         public ActionResult ManageCourse()
         {
             string message = string.Empty;
@@ -351,6 +352,90 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
+        // GET: ManageInstructor/InstructorDetails
+        public ActionResult InstructorDetails(int id)
+        {
+            string message = string.Empty;
+            using (var getInstructor = new UserManager())
+            {
+                var instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
+                if (instructor == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(instructor);
+            };
+
+        }
+
+        // POST: ManageInstructor/ActivateInstructor
+        public ActionResult ActivateInstructor(int id)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var activateInstructor = new UserManager())
+                {
+                    //if (student == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    var instructor = activateInstructor.GetInstructorByInstructorSid(id, out message);
+                    if (activateInstructor.ActivateInstructor(instructor, out message))
+                    {
+                        return RedirectToAction("ManageInstructor");
+                    }
+                    return View(instructor);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+        }
+
+        // POST: ManageStudent/DeactivateInstructor
+        public ActionResult DeactivateInstructor(int id)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var deactivateInstructor = new UserManager())
+                {
+                    //if (student == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    var instructor = deactivateInstructor.GetInstructorByInstructorSid(id, out message);
+                    if (deactivateInstructor.DeactivateInstructor(instructor, out message))
+                    {
+                        return RedirectToAction("ManageInstructor");
+                    }
+                    return View(instructor);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
         #endregion
 
 
@@ -376,6 +461,7 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
+        // GET: ManageStudent/StudentDetails
         public ActionResult StudentDetails(int id)
         {
             string message = string.Empty;
@@ -531,7 +617,148 @@ namespace ActiveLearning.Web.Controllers
             }
 
         }
+
+
+        // POST: ManageStudent/ActivateStudent
+        public ActionResult ActivateStudent(int id)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var activateStudent = new UserManager())
+                {
+                    //if (student == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    var student = activateStudent.GetStudentByStudentSid(id, out message);
+                    if (activateStudent.ActivateStudent(student, out message))
+                    {
+                        return RedirectToAction("ManageStudent");
+                    }
+                    return View(student);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
+
+        // POST: ManageStudent/DeactivateStudent
+        public ActionResult DeactivateStudent(int id)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var deactivateStudent = new UserManager())
+                {
+                    //if (student == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    var student = deactivateStudent.GetStudentByStudentSid(id, out message);
+                    if (deactivateStudent.DeactivateStudent(student, out message))
+                    {
+                        return RedirectToAction("ManageStudent");
+                    }
+                    return View(student);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
         #endregion
 
+        #region Enrolment
+
+
+        // GET: ManageCourse
+        public ActionResult ManageEnrolment(int id)
+        {
+            string message = string.Empty;
+            using (var enrol = new UserManager())
+            {
+
+                var listStudent = enrol.GetAllActiveStudent(out message);
+                if (listStudent == null)
+                {
+                    ViewBag.Message = "The List is empty !";
+                }
+                var checkedStu = new CourseManager();
+                var checkedStudent = checkedStu.GetEnrolledStudentsByCourseSid(id, out message);
+                TempData["CheckedStudent"] = checkedStudent;
+                return View(listStudent);
+            }
+        }
+
+
+        // GET: ManageCourse/RemoveEnrolment
+        public ActionResult RemoveEnrolment(FormCollection formCollection)
+        {
+            try
+            {
+                string message = string.Empty;
+                using (var removeEnrolStu = new CourseManager())
+                {
+                    string[] ids = formCollection["studentId"].Split(new char[] { ',' });
+                    int courseId = 001;
+                    foreach (var id in ids)
+                    {
+
+                        //if (removeEnrolStu.RemoveStudentsFromCourse(, courseId, out message))
+
+                        return RedirectToAction("ManageCourse");
+
+                    };
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
+
+
+
+
     }
+
+
+
+
+    #endregion
+
+
+
 }

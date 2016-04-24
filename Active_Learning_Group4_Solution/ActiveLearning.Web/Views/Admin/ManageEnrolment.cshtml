@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ActiveLearning.DB.Student>
+@using ActiveLearning.DB;
+
+@{
+    ViewBag.Title = "ManageEnrolment";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked"))
+                $('.checkbox').prop('checked', true);
+            else
+                $('.checkbox').prop('checked', false);
+        });
+    });
+</script>
+
+
+<h2>Manage Course Enrolment</h2>
+
+<p>
+    @Html.ActionLink("Update", "Create")
+</p>
+@using (Html.BeginForm("RemoveEnrolment", "ManageEnrolment",FormMethod.Post)) {
+    
+    @*<input type="submit" value="Remove" onclick="return Confirm('Are you sure?')"/>*@
+<table class="table">
+    <tr>
+        <th>
+            <input type="checkbox" id="checkBoxAll" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BatchNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@{if (TempData["CheckedStudent"] != null)
+                {
+                    var checkedStu = TempData.Peek("CheckedStudent") as Student;
+                    if (item.UserSid.Equals(checkedStu.UserSid))
+                    {
+                        <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" />
+                    }
+
+                }
+            }
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Sid }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Sid }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Sid })
+            </td>
+        </tr>
+    }
+
+</table>
+}
