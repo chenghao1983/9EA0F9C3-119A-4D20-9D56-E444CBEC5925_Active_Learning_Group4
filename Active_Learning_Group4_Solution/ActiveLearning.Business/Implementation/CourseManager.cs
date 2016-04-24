@@ -216,7 +216,7 @@ namespace ActiveLearning.Business.Implementation
             }
             if (nonEnrolledList != null)
             {
-                allList.AddRange(enrolledList);
+                allList.AddRange(nonEnrolledList);
             }
             if (allList.Count() == 0)
             {
@@ -609,7 +609,7 @@ namespace ActiveLearning.Business.Implementation
             }
             if(nonEnrolledList !=null)
             {
-                allList.AddRange(enrolledList);
+                allList.AddRange(nonEnrolledList);
             }
             if(allList.Count()==0)
             {
