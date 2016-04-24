@@ -1,7 +1,7 @@
 ﻿using ActiveLearning.Business.Implementation;
 using ActiveLearning.DB;
 using ActiveLearning.Repository.Context;
-using ActiveLearning.Web.Service;
+//using ActiveLearning.Web.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,37 +9,52 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web;
+using ActiveLearning.Business.ViewModel;
+using System.Web.SessionState;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class QuizQuestionController : ApiController
     {
-        private ActiveLearningContext db;
+        //private ActiveLearningContext db;
 
-        private QuizManager quizManager = new QuizManager();
-        private StatisticsService statisticsService;
+        //private QuizManager quizManager = new QuizManager();
+        //private StatisticsService statisticsService;
 
         public QuizQuestionController()
         {
-            this.db = new ActiveLearningContext();
-            this.statisticsService = new StatisticsService();
+            //this.db = new ActiveLearningContext();
+            //this.statisticsService = new StatisticsService();
         }
 
         public async Task<QuizQuestion> Get()
         {
             //var userId = User.Identity.Name;
-
-            int userId = 1;
-            int courseID = 1;
-
-            QuizQuestion nextQuestion = await this.quizManager.NextQuestionAsync(userId, courseID);
-
-            if (nextQuestion == null)
+            using (var quizManager = new QuizManager())
             {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-            }
+                int userId = 1;
+                int courseID = 1;
 
-            return nextQuestion;
+                var session = SessionStateUtility.GetHttpSessionStateFromContext(HttpContext.Current);
+
+                if (session == null || session[BaseController.UserSessionParam] ==null)
+                {
+                    throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                }
+                
+                User user = session[BaseController.UserSessionParam] as User;
+
+
+                QuizQuestion nextQuestion = await quizManager.NextQuestionAsync(user.Students.FirstOrDefault().Sid, courseID);
+
+                if (nextQuestion == null)
+                {
+                    throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                }
+
+                return nextQuestion;
+            }
         }
 
         public async Task<HttpResponseMessage> Post(QuizAnswer answer)
@@ -49,14 +64,22 @@ namespace ActiveLearning.Web.Controllers
                 //answer.StudentSid = User.Identity.Name;
 
                 //TODO
+                int userId = 1;
+                int courseID = 1;
+
                 answer.StudentSid = 1;
-
                 answer.CreateDT = DateTime.Now;
-                var isCorrect = await this.quizManager.StoreAsync(answer);
 
-                await this.statisticsService.NotifyUpdates();
+                // await this.statisticsService.NotifyUpdates();
 
-                return Request.CreateResponse(HttpStatusCode.Created, isCorrect);
+                using (var quizManager = new QuizManager())
+                {
+                    var isCorrect = await quizManager.StoreAsync(answer);
+
+                    //TODO: change parameter
+                    await quizManager.NotifyUpdates(courseID);
+                    return Request.CreateResponse(HttpStatusCode.Created, isCorrect);
+                }
             }
             else
             {
@@ -66,7 +89,7 @@ namespace ActiveLearning.Web.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            this.db.Dispose();
+            //this.db.Dispose();
             base.Dispose(disposing);
         }
 

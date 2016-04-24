@@ -185,9 +185,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ChatController.cs" />
-    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
@@ -200,12 +199,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Hubs\StatisticsHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\StatisticsService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\StatisticsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -219,6 +214,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ember-1.0.0.debug.js" />
     <Content Include="Scripts\ember-1.0.0.js" />
@@ -263,16 +259,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\TestAdmin\CreateCourse.cshtml" />
-    <Content Include="Views\TestAdmin\CreateInstructor.cshtml" />
     <Content Include="Views\Download\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LoginAdminPartial.cshtml" />
-    <Content Include="Views\TestAdmin\EditCourse.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Quiz\Index.cshtml" />
-    <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\QuizStatistics\Index.cshtml" />
     <Content Include="Views\Admin\CreateStudent.cshtml" />
     <Content Include="Views\Admin\DeleteStudent.cshtml" />
@@ -282,12 +274,26 @@
     <Content Include="Views\Shared\_LoginInstructorPartial.cshtml" />
     <Content Include="Views\Shared\_LoginStudentPartial.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Admin\CreateCourse.cshtml" />
+    <Content Include="Views\Admin\CreateInstructor.cshtml" />
+    <Content Include="Views\Admin\DeleteInstructor.cshtml" />
+    <Content Include="Views\Admin\EditInstructor.cshtml" />
+    <Content Include="Views\Admin\ManageCourse.cshtml" />
+    <Content Include="Views\Admin\ManageInstructor.cshtml" />
+    <Content Include="Views\Admin\StudentDetails.cshtml" />
+    <Content Include="Views\Admin\ManageEnrolment.cshtml" />
+    <Content Include="Views\Admin\DeleteCourse.cshtml" />
+    <Content Include="Views\Student\Chat.cshtml" />
+    <Content Include="Views\Student\Quiz.cshtml" />
+    <Content Include="Views\Student\Download.cshtml" />
+    <Content Include="Views\Instructor\QuizStatistics.cshtml" />
+    <Content Include="Views\Instructor\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Upload\" />
     <Folder Include="Log\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Course\" />
+    <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -64,6 +64,10 @@
                     //alert(JSON.stringify(response));
                     question.setProperties(response);
                 }).fail(function () { question.set('title', "Oops... something went wrong") });
+                //jQuery.getJSON("/student/Quiz", function (response) {
+                //    //alert(JSON.stringify(response));
+                //    question.setProperties(response);
+                //}).fail(function () { question.set('title', "Oops... something went wrong") });
             },
 
             sendAnswer: function (question, option) {
@@ -76,6 +80,11 @@
                     controller.set('answer', response ? 'correct' : 'incorrect');
                     controller.set('question.answered', true);
                 });
+
+                //jQuery.post('/student/Quiz', { 'QuizQuestionSid': question.sid, 'QuizOptionSid': option.sid }, function (response) {
+                //    controller.set('answer', response ? 'correct' : 'incorrect');
+                //    controller.set('question.answered', true);
+                //});
             }
         });
     </script>

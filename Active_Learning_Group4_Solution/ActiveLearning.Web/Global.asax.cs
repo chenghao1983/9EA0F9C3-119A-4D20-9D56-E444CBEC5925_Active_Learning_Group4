@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.SessionState;
 
 namespace ActiveLearning.Web
 {
@@ -29,5 +30,11 @@ namespace ActiveLearning.Web
         {
 
         }
+        protected void Application_PostAuthorizeRequest()
+
+        {
+            HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+        }
+
     }
 }

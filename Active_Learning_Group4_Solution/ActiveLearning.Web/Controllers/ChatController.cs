@@ -7,15 +7,17 @@ using System.Web;
 using System.Web.Mvc;
 namespace ActiveLearning.Web.Controllers
 {
-    public class ChatController : Controller
+    public class ChatController : BaseController
     {
         // GET: Chat
         public ActionResult Index()
         {
             //TODO
             var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Country, "CourseName"));
-            claims.Add(new Claim(ClaimTypes.Name, "Andy Lau"));
+
+            // TODO: groupid : courseSid parameter, name 
+            claims.Add(new Claim(ClaimTypes.GroupSid, "CourseName"));
+            claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 

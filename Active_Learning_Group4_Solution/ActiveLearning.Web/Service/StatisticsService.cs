@@ -1,10 +1,11 @@
 ﻿using ActiveLearning.Repository.Context;
-using ActiveLearning.Web.Hubs;
+//using ActiveLearning.Web.Hubs;
 using ActiveLearning.Web.ViewModel;
 using Microsoft.AspNet.SignalR;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using ActiveLearning.Business.ViewModel;
 
 namespace ActiveLearning.Web.Service
 {
