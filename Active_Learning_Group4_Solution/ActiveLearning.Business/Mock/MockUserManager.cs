@@ -23,6 +23,15 @@ namespace ActiveLearning.Business.Mock
 
         }
 
+        #region Mock Data
+
+        public IQueryable MockStudents { get; set; }
+
+        public Student MockStudent { get; set; }
+
+
+        #endregion
+
         #region user
         public bool UserNameExists(string userName, out string message)
         {
@@ -67,7 +76,29 @@ namespace ActiveLearning.Business.Mock
         }
         public IEnumerable<Student> GetAllStudent(out string message)
         {
-            throw new NotImplementedException();
+            message = string.Empty;
+            List<Student> list = new List<Student>();
+
+            try
+            {
+                if (MockStudents == null || (MockStudents as IEnumerable<Student>).Count() == 0)
+                {
+                    message = Constants.ThereIsNoValueFound(Constants.Student);
+                    return null;
+                }
+
+                foreach (var student in MockStudents)
+                {
+                    list.Add(student as Student);
+                }
+
+                return list.ToList();
+            }
+            catch (Exception ex)
+            {
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Student);
+                return null;
+            }
         }
         public IEnumerable<Student> GetAllActiveStudent(out string message)
         {
@@ -79,7 +110,26 @@ namespace ActiveLearning.Business.Mock
         */
         public Student AddStudent(Student student, out string message)
         {
-            throw new NotImplementedException();
+            message = string.Empty;
+            if (student == null)
+            {
+                message = Constants.ValueIsEmpty(Constants.Student);
+                return null;
+            }
+            try
+            {
+                if (MockStudent == null)
+                {
+                    throw new Exception();
+                }
+
+                return MockStudent;
+            }
+            catch (Exception ex)
+            {
+                message = Constants.OperationFailedDuringAddingValue(Constants.Student);
+                return null;
+            }
         }
         /*
         *Will NOT check whether username exists

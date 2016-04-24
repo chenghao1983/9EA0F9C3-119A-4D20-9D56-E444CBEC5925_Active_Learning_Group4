@@ -113,22 +113,84 @@ namespace ActiveLearning.Web.Tests.Controllers
             Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Course));
         }
 
+        [TestMethod]
+        public void ManageStudent_ExpectViewResultReturnedWithCorrectStudentsCount()
+        {
+            // Arrange
+            var stubStudents = (new List<Student>
+            {
+                new Student()
+                {
+                    UserSid = 1
 
+                },
+                new Student()
+                {
+                    UserSid = 2
+                }
+            }).AsQueryable();
 
+            _mockUserManager.MockStudents = stubStudents;
 
+            // Act
+            var view = (ViewResult)_controller.ManageStudent();
 
+            // Assert  
+            var Model = (IEnumerable<Student>)view.Model;
+            Assert.IsTrue(Model.Count() == 2);
+        }
 
+        [TestMethod]
+        public void ManageStudent_ExpectError()
+        {
+            // Arrange
+            _mockUserManager.MockStudents = null;
 
+            // Act
+            var view = (ViewResult)_controller.ManageStudent();
 
+            // Assert  
+            Assert.IsTrue(view.ViewData["Message"].ToString() == "The List is empty !");
+        }
 
+        [TestMethod]
+        public void CreateStudent_NoError()
+        {
+            // Arrange
+            Student _student = new Student();
+            _mockUserManager.MockStudent = _student;
 
+            // Act
+            var action = (RedirectToRouteResult)_controller.CreateStudent(_student);
 
+            // Assert  
+            Assert.AreEqual("ManageStudent", action.RouteValues["action"]);
+        }
 
+        [TestMethod]
+        public void CreateStudent_NullParameter()
+        {
+            // Arrange
 
+            // Act
+            var view = (ViewResult)_controller.CreateStudent(null);
 
+            // Assert  
+            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.ValueIsEmpty(Constants.Student));
+        }
 
+        [TestMethod]
+        public void CreateStudent_EF_Failure()
+        {
+            // Arrange
+            _mockUserManager.MockStudent = null;
 
+            // Act
+            var view = (ViewResult)_controller.CreateStudent(new Student());
 
+            // Assert  
+            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Student));
+        }
 
     }
 }

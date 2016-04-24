@@ -359,7 +359,7 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult ManageStudent()
         {
             string message = string.Empty;
-            using (var userManager = new UserManager())
+            using (var userManager = _UserManagerfactory.Create())
             {
 
                 List<Student> listStudent = (List<Student>)userManager.GetAllStudent(out message);
@@ -403,7 +403,7 @@ namespace ActiveLearning.Web.Controllers
             try
             {
                 string message = string.Empty;
-                using (var userManager = new UserManager())
+                using (var userManager = _UserManagerfactory.Create())
                 {
                     if (userManager.AddStudent(student, out message) == null)
                     {
