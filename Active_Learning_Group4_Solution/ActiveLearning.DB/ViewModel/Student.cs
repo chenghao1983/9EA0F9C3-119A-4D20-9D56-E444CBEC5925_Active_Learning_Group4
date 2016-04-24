@@ -17,5 +17,9 @@ namespace ActiveLearning.DB
             [Display(Name = "Batch Number")]
             public string BatchNo { get; set; }
         }
+
+        [Display(Name = "Enrolled")]
+        public bool HasEnrolled { get; set; }
+
     }
 }
