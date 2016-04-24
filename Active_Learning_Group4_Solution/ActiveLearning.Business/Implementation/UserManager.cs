@@ -25,6 +25,8 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.UserName);
                 return true;
             }
+            try
+            { 
             using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
             {
                 var user = unitOfWork.Users.Find(u => u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.DeleteDT.HasValue).FirstOrDefault();
@@ -36,6 +38,13 @@ namespace ActiveLearning.Business.Implementation
             }
             message = string.Empty;
             return false;
+            }
+            catch(Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.UserName);
+                return true;
+            }
         }
         public User GenerateHashedUser(User user, out string message)
         {
@@ -154,8 +163,8 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                messge = Constants.OperationFailedDuringAuthentingUserValue(userName);
                 ExceptionLog(ex);
+                messge = Constants.OperationFailedDuringAuthentingUserValue(userName);
                 return authenticatedUser;
             }
         }
@@ -330,10 +339,11 @@ namespace ActiveLearning.Business.Implementation
                 
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    student.User.UpdateDT = DateTime.Now;
-                    Util.CopyNonNullProperty(student, unitOfWork.Students.Get(student.Sid));
+                    var studentToUpdate = unitOfWork.Students.Get(student.Sid);
+                    Util.CopyNonNullProperty(student, studentToUpdate);
                     var userToUpdate = unitOfWork.Users.Get(student.User.Sid);
                     Util.CopyNonNullProperty(student.User, userToUpdate);
+                    userToUpdate.UpdateDT = DateTime.Now;
                     userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
 
                     using (TransactionScope scope = new TransactionScope())

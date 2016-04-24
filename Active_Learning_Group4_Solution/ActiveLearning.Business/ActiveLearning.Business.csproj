@@ -75,11 +75,14 @@
     <Compile Include="Implementation\ContentManager.cs" />
     <Compile Include="Interface\IChatManager.cs" />
     <Compile Include="Interface\IFileManager.cs" />
+    <Compile Include="Interface\IManagerFactoryBase.cs" />
     <Compile Include="Interface\IQuizManager.cs" />
     <Compile Include="Implementation\QuizManager.cs" />
     <Compile Include="Implementation\UserManager.cs" />
     <Compile Include="Interface\ICourseManager.cs" />
     <Compile Include="Interface\IUserManager.cs" />
+    <Compile Include="Mock\MockCourseManager.cs" />
+    <Compile Include="Mock\MockUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ChatHub.cs" />
     <Compile Include="ViewModel\StatisticsHub.cs" />

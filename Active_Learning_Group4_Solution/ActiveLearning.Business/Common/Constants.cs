@@ -39,6 +39,9 @@ namespace ActiveLearning.Business.Common
         public const string NonEnrolledCourse = "Non Enrolled Course";
         public const string Chat = "Chat";
         public const string Quiz = "Quiz";
+        public const string QuizQuestion = "Quiz Question";
+        public const string QuizOption = "Quiz Option";
+        public const string QuizAnswer = "Quiz Answer";
         public const string QuizTitle = "Quiz Title";
 
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
