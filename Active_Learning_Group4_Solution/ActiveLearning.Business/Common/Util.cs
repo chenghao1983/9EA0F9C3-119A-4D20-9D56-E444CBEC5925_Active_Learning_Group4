@@ -4,31 +4,13 @@ using System.Security.Cryptography;
 using System.Text;
 using ActiveLearning.DB;
 using System.Collections.Generic;
-using AutoMapper;
 
 namespace ActiveLearning.Business.Common
 {
     public class Util
     {
         #region Copy values
-        //public static void CopyNonNullProperty(ref object from, ref object to)
-        //{
-        //    if (from == null || to == null) return;
-        //    PropertyInfo[] allProps = from.GetType().GetProperties();
-        //    PropertyInfo toProp;
-        //    foreach (PropertyInfo fromProp in allProps)
-        //    {
-        //        //find property on "to" with same name
 
-        //        toProp = to.GetType().GetProperty(fromProp.Name);
-        //        if (toProp == null) continue; //not here
-        //        if (!toProp.CanWrite) continue; //only if writeable
-        //                                        //set the property value from "from" to "to"
-        //                                        // Debug.WriteLine(toProp.Name + " = from." + fromProp.Name + ";");
-        //        if (fromProp.GetValue(from, null) == null) continue;
-        //        toProp.SetValue(to, fromProp.GetValue(from, null), null);
-        //    }
-        //}
         public static void CopyNonNullProperty(object objFrom, object objTo)
         {
             List<Type> typeList = new List<Type>() { typeof(byte), typeof(byte?), typeof(sbyte),  typeof(sbyte?), typeof(int), typeof(int?), typeof(uint), typeof(uint?),
@@ -112,5 +94,39 @@ namespace ActiveLearning.Business.Common
             return pbkdf2.GetBytes(outputBytes);
         }
         #endregion
+
+        #region
+
+        public static string GetAllowedFileExtentionFromConfig()
+        {
+            string defaultExtentions = "mp4, ppt, pptx";
+            string key = "AllowedFileExtentions";
+            string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
+            return settings == null || settings.Length == 0 ? defaultExtentions : settings[0];
+        }
+        public static int GetAllowedFileSizeFromConfig()
+        {
+            int defaultAllowedFileSize = 4;
+            string key = "AllowedFileSize";
+            string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
+            if(settings ==null || settings.Length ==0)
+            {
+                return defaultAllowedFileSize;
+            }
+            else
+            {
+                int allowedFileSize = 0;
+                if(int.TryParse(settings[0], out allowedFileSize))
+                {
+                    return allowedFileSize;
+                }
+                else
+                {
+                    return defaultAllowedFileSize;
+                }
+            }
+        }
+        #endregion
+
     }
 }
