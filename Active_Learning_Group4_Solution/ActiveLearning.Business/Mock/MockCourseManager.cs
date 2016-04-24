@@ -251,6 +251,16 @@ namespace ActiveLearning.Business.Mock
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Student> GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instructor> GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         #endregion

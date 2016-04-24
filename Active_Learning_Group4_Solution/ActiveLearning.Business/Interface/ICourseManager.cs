@@ -20,6 +20,7 @@ namespace ActiveLearning.Business.Interface
         #endregion
 
         #region Student Enrolment
+        IEnumerable<Student> GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message);
         IEnumerable<Student> GetEnrolledStudentsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetEnrolledStudentSidsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetEnrolledStudentUserSidsByCourseSid(int courseSid, out string message);
@@ -40,6 +41,7 @@ namespace ActiveLearning.Business.Interface
         #endregion
 
         #region Instructor Enrolment
+        IEnumerable<Instructor> GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message);
         IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetEnrolledInstructorSidsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetEnrolledInstructorUserSidsByCourseSid(int courseSid, out string message);

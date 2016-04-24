@@ -204,6 +204,27 @@ namespace ActiveLearning.Business.Implementation
         #endregion
 
         #region Student Enrolment
+        public IEnumerable<Student> GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        {
+            var enrolledList = GetEnrolledStudentsByCourseSid(courseSid, out message);
+            var nonEnrolledList = GetNonEnrolledStudentsByCourseSid(courseSid, out message);
+
+            var allList = new List<Student>();
+            if (enrolledList != null)
+            {
+                allList.AddRange(enrolledList);
+            }
+            if (nonEnrolledList != null)
+            {
+                allList.AddRange(enrolledList);
+            }
+            if (allList.Count() == 0)
+            {
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Student_Course_Enrolment);
+                return null;
+            }
+            return allList;
+        }
         public IEnumerable<Student> GetEnrolledStudentsByCourseSid(int courseSid, out string message)
         {
             message = string.Empty;
@@ -562,7 +583,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Student_List);
                 return false;
             }
-            List<Student> list = new List<Student>();
+           var list = new List<Student>();
             foreach (var s in students)
             {
                 if (s.HasEnrolled)
@@ -576,6 +597,27 @@ namespace ActiveLearning.Business.Implementation
         #endregion
 
         #region Instructor enrolment
+        public IEnumerable<Instructor> GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        {
+            var enrolledList = GetEnrolledInstructorsByCourseSid(courseSid, out message);
+            var nonEnrolledList = GetNonEnrolledInstructorsByCourseSid(courseSid, out message);
+
+            var allList = new List<Instructor>();
+            if(enrolledList !=null)
+            {
+                allList.AddRange(enrolledList);
+            }
+            if(nonEnrolledList !=null)
+            {
+                allList.AddRange(enrolledList);
+            }
+            if(allList.Count()==0)
+            {
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Instructor_Course_Enrolment);
+                return null;
+            }
+            return allList;
+        }
         public IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message)
         {
             message = string.Empty;
@@ -923,7 +965,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Instructor_List);
                 return false;
             }
-            List<Instructor> list = new List<Instructor>();
+            var list = new List<Instructor>();
             foreach (var i in Instructors)
             {
                 if (i.HasEnrolled)
