@@ -11,6 +11,7 @@ using ActiveLearning.Repository.Repository.Core;
 using ActiveLearning.Repository.Repository;
 using ActiveLearning.DB;
 
+
 namespace ActiveLearning.Repository
 {
     public class UnitOfWork : IUnitOfWork
@@ -53,9 +54,17 @@ namespace ActiveLearning.Repository
             return _context.SaveChanges();
         }
 
+        public async Task CompleteAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public void Dispose()
         {
             _context.Dispose();
+        }
+        public ActiveLearningContext ActiveLearningContext
+        {
+            get { return _context as ActiveLearningContext; }
         }
     }
 }

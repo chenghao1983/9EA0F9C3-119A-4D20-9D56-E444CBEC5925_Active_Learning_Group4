@@ -12,5 +12,6 @@ namespace ActiveLearning.Repository.Interface.Core
 
         Task<bool> DeleteAsync(params object[] keyValues);
 
+
     }
 }
