@@ -23,9 +23,11 @@ namespace ActiveLearning.Business.Common
         public const string Role = "Role";
         public const string User = "User";
         public const string Student = "Student";
+        public const string Student_List = "Student List";
         public const string EnrolledStudent = "Enrolled Student";
         public const string NonEnrolledStudent = "Non Enrolled Student";
         public const string Instructor = "Instructor";
+        public const string Instructor_List = "Instructor List";
         public const string EnrolledInstructor = "Enrolled Instructor";
         public const string NonEnrolledInstructor = "Non Enrolled Instructor";
         public const string Student_Course_Enrolment = "Student Course Enrolment ";

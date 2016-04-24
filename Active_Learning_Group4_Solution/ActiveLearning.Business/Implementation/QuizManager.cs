@@ -584,42 +584,86 @@ namespace ActiveLearning.Business.Implementation
         #region Async
         public async Task<QuizQuestion> NextQuestionAsync(int studentSid, int CourseSid)
         {
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                //var lastQuestionId = await unitOfWork.QuizAnswers.FindAsync(a => a.StudentSid == studentSid)
-            }
-            var lastQuestionId = await db.QuizAnswers
-                .Where(a => a.StudentSid == studentSid)
-                .GroupBy(a => a.QuizQuestionSid)
-                .Select(g => new { QuestionId = g.Key, Count = g.Count() })
-                .OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId })
-                .Select(q => q.QuestionId)
-                .FirstOrDefaultAsync();
-
             try
             {
-                var questionsCount = await db.QuizQuestions.Where(x => x.CourseSid == CourseSid).CountAsync();
-
-                if (questionsCount == 0)
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    return null;
+                    var lastQuestion = await unitOfWork.QuizAnswers.FindAsync(a => a.StudentSid == studentSid);
+
+                    var lastQuestionId = lastQuestion.GroupBy(a => a.QuizQuestionSid).Select(g => new { QuestionId = g.Key, Count = g.Count() }).
+                           OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId }).Select(q => q.QuestionId).FirstOrDefault();
+
+                    var question = await unitOfWork.QuizQuestions.FindAsync(x => x.CourseSid == CourseSid);
+                    var questionsCount = question.Count();
+
+                    //var questionsCount = await db.QuizQuestions.Where(x => x.CourseSid == CourseSid).CountAsync();
+
+                    if (questionsCount == 0)
+                    {
+                        return null;
+                    }
+                    var nextQuestionId = (lastQuestionId % questionsCount) + 1;
+
+                    var nextQuestion = await unitOfWork.QuizQuestions.GetAsync(nextQuestionId);
+                    nextQuestion.QuizOptions = await unitOfWork.QuizOptions.FindAsync(o => o.QuizQuestionSid == nextQuestion.Sid) as ICollection<QuizOption>;
+
+                    return nextQuestion;
+                    //return await db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
                 }
-                var nextQuestionId = (lastQuestionId % questionsCount) + 1;
-
-                //var p = db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
-
-
-                return await db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
                 return null;
-
             }
+            //var lastQuestionId = await db.QuizAnswers
+            //    .Where(a => a.StudentSid == studentSid)
+            //    .GroupBy(a => a.QuizQuestionSid)
+            //    .Select(g => new { QuestionId = g.Key, Count = g.Count() })
+            //    .OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId })
+            //    .Select(q => q.QuestionId)
+            //    .FirstOrDefaultAsync();
+
+            //try
+            //{
+            //    var questionsCount = await db.QuizQuestions.Where(x => x.CourseSid == CourseSid).CountAsync();
+
+            //    if (questionsCount == 0)
+            //    {
+            //        return null;
+            //    }
+            //    var nextQuestionId = (lastQuestionId % questionsCount) + 1;
+
+            //    //var p = db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
+
+
+            //    return await db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ExceptionLog(ex);
+            //    return null;
+
+            //}
         }
+
         public async Task<bool> StoreAsync(QuizAnswer answer)
         {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    unitOfWork.QuizAnswers.Add(answer);
+    
+                    //unitOfWork.CompleteAsync
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                throw;
+            }
+
             this.db.QuizAnswers.Add(answer);
 
             await this.db.SaveChangesAsync();

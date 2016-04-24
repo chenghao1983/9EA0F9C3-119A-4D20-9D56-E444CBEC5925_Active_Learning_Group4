@@ -36,6 +36,7 @@ namespace ActiveLearning.Business.Interface
         bool RemoveStudentsFromCourse(IEnumerable<int> studentSids, int courseSid, out string message);
         bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message);
         bool UpdateStudentsCourseEnrolment(IEnumerable<int> studentSids, int courseSid, out string message);
+        bool UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(IEnumerable<Student> students, int courseSid, out string message);
         #endregion
 
         #region Instructor Enrolment
@@ -55,6 +56,7 @@ namespace ActiveLearning.Business.Interface
         bool RemoveInstructorsFromCourse(IEnumerable<int> InstructorSids, int courseSid, out string message);
         bool UpdateInstructorsCourseEnrolment(IEnumerable<Instructor> Instructors, int courseSid, out string message);
         bool UpdateInstructorsCourseEnrolment(IEnumerable<int> InstructorSids, int courseSid, out string message);
+        bool UpdateInstructorsCourseEnrolmentByHasEnrolledIndicator(IEnumerable<Instructor> Instructors, int courseSid, out string message);
         #endregion
     }
 }

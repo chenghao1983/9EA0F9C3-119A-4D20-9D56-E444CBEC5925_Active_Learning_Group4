@@ -226,6 +226,7 @@ namespace ActiveLearning.Business.Implementation
                             {
                                 if (student != null)
                                 {
+                                    student.HasEnrolled = true;
                                     list.Add(student);
                                 }
                             }
@@ -289,6 +290,10 @@ namespace ActiveLearning.Business.Implementation
                         var enrolledStudents = GetEnrolledStudentsByCourseSid(courseSid, out message);
                         if (enrolledStudents == null || enrolledStudents.Count() == 0)
                         {
+                            foreach (var activeStudent in allActiveStudents)
+                            {
+                                activeStudent.HasEnrolled = false;
+                            }
                             message = string.Empty;
                             return allActiveStudents;
                         }
@@ -307,6 +312,10 @@ namespace ActiveLearning.Business.Implementation
                             }
                             else
                             {
+                                foreach (var s in list)
+                                {
+                                    s.HasEnrolled = false;
+                                }
                                 message = string.Empty;
                                 return list.ToList();
                             }
@@ -473,7 +482,7 @@ namespace ActiveLearning.Business.Implementation
 
         public bool UpdateStudentsCourseEnrolment(IEnumerable<Student> students, int courseSid, out string message)
         {
-            if (students == null || students.Count() == 0)
+            if (students == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
@@ -487,7 +496,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool UpdateStudentsCourseEnrolment(IEnumerable<int> studentSids, int courseSid, out string message)
         {
-            if (studentSids == null || studentSids.Count() == 0)
+            if (studentSids == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
@@ -546,6 +555,24 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
+        public bool UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(IEnumerable<Student> students, int courseSid, out string message)
+        {
+            if (students == null)
+            {
+                message = Constants.ValueIsEmpty(Constants.Student_List);
+                return false;
+            }
+            List<Student> list = new List<Student>();
+            foreach (var s in students)
+            {
+                if (s.HasEnrolled)
+                {
+                    list.Add(s);
+                }
+            }
+            return UpdateStudentsCourseEnrolment(list, courseSid, out message);
+        }
+
         #endregion
 
         #region Instructor enrolment
@@ -571,6 +598,7 @@ namespace ActiveLearning.Business.Implementation
                             {
                                 if (Instructor != null)
                                 {
+                                    Instructor.HasEnrolled = true;
                                     list.Add(Instructor);
                                 }
                             }
@@ -633,8 +661,12 @@ namespace ActiveLearning.Business.Implementation
                         var enrolledInstructors = GetEnrolledInstructorsByCourseSid(courseSid, out message);
                         if (enrolledInstructors == null || enrolledInstructors.Count() == 0)
                         {
+                            foreach (var i in allActiveInstructors)
+                            {
+                                i.HasEnrolled = false;
+                            }
                             message = string.Empty;
-                            return allActiveInstructors.ToList();
+                            return allActiveInstructors;
                         }
                         if (enrolledInstructors.Count() == allActiveInstructors.Count())
                         {
@@ -651,6 +683,10 @@ namespace ActiveLearning.Business.Implementation
                             }
                             else
                             {
+                                foreach (var i in list)
+                                {
+                                    i.HasEnrolled = false;
+                                }
                                 message = string.Empty;
                                 return list.ToList();
                             }
@@ -812,7 +848,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool UpdateInstructorsCourseEnrolment(IEnumerable<Instructor> Instructors, int courseSid, out string message)
         {
-            if (Instructors == null || Instructors.Count() == 0)
+            if (Instructors == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
@@ -821,7 +857,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool UpdateInstructorsCourseEnrolment(IEnumerable<int> InstructorSids, int courseSid, out string message)
         {
-            if (InstructorSids == null || InstructorSids.Count() == 0)
+            if (InstructorSids == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
@@ -880,7 +916,23 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
-
+        public bool UpdateInstructorsCourseEnrolmentByHasEnrolledIndicator(IEnumerable<Instructor> Instructors, int courseSid, out string message)
+        {
+            if (Instructors == null)
+            {
+                message = Constants.ValueIsEmpty(Constants.Instructor_List);
+                return false;
+            }
+            List<Instructor> list = new List<Instructor>();
+            foreach (var i in Instructors)
+            {
+                if (i.HasEnrolled)
+                {
+                    list.Add(i);
+                }
+            }
+            return UpdateInstructorsCourseEnrolment(list, courseSid, out message);
+        }
         #endregion
     }
 }
