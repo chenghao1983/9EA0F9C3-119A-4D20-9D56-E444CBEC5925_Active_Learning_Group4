@@ -7,6 +7,7 @@ using ActiveLearning.DB;
 using System.Reflection;
 using ActiveLearning.Web.Filter;
 using log4net;
+using ActiveLearning.Business.Implementation;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -23,6 +24,13 @@ namespace ActiveLearning.Web.Controllers
             return Redirect("~/home");
         }
 
+        public bool HasAccessToCourse(int courseSid, out string message)
+        {
+            using (var userManager = new UserManager())
+            {
+                return userManager.HasAccessToCourse(GetLoginUser(), courseSid, out message);
+            }
+        }
 
         //log error
         public static void ExceptionLog(Exception ex)
