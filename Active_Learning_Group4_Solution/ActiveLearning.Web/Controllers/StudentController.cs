@@ -23,7 +23,7 @@ namespace ActiveLearning.Web.Controllers
             var claims = new List<Claim>();
 
             // TODO: groupid : courseSid parameter, name 
-
+            courseSid = "1";
 
             claims.Add(new Claim(ClaimTypes.GroupSid, courseSid));
             claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));

@@ -9,7 +9,8 @@
     using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
 
-        var tempUser = TempData[BaseController.UserSessionParam] as User;
+        var tempUser = TempData.Peek(BaseController.UserSessionParam) as User;
+
         @*@html.antiforgerytoken();*@
         <ul class="nav navbar-nav navbar-right">
             <li>
