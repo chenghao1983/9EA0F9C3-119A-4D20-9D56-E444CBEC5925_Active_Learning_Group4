@@ -62,7 +62,7 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
         }
-        public IEnumerable<Course> GetAllCourses(out string message)
+        public virtual IEnumerable<Course> GetAllCourses(out string message)
         {
             message = string.Empty;
             try
