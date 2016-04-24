@@ -9,11 +9,24 @@ using System.Security.Principal;
 using System.Security.Claims;
 using ActiveLearning.Web.Filter;
 using ActiveLearning.Business.Common;
+using ActiveLearning.Business.Interface;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class AdminController : BaseController
     {
+        private IManagerFactoryBase<ICourseManager> _CourseManagerfactory { get; set; }
+
+        public AdminController()
+        {
+            _CourseManagerfactory = new CourseManager();
+        }
+
+        public AdminController(IManagerFactoryBase<ICourseManager> factory)
+        {
+            _CourseManagerfactory = factory;
+        }
+
         // GET: Course
         public ActionResult Index()
         {
@@ -28,7 +41,7 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult ManageCourse()
         {
             string message = string.Empty;
-            using (var courseManager = new CourseManager())
+            using (var courseManager = _CourseManagerfactory.Create())
             {
 
                 var listCourse = courseManager.GetAllCourses(out message);

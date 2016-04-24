@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActiveLearning.Business.Interface
 {
-    public interface ICourseManager
+    public interface ICourseManager : IDisposable
     {
         #region Course
         bool CourseNameExists(string courseName, out string message);

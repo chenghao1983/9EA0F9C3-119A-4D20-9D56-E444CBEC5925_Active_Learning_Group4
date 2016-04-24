@@ -12,14 +12,20 @@ using System.Threading.Tasks;
 using ActiveLearning.Repository.Context;
 using ActiveLearning.Business.Common;
 using System.Transactions;
+using ActiveLearning.Business.Implementation;
 
-namespace ActiveLearning.Business.Implementation
+namespace ActiveLearning.Business.Mock
 {
-    public class CourseManager : BaseManager, ICourseManager, IManagerFactoryBase<ICourseManager>
+    public class MockCourseManager : ICourseManager, IManagerFactoryBase<ICourseManager>
     {
         public ICourseManager Create()
         {
-            return new CourseManager();
+            return new MockCourseManager();
+        }
+
+        public void Dispose()
+        {
+            
         }
 
         #region Course
@@ -62,8 +68,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue(Constants.Course);
+
                 return null;
             }
         }
@@ -87,7 +92,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+              
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.Course);
                 return null;
             }
@@ -121,7 +126,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+             
                 message = Constants.OperationFailedDuringAddingValue(Constants.Course);
                 return null;
             }
@@ -151,7 +156,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringUpdatingValue(Constants.Course);
                 return false;
             }
@@ -196,7 +201,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+             
                 message = Constants.OperationFailedDuringDeletingValue(Constants.Course);
                 return false;
             }
@@ -242,7 +247,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+              
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.EnrolledStudent);
                 return null;
             }
@@ -316,7 +321,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+              
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.NonEnrolledStudent);
                 return null;
             }
@@ -377,7 +382,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+           
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.EnrolledCourse);
                 return null;
             }
@@ -436,7 +441,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+              
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.NonEnrolledCourse);
                 return null;
             }
@@ -510,7 +515,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringUpdatingValue(Constants.Student_Course_Enrolment);
                 return false;
             }
@@ -541,7 +546,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+             
                 message = Constants.OperationFailedDuringSavingValue(Constants.Student_Course_Enrolment);
                 return false;
             }
@@ -587,7 +592,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+             
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.EnrolledInstructor);
                 return null;
             }
@@ -660,7 +665,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.NonEnrolledInstructor);
                 return null;
             }
@@ -720,7 +725,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.EnrolledCourse);
                 return null;
             }
@@ -779,7 +784,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+              
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.NonEnrolledCourse);
                 return null;
             }
@@ -844,7 +849,7 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringUpdatingValue(Constants.Instructor_Course_Enrolment);
                 return false;
             }
@@ -875,12 +880,15 @@ namespace ActiveLearning.Business.Implementation
             }
             catch (Exception ex)
             {
-                ExceptionLog(ex);
+               
                 message = Constants.OperationFailedDuringSavingValue(Constants.Instructor_Course_Enrolment);
                 return false;
             }
         }
 
+
+
         #endregion
+
     }
 }
