@@ -4,15 +4,35 @@ using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Collections.Generic;
+using ActiveLearning.Business.Implementation;
+using ActiveLearning.DB;
 
-namespace ActiveLearning.Business.ViewModel
+namespace ActiveLearning.Business.ChatHub
 {
     public class ChatHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string studentSid, string name, string message)
         {
             // Call the addNewMessageToPage method to update clients.
             //Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
+            if(message ==null ||string.IsNullOrEmpty(message))
+            {
+                message = "";
+            }
+            using (var chatManager = new ChatManager())
+            {
+                try
+                {
+                    string msg = string.Empty;
+                    Chat chat = new Chat() { CourseSid = int.Parse(LiveChatHelper.CourseName), CreateDT = DateTime.Now, Message = message, StudentSid = int.Parse(studentSid) };
+                    chatManager.AddStudentChatToCourse(chat, chat.StudentSid.Value, chat.CourseSid, out msg);
+                }
+                catch (Exception ex)
+                {
+                    BaseManager.ExceptionLog(ex);
+                }
+            }
+
             Clients.Group(LiveChatHelper.CourseName).addNewMessageToPage(Context.User.Identity.Name, message);
         }
 
@@ -34,12 +54,8 @@ namespace ActiveLearning.Business.ViewModel
                 }
             }
 
-
-
             return base.OnConnected();
         }
-
-
     }
 
 
@@ -58,8 +74,6 @@ namespace ActiveLearning.Business.ViewModel
         }
 
         public static string CourseName { get; set; }
-
-
 
         public static string Anonymous
         {
