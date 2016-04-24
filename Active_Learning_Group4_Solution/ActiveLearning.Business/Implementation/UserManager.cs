@@ -327,15 +327,17 @@ namespace ActiveLearning.Business.Implementation
             }
             try
             {
+                
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
+                    student.User.UpdateDT = DateTime.Now;
+                    Util.CopyNonNullProperty(student, unitOfWork.Students.Get(student.Sid));
+                    var userToUpdate = unitOfWork.Users.Get(student.User.Sid);
+                    Util.CopyNonNullProperty(student.User, userToUpdate);
+                    userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
+
                     using (TransactionScope scope = new TransactionScope())
                     {
-                        student.User.UpdateDT = DateTime.Now;
-                        Util.CopyNonNullProperty(student, unitOfWork.Students.Get(student.Sid));
-                        var userToUpdate = unitOfWork.Users.Get(student.User.Sid);
-                        Util.CopyNonNullProperty(student.User, userToUpdate);
-                        userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
                         unitOfWork.Complete();
                         scope.Complete();
                     }
