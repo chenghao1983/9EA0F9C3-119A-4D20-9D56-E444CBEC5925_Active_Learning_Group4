@@ -11,6 +11,7 @@ using ActiveLearning.Web.Filter;
 using ActiveLearning.Business.Common;
 using ActiveLearning.Business.Interface;
 
+
 namespace ActiveLearning.Web.Controllers
 {
     public class AdminController : BaseController
@@ -31,6 +32,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: Course
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Index()
         {
 
@@ -41,6 +43,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageCourse
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageCourse()
         {
             string message = string.Empty;
@@ -215,7 +218,7 @@ namespace ActiveLearning.Web.Controllers
 
                 using (var updateInstructor = new UserManager())
                 {
-                    if (updateInstructor.UpdateInstructor(instructorToUpdate,out message))
+                    if (updateInstructor.UpdateInstructor(instructorToUpdate, out message))
                     {
                         return RedirectToAction("ManageInstructor");
                     }

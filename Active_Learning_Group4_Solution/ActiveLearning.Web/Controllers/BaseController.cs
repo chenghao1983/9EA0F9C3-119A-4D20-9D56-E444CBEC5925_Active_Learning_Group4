@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ActiveLearning.DB;
 using System.Reflection;
+using ActiveLearning.Web.Filter;
 using log4net;
 
 namespace ActiveLearning.Web.Controllers
@@ -101,39 +102,44 @@ namespace ActiveLearning.Web.Controllers
         public bool IsUserAuthenticated()
         {
             if (TempData.Peek(UserSessionParam) == null)
-            //if (Session[UserSessionParam] == null)
             {
+                if (Session == null || Session[UserSessionParam] == null)
+                    return false;
+
                 return false;
             }
             return true;
-
         }
 
         public User GetLoginUser()
         {
             if (TempData.Peek(UserSessionParam) == null)
-            //if (Session ==null || Session[UserSessionParam] == null)
             {
-                return null;
+                if (Session == null || Session[UserSessionParam] == null)
+                    return null;
+
+                return Session[UserSessionParam] as User;
             }
-            //return Session[UserSessionParam] as User;
             return TempData.Peek(UserSessionParam) as User;
         }
 
         public string GetLoginUserRole()
         {
             if (TempData.Peek(UserSessionParam) == null)
-            //if (Session[UserSessionParam] == null)
             {
-                return null;
+                if (Session == null || Session[UserSessionParam] == null)
+                    return null;
+
+                return (Session[UserSessionParam] as User).Role;
             }
-            //return (Session[UserSessionParam] as User).Role;
             return (TempData.Peek(UserSessionParam) as User).Role;
         }
 
         public void LogUserIn(User user)
         {
-            //Session[UserSessionParam] = user;
+            if (Session != null)
+                Session[UserSessionParam] = user;
+
             if (!TempData.Keys.Contains(UserSessionParam))
             {
                 TempData.Add(UserSessionParam, user);
@@ -145,6 +151,7 @@ namespace ActiveLearning.Web.Controllers
         public void LogUserOut()
         {
             TempData.Clear();
+            Session.Clear();
         }
     }
 }
