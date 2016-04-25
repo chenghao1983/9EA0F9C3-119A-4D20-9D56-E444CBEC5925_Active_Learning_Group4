@@ -1,10 +1,10 @@
 ﻿@model ActiveLearning.DB.User
 
 @{
-    ViewBag.Title = "Please Login";
+    ViewBag.Title = "Login";
 }
 
-<h2 class="text-center">Login</h2>
+<h2 class="text-center">Please Login</h2>
 
 @using (Html.BeginForm())
 {
@@ -34,8 +34,8 @@
 
 
         <div class="form-group">
-            <div class="col-md-offset-5 col-md-5">
-                <input type="submit" value="Login" class="btn btn-default" />
+            <div class="text-center">
+                <input type="submit" value="Login" class="btn btn-primary btn-lg" style="width:400px"/>
             </div>
         </div>
 
