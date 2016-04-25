@@ -50,6 +50,11 @@ namespace ActiveLearning.Business.Common
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
+
+        public static string PleaseEnterValue(string value)
+        {
+            return "Please enter " + value;
+        }
         public static string UnknownValue(string value)
         {
             return "Unknown " + value;

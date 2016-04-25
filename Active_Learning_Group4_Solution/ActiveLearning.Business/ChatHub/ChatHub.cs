@@ -11,7 +11,7 @@ namespace ActiveLearning.Business.ChatHub
 {
     public class ChatHub : Hub
     {
-        public void Send(string studentSid, string name, string message)
+        public void Send(int courseSid,string studentSid, string name, string message)
         {
             // Call the addNewMessageToPage method to update clients.
             //Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
@@ -24,7 +24,7 @@ namespace ActiveLearning.Business.ChatHub
                 try
                 {
                     string msg = string.Empty;
-                    Chat chat = new Chat() { CourseSid = int.Parse(LiveChatHelper.CourseName), CreateDT = DateTime.Now, Message = message, StudentSid = int.Parse(studentSid) };
+                    Chat chat = new Chat() { CourseSid = courseSid, CreateDT = DateTime.Now, Message = message, StudentSid = int.Parse(studentSid) };
                     chatManager.AddStudentChatToCourse(chat, chat.StudentSid.Value, chat.CourseSid, out msg);
                 }
                 catch (Exception ex)
@@ -32,15 +32,13 @@ namespace ActiveLearning.Business.ChatHub
                     BaseManager.ExceptionLog(ex);
                 }
             }
-
-            Clients.Group(LiveChatHelper.CourseName).addNewMessageToPage(Context.User.Identity.Name, message);
+            Clients.Group(courseSid.ToString()).addNewMessageToPage(Context.User.Identity.Name, message);
         }
 
 
         public override Task OnConnected()
-        {
+       {
             string username = Context.User.Identity.Name;
-
 
             var identity = (ClaimsIdentity)Context.User.Identity;
             IEnumerable<Claim> claims = identity.Claims;
@@ -49,7 +47,8 @@ namespace ActiveLearning.Business.ChatHub
             {
                 if (LiveChatHelper.ParseClaimsType(claim.Type) == "GroupSid")
                 {
-                    LiveChatHelper.CourseName = claim.Value;
+
+                   //LiveChatHelper.CourseID = claim.Value;
                     Groups.Add(this.Context.ConnectionId, claim.Value);
                 }
             }
@@ -59,7 +58,7 @@ namespace ActiveLearning.Business.ChatHub
     }
 
 
-    public static class LiveChatHelper
+    public class LiveChatHelper
     {
         public static string ParseClaimsType(string claimType)
         {
@@ -73,7 +72,7 @@ namespace ActiveLearning.Business.ChatHub
             }
         }
 
-        public static string CourseName { get; set; }
+        public static string CourseID { get; set; }
 
         public static string Anonymous
         {
