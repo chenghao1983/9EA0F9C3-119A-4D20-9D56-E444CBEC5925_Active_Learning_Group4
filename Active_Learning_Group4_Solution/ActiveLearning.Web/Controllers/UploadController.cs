@@ -40,8 +40,9 @@ namespace ActiveLearning.Web.Controllers
                     };
 
                     // Write to Database
-                    IFileManager fileManager = new FileManager();
-                    fileManager.AddFile(fileDetail);
+                    string message = string.Empty;
+                    IContentManager fileManager = new ContentManager();
+                    fileManager.AddContent(fileDetail, 1, out message);
 
 
                     var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));

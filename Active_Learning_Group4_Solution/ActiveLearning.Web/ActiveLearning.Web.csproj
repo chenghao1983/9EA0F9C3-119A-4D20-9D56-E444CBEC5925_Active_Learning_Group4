@@ -192,7 +192,6 @@
     <Compile Include="Controllers\QuizQuestionController.cs" />
     <Compile Include="Controllers\QuizStatisticsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\TestAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />

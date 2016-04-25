@@ -12,13 +12,12 @@
         var tempUser = TempData.Peek(BaseController.UserSessionParam) as User;
 
         @*@html.antiforgerytoken();*@
-        <ul class="nav navbar-nav navbar-left">
-            <li>@Html.ActionLink("Home", "Index", "student")</li>
-        </ul>
+        <ul class="nav navbar-nav navbar-left"></ul>
         <ul class="nav navbar-nav navbar-right">
-            <li >
-                @Html.ActionLink("Hello " + tempUser.FullName,"", null, new { onclick = "javascript:return false;" })
+            <li>
+                @Html.ActionLink("Hello " + tempUser.FullName, "", null, new { onclick = "javascript:return false;" })
             </li>
+            <li>@Html.ActionLink("Home", "Index", "student")</li>
             <li>@Html.ActionLink("My Course", "CourseList", "student")</li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

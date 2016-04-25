@@ -35,14 +35,12 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
             string message = string.Empty;
-            if(!HasAccessToCourse(courseSid, out message))
+            if (!HasAccessToCourse(courseSid, out message))
             {
                 return new HttpUnauthorizedResult(message);
             }
             var claims = new List<Claim>();
 
-            // TODO: groupid : courseSid parameter, name 
-            //courseSid = 1;
 
             claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
@@ -59,6 +57,7 @@ namespace ActiveLearning.Web.Controllers
             return View(courseSid);
 
         }
+
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Download()
         {
@@ -68,8 +67,9 @@ namespace ActiveLearning.Web.Controllers
             }
             // TODO 
             // Get course ID
-            IFileManager fileManager = new FileManager();
-            var files = fileManager.GetFiles(2);
+            string message = string.Empty;
+            IContentManager fileManager = new ContentManager();
+            var files = fileManager.GetContentsByCourseSid(1, out message);
 
             List<string> items = new List<string>();
             foreach (var file in files)
@@ -87,8 +87,9 @@ namespace ActiveLearning.Web.Controllers
                 return null;
             }
             // convert filename to GUID filename
-            IFileManager fileManager = new FileManager();
-            var guidFileName = fileManager.GetGUIDFile(FileName, 2);
+            string message = string.Empty;
+            IContentManager fileManager = new ContentManager();
+            var guidFileName = fileManager.GetGUIDFile(FileName, 2, out message);
 
 
             return File("~/App_Data/Upload/" + guidFileName, System.Net.Mime.MediaTypeNames.Application.Octet, FileName);

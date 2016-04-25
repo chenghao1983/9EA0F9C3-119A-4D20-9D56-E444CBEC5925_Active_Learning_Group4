@@ -710,12 +710,12 @@ namespace ActiveLearning.Web.Controllers
                 //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
                 //TempData["CheckedStudent"] = checkedStudentId;
                 TempData["CourseId"] = id;
-                return View(listStudent);
+                return View(listStudent.ToList());
             }
         }
         // POST: ManageCourse/UpdateEnrolment
         [HttpPost]
-        public string UpdateEnrolment(IEnumerable<Student> student)
+        public string UpdateEnrolment(IList<Student> student)
         {
 
             if(student.Count(x => x.HasEnrolled) == 0)

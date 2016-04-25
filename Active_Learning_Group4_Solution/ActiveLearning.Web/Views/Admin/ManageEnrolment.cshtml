@@ -1,6 +1,6 @@
-﻿@model IEnumerable<ActiveLearning.DB.Student>
+﻿@model IList<ActiveLearning.DB.Student>
 @using ActiveLearning.DB;
-
+@using ActiveLearning.Business.Common;
 @{
     ViewBag.Title = "ManageEnrolment";
 }
@@ -19,62 +19,77 @@
 
 <h2>Manage Course Enrolment</h2>
 
-<p>
-    @Html.ActionLink("Update", "UpdateEnrolment", "Admin")
-</p>
-@using (Html.BeginForm("UpdateEnrolment", "Admin", FormMethod.Post))
+@if (Model == null || Model.Count() == 0)
 {
-    <input type="submit" value="Update" onclick="return Confirm('Are you sure?')"/>
-    <table class="table">
-        <tr>
-            <th>
-                <input type="checkbox" id="checkBoxAll" />
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BatchNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.Username)
-            </th>
+    <label for="Name" class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Student)</label>
+}
+else
+{
 
-
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    using (Html.BeginForm("UpdateEnrolment", "Admin", FormMethod.Post))
+    {
+        <table class="table">
             <tr>
-                    @*@{if (TempData.Peek("CheckedStudent") != null)
-                        {
-                            var checkedStu = TempData.Peek("CheckedStudent")as List<int>;
-                            //if (item.UserSid.Equals(checkedStu[0]))
-                            if(checkedStu.Contains(item.UserSid))
-                            {
-                                <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" checked />
-                            }
-                            else
-                            {
-                                <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" />
-                            }
-
-                        }
-                    }*@
-                <td>
-                    @Html.CheckBoxFor(modelItem => item.HasEnrolled)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BatchNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Username)
-                </td>
-
-
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.Sid }) 
-                </td>
+                <th>
+                    <input type="checkbox" id="checkBoxAll" />
+                </th>
+                <th>
+                    Full Name   @*@Html.DisplayNameFor(model => model.BatchNo)*@
+                </th>
+                <th>
+                    User Name   @*@Html.DisplayNameFor(model => model.User.Username)*@
+                </th>
+                <th>
+                    Batch No
+                </th>
+                <th>
+                </th>
             </tr>
-                        }
 
-    </table>
-                        }
+            @*@foreach (var item in Model)*@
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+
+                <tr>
+                    @*@{if (TempData.Peek("CheckedStudent") != null)
+                            {
+                                var checkedStu = TempData.Peek("CheckedStudent")as List<int>;
+                                //if (item.UserSid.Equals(checkedStu[0]))
+                                if(checkedStu.Contains(item.UserSid))
+                                {
+                                    <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" />
+                                }
+
+                            }
+                        }*@
+                    <td>
+                        @Html.CheckBoxFor(x => x[i].HasEnrolled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].User.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].User.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].BatchNo)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = Model[i].Sid })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" onclick="return Confirm('Confirm to update Student Enrollment ?')" />
+            </div>
+        </div>
+    }
+}
