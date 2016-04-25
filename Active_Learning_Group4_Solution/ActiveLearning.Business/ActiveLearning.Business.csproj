@@ -70,11 +70,9 @@
     <Compile Include="Implementation\ChatManager.cs" />
     <Compile Include="Implementation\CourseManager.cs" />
     <Compile Include="Implementation\BaseManager.cs" />
-    <Compile Include="Implementation\FileManager.cs" />
-    <Compile Include="Interface\IContentManager.cs" />
     <Compile Include="Implementation\ContentManager.cs" />
     <Compile Include="Interface\IChatManager.cs" />
-    <Compile Include="Interface\IFileManager.cs" />
+    <Compile Include="Interface\IContentManager.cs" />
     <Compile Include="Interface\IManagerFactoryBase.cs" />
     <Compile Include="Interface\IQuizManager.cs" />
     <Compile Include="Implementation\QuizManager.cs" />
