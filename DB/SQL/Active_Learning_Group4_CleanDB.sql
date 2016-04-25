@@ -476,8 +476,13 @@ GO
 --------------------------View---------------------- 
 --------------------------SP------------------------ 
 --------------------------Data---------------------- 
----  [dbo].[User]  --
 
+
+---  [dbo].[User]  --
+DELETE from [dbo].[Student_Course_Map]
+GO
+DELETE from [dbo].[Instructor_Course_Map]
+GO
 DELETE from [dbo].[Student]
 GO
 DELETE from [dbo].[Instructor]
@@ -617,7 +622,7 @@ GO
 
 INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (1, 'Enterprise .NET - SE24', GETDATE())
 GO
-INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (2, 'Object Oriented Software Development- SE24', GETDATE())
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (2, 'Object Oriented Software Development - SE24', GETDATE())
 GO
 INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (3, 'Project Initiation and Scope Management - SE24', GETDATE())
 GO
@@ -625,7 +630,7 @@ INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (4, 'Scope Managem
 GO
 INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (5, 'Risk Management and Work Breakdown Structure - SE24', GETDATE())
 GO
-INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (6, 'Object Oriented Software Development - SE24', GETDATE())
+INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (6, 'Object Oriented Software Design - SE24', GETDATE())
 GO
 INSERT INTO [dbo].[Course] (Sid, CourseName, CreateDT) VALUES (7, 'Scheduling and Producing Project Plans - SE24', GETDATE())
 GO
@@ -643,6 +648,78 @@ GO
 SET IDENTITY_INSERT [dbo].[Course] OFF
 GO
 
+
+-- Student Course Map
+
+SET IDENTITY_INSERT [dbo].[Student_Course_Map] ON
+GO
+
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (1, 1, 1, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (2, 1, 2, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (3, 1, 6, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (4, 1, 12, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (5, 2, 3, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (6, 2, 4, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (7, 2, 6, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (8, 2, 7, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (9, 2, 8, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (10, 2, 10, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (11, 2, 11, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (12, 3, 9, GETDATE())
+GO
+
+SET IDENTITY_INSERT [dbo].[Student_Course_Map] OFF
+GO
+
+-- Instructor Course Map
+
+SET IDENTITY_INSERT [dbo].[Instructor_Course_Map] ON
+GO
+
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (1, 1, 1, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (2, 1, 2, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (3, 2, 3, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (4, 2, 6, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (5, 3, 3, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (6, 4, 1, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (7, 5, 1, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (8, 6, 12, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (9, 7, 10, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (10, 8, 4, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (11, 8, 5, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (12, 8, 11, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (13, 9, 7, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (14, 10, 9, GETDATE())
+GO
+INSERT INTO [dbo].[Instructor_Course_Map] (Sid, InstructorSid, CourseSid, CreateDT) VALUES (15, 10, 8, GETDATE())
+GO
+
+SET IDENTITY_INSERT [dbo].[Instructor_Course_Map] OFF
+GO
 
 -- Quiz Question an Option --
 
