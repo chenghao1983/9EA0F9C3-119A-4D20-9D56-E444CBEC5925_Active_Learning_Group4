@@ -1,8 +1,7 @@
 ﻿@using ActiveLearning.Web.Controllers;
 @using ActiveLearning.DB;
-
 @{
-    ViewBag.Title = "Let's Chat";
+    ViewBag.Title = "Chat";
 }
 
 <h2>Chat</h2>
@@ -67,7 +66,7 @@
                         return;
                     }
                     // Call the Send method on the hub.
-                    chat.server.send(@Model, @studentSid, $('#displayname').val(), $('#message').val());
+                    chat.server.send(@studentSid,$('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                     $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));

@@ -8,6 +8,7 @@ using System.Reflection;
 using ActiveLearning.Web.Filter;
 using log4net;
 using ActiveLearning.Business.Implementation;
+using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -21,9 +22,31 @@ namespace ActiveLearning.Web.Controllers
 
         public RedirectResult RedirectToLogin()
         {
+            LogUserOut();
             return Redirect("~/home");
         }
-
+        public RedirectResult RedirectToHome()
+        {
+            if (GetLoginUser() == null)
+            {
+                return RedirectToLogin();
+            }
+            switch (GetLoginUserRole())
+            {
+                case Constants.User_Role_Student_Code:
+                    return Redirect("~/student");
+                    break;
+                case Constants.User_Role_Instructor_Code:
+                    return Redirect("~/instructor");
+                    break;
+                case Constants.User_Role_Admin_Code:
+                    return Redirect("~/admin");
+                    break;
+                default:
+                    return RedirectToLogin();
+                    break;
+            }
+        }
         public bool HasAccessToCourse(int courseSid, out string message)
         {
             using (var userManager = new UserManager())

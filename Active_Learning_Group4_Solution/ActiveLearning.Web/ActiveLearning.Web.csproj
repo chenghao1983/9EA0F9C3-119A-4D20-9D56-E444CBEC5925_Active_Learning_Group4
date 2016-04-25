@@ -290,6 +290,8 @@
     <Content Include="Views\Student\Download.cshtml" />
     <Content Include="Views\Instructor\QuizStatistics.cshtml" />
     <Content Include="Views\Instructor\Upload.cshtml" />
+    <Content Include="Views\Instructor\Chat.cshtml" />
+    <Content Include="Views\Student\CourseList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Upload\" />
