@@ -10,7 +10,7 @@ using System.Security.Claims;
 using ActiveLearning.Web.Filter;
 using ActiveLearning.Business.Common;
 using ActiveLearning.Business.Interface;
-
+using System.Text;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -620,6 +620,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // POST: ManageStudent/ActivateStudent
+        [HttpPost]
         public ActionResult ActivateStudent(int id)
         {
             try
@@ -655,6 +656,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // POST: ManageStudent/DeactivateStudent
+        [HttpPost]
         public ActionResult DeactivateStudent(int id)
         {
             try
@@ -697,21 +699,71 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult ManageEnrolment(int id)
         {
             string message = string.Empty;
-            using (var enrol = new UserManager())
+            using (var enrol = new CourseManager())
             {
 
-                var listStudent = enrol.GetAllActiveStudent(out message);
+                var listStudent = enrol.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(id,out message);
                 if (listStudent == null)
                 {
                     ViewBag.Message = "The List is empty !";
                 }
-                var checkedStu = new CourseManager();
-                var checkedStudent = checkedStu.GetEnrolledStudentsByCourseSid(id, out message);
-                TempData["CheckedStudent"] = checkedStudent;
+                //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
+                //TempData["CheckedStudent"] = checkedStudentId;
+                TempData["CourseId"] = id;
                 return View(listStudent);
             }
         }
+        // POST: ManageCourse/UpdateEnrolment
+        [HttpPost]
+        public string UpdateEnrolment(IEnumerable<Student> student)
+        {
 
+            if(student.Count(x => x.HasEnrolled) == 0)
+            {
+                return "You have not selected students";
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("You selected – ");
+                foreach (Student stu in student)
+                {
+                    if (stu.HasEnrolled)
+                    {
+                        sb.Append(stu.User.FullName + ", ");
+                    }
+                }
+                sb.Remove(sb.ToString().LastIndexOf(","), 1);
+                return sb.ToString();
+            }
+
+            //    string message = string.Empty;
+            //    using (var updateEnrolStu = new CourseManager())
+            //    {
+            //       // string[] ids = formCollection["studentId"].Split(new char[] { ',' });
+            //        int courseId = 1;
+            //        var listStudent= updateEnrolStu.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseId, out message);
+            //        if (student.Count(x => x.HasEnrolled) == 0)
+            //        {
+            //            return "Select nothing";
+            //        }else
+            //        {
+            //            return "Select somthing";
+            //        }
+            //        //foreach (var id in ids)
+            //        //{
+            //        //    string[] str = formCollection.AllKeys;
+            //        //    //if (removeEnrolStu.RemoveStudentsFromCourse(, courseId, out message))
+            //        //    if (updateEnrolStu.UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(listStudent, courseId, out message))
+            //        //   ViewBag.Message = "checkbox !";
+
+            //        //};
+            //        //return RedirectToAction("ManageCourse");
+            //    }
+            //return "nothing";
+
+
+        }
 
         // GET: ManageCourse/RemoveEnrolment
         public ActionResult RemoveEnrolment(FormCollection formCollection)
