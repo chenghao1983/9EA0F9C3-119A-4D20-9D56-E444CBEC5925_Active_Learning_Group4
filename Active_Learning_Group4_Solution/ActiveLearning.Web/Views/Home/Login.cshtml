@@ -10,10 +10,10 @@
 {
     //@Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal ">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-group ">
             <label class="text-danger text-center" style="width:100%" >@ViewBag.Message</label>
         </div>
         <div class="form-group">
@@ -31,9 +31,9 @@
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br />
 
-
-        <div class="form-group">
+        <div class="form-group col-lg-offset-10">
             <div class="text-center">
                 <input type="submit" value="Login" class="btn btn-primary btn-lg" style="width:400px"/>
             </div>
