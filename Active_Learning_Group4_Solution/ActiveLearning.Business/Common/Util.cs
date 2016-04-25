@@ -95,7 +95,7 @@ namespace ActiveLearning.Business.Common
         }
         #endregion
 
-        #region
+        #region Upload
 
         public static string GetAllowedFileExtentionFromConfig()
         {
@@ -125,6 +125,13 @@ namespace ActiveLearning.Business.Common
                     return defaultAllowedFileSize;
                 }
             }
+        }
+        public static string GetUploadFolder()
+        {
+            string defaultFolder = "~/App_Data/Upload/";
+            string key = "UploadPath";
+            string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
+            return settings == null || settings.Length == 0 ? defaultFolder : settings[0];
         }
         #endregion
 

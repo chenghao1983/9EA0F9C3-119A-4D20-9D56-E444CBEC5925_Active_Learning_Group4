@@ -7,31 +7,102 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Business.Implementation
 {
     public class ContentManager : BaseManager, IContentManager
     {
+        public Content GetContentByContentSid(int contentSid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    var content = unitOfWork.Contents.Find(c => c.Sid == contentSid && !c.DeleteDT.HasValue).FirstOrDefault();
+                    if (content == null)
+                    {
+                        message = Constants.ValueNotFound(Constants.Content);
+                        return null;
+                    }
+                    message = string.Empty;
+                    return content;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Content);
+                return null;
+            }
+        }
+        public IEnumerable<Content> GetContentsByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    var contents = unitOfWork.Contents.Find(c => c.CourseSid == courseSid && !c.DeleteDT.HasValue);
+                    if (contents == null || contents.Count() == 0)
+                    {
+                        message = Constants.ThereIsNoValueFound(Constants.Content);
+                        return null;
+                    }
+                    message = string.Empty;
+                    return contents;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Content);
+                return null;
+            }
+        }
+
+        public IEnumerable<int> GetContentSidsByCounrseSid(int courseSid, out string message)
+        {
+            var contents = GetContentsByCourseSid(courseSid, out message);
+            if (contents == null || contents.Count() == 0)
+            {
+                return null;
+            }
+            return contents.Select(c => c.Sid);
+        }
         public Content AddContent(Content content, int courseSid, out string message)
         {
             message = string.Empty;
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+            if(content ==null)
             {
-                // Same course cannot have same file name
-                //var content = unitOfWork.Contents.GetAll().Where(c => c.CourseSid == content.CourseSid && c.DeleteDT == null && c.OriginalFileName == content.OriginalFileName).FirstOrDefault();
 
-
-                if (content == null)
+            }
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    unitOfWork.Contents.Add(content);
+                    // Same course cannot have same file name
+                    //var content = unitOfWork.Contents.GetAll().Where(c => c.CourseSid == content.CourseSid && c.DeleteDT == null && c.OriginalFileName == content.OriginalFileName).FirstOrDefault();
 
-                    unitOfWork.Complete();
-                    return content;
+
+                    if (content == null)
+                    {
+                        unitOfWork.Contents.Add(content);
+
+                        unitOfWork.Complete();
+                        return content;
+                    }
+                    else
+                    {
+                        throw new Exception("Same filename exits.");
+                    }
                 }
-                else
-                {
-                    throw new Exception("Same filename exits.");
-                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -41,14 +112,6 @@ namespace ActiveLearning.Business.Implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Content> GetContentsByCourseSid(int courseID, out string message)
-        {
-            message = string.Empty;
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                return unitOfWork.Contents.GetAll().Where(c => c.CourseSid == courseID && c.DeleteDT == null);
-            }
-        }
 
 
 

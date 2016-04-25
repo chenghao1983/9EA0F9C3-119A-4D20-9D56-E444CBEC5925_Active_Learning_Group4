@@ -197,7 +197,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteQuizQuestion(int quizQuestionSid, out string message)
         {
-            if (quizQuestionSid == 00)
+            if (quizQuestionSid == 0)
             {
                 message = Constants.ValueIsEmpty(Constants.QuizQuestion);
                 return false;
@@ -552,7 +552,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteQuizAnswer(int quizAnswerSid, out string message)
         {
-            if (quizAnswerSid == 00)
+            if (quizAnswerSid == 0)
             {
                 message = Constants.ValueIsEmpty(Constants.QuizAnswer);
                 return false;

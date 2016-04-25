@@ -493,7 +493,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool ActivateStudent(Student student, out string message)
         {
-            if (student == null || student.Sid == 0)
+            if (student == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
@@ -536,7 +536,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeactivateStudent(Student student, out string message)
         {
-            if (student == null || student.Sid == 0)
+            if (student == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
@@ -774,7 +774,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteInstructor(Instructor instructor, out string message)
         {
-            if (instructor == null || instructor.Sid == 0)
+            if (instructor == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
@@ -817,7 +817,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool ActivateInstructor(Instructor instructor, out string message)
         {
-            if (instructor == null || instructor.Sid == 0)
+            if (instructor == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
@@ -862,7 +862,7 @@ namespace ActiveLearning.Business.Implementation
 
         public bool DeactivateInstructor(Instructor instructor, out string message)
         {
-            if (instructor == null || instructor.Sid == 0)
+            if (instructor == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
@@ -1101,7 +1101,7 @@ namespace ActiveLearning.Business.Implementation
         }
         public bool DeleteAdmin(Admin admin, out string message)
         {
-            if (admin == null || admin.Sid == 0)
+            if (admin == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Admin);
                 return false;

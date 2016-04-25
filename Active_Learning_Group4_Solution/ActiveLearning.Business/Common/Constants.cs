@@ -47,6 +47,8 @@ namespace ActiveLearning.Business.Common
         public const string QuizAnswer = "Quiz Answer";
         public const string QuizTitle = "Quiz Title";
 
+        public const string Content = "Content";
+
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";

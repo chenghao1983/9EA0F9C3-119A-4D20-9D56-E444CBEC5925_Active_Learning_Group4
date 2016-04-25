@@ -293,7 +293,7 @@ namespace ActiveLearning.Business.Implementation
         public IEnumerable<Student> GetNonEnrolledStudentsByCourseSid(int courseSid, out string message)
         {
             message = string.Empty;
-            IEnumerable<Student> list = new List<Student>();
+            var list = new List<Student>();
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -325,7 +325,12 @@ namespace ActiveLearning.Business.Implementation
                         }
                         else
                         {
-                            list = allActiveStudents.SkipWhile(a => enrolledStudents.Select(e => e.Sid).Contains(a.Sid));
+                            var enrolledStudentSids = enrolledStudents.Select(e => e.Sid).ToList();
+                            if (enrolledStudentSids != null)
+                            {
+                                list.AddRange(allActiveStudents.Where(a => !enrolledStudentSids.Contains(a.Sid)));
+                            }
+                            //list = allActiveStudents.SkipWhile(a => enrolledStudentSids.Contains(a.Sid));
                             if (list == null || list.Count() == 0)
                             {
                                 message = Constants.ThereIsNoValueFound(Constants.NonEnrolledStudent);
@@ -529,14 +534,18 @@ namespace ActiveLearning.Business.Implementation
             var currentStudentSids = GetEnrolledStudentSidsByCourseSid(courseSid, out message);
 
             // no student enrolled in the course
-            if (currentStudentSids == null || currentStudentSids.Count() == 0)
-            {
-                studentSidsToEnrol = studentSids;
-            }
+
             try
             {
-                studentSidsToEnrol = studentSids.SkipWhile(s => currentStudentSids.Contains(s));
-                studentSidsToRemove = currentStudentSids.SkipWhile(s => studentSids.Contains(s));
+                if (currentStudentSids == null || currentStudentSids.Count() == 0)
+                {
+                    studentSidsToEnrol = studentSids;
+                }
+                else
+                {
+                    studentSidsToEnrol = studentSids.Where(s => !currentStudentSids.Contains(s));  //studentSids.SkipWhile(s => currentStudentSids.Contains(s));
+                    studentSidsToRemove = currentStudentSids.Where(s => !studentSids.Contains(s));  //currentStudentSids.SkipWhile(s => studentSids.Contains(s));
+                }
             }
             catch (Exception ex)
             {
@@ -583,7 +592,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Student_List);
                 return false;
             }
-           var list = new List<Student>();
+            var list = new List<Student>();
             foreach (var s in students)
             {
                 if (s.HasEnrolled)
@@ -603,15 +612,15 @@ namespace ActiveLearning.Business.Implementation
             var nonEnrolledList = GetNonEnrolledInstructorsByCourseSid(courseSid, out message);
 
             var allList = new List<Instructor>();
-            if(enrolledList !=null)
+            if (enrolledList != null)
             {
                 allList.AddRange(enrolledList);
             }
-            if(nonEnrolledList !=null)
+            if (nonEnrolledList != null)
             {
                 allList.AddRange(nonEnrolledList);
             }
-            if(allList.Count()==0)
+            if (allList.Count() == 0)
             {
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.Instructor_Course_Enrolment);
                 return null;
