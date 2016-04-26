@@ -64,7 +64,7 @@ namespace ActiveLearning.Web.Controllers
 
         }
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace ActiveLearning.Web.Controllers
                     using (var fileManager = new ContentManager())
                     {
                         string message = string.Empty;
-                        fileManager.AddContent(fileDetail, 1, out message);
+                        fileManager.AddContent(this, file, 1, out message);
                     }
 
                     var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));

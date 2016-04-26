@@ -65,38 +65,47 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
-            if (courseSid == 0)
-            {
-
-            }
-            // TODO 
-            // Get course ID
             string message = string.Empty;
-            IContentManager fileManager = new ContentManager();
-            var files = fileManager.GetContentsByCourseSid(1, out message);
-
-            List<string> items = new List<string>();
-            foreach (var file in files)
+            if (!HasAccessToCourse(courseSid, out message))
             {
-                items.Add(file.OriginalFileName);
+                return RedirectToError(message);
             }
 
+            List<Content> items = new List<Content>();
+            using (var contentManager = new ContentManager())
+            {
+                message = string.Empty;
+                var contents = contentManager.GetContentsByCourseSid(courseSid, out message);
+                if (contents != null)
+                {
+                    items = contents.ToList();
+                }
+            }
+            ViewBag.CourseSid = courseSid;
             return View(items);
         }
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
-        public FileResult DownloadFile(string FileName)
+        public FileResult Download(int courseSid, string GUIDFileName, string originalFileName)
         {
             if (GetLoginUser() == null)
             {
                 return null;
             }
-            // convert filename to GUID filename
             string message = string.Empty;
-            IContentManager fileManager = new ContentManager();
-            var guidFileName = fileManager.GetGUIDFile(FileName, 2, out message);
-
-
-            return File("~/App_Data/Upload/" + guidFileName, System.Net.Mime.MediaTypeNames.Application.Octet, FileName);
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return null;
+            }
+            message = string.Empty;
+            string path;
+            using (var contentManager = new ContentManager())
+            {
+                path = contentManager.GetContentPathByContentGUIDName(GUIDFileName, out message);
+            }
+            var file = File(path, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
+            if (file == null)
+                return null;
+            return file;
         }
 
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]

@@ -3,7 +3,7 @@
 
 @if (Model == null || Model.Count() == 0)
 {
-    <label for="Name" class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Course)</label>
+    <label  class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Course)</label>
 }
 else
 {
@@ -16,10 +16,10 @@ else
                 @Html.DisplayNameFor(model => model.CreateDT)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UpdateDT)
+        
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeleteDT)
+            
             </th>
             <th>
                &nbsp;
@@ -43,9 +43,10 @@ else
                     @Html.DisplayFor(modelItem => item.DeleteDT)
                 </td>
                 <td>
-                    @Html.ActionLink("Detail", "CourseDetail", new { courseSid = item.Sid })
-                    &nbsp; | &nbsp; @Html.ActionLink("Chat", "Chat", new { courseSid = item.Sid })
+                    @*@Html.ActionLink("Detail", "CourseDetail", new { courseSid = item.Sid })*@
+                    @Html.ActionLink("Chat", "Chat", new { courseSid = item.Sid })
                     &nbsp; | &nbsp; @Html.ActionLink("Quiz", "Quiz", new { courseSid = item.Sid })
+                    &nbsp; | &nbsp; @Html.ActionLink("Content", "Content", new { courseSid = item.Sid })
                 </td>
     
             </tr>
