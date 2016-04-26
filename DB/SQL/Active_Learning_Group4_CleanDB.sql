@@ -1183,7 +1183,7 @@ SET IDENTITY_INSERT [dbo].[QuizOption] OFF
 SET IDENTITY_INSERT [dbo].[Content] ON
 INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(1, 1, 'F', '', '0e682838-8ea1-4f47-b8b7-7e55fe322769.txt', 'test.txt', Getdate(), null,  null)
 GO
-INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(2, 1, 'V', '', 'B2ADDC26-CBA3-4F78-AA45-57832EB2AF12.mp4', 'Repository Pattern with C# and Entity Framework, Done Right.mp4', Getdate(), null,  null)
+INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(2, 1, 'V', '', 'B2ADDC26-CBA3-4F78-AA45-57832EB2AF12.mp4', 'Interstellar Movie - Official Trailer 3.mp4', Getdate(), null,  null)
 GO
 SET IDENTITY_INSERT [dbo].[Content] OFF--------------------------Others---------------------- 
 -- DB version --
