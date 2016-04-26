@@ -95,6 +95,16 @@ namespace ActiveLearning.Business.Common
         }
         #endregion
 
+        #region Password Complexity
+        public bool IsPasswordComple(string password)
+        {
+            string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+            return false;
+        }
+        #endregion
+
         #region Upload
 
         public static string GetAllowedFileExtentionFromConfig()
@@ -109,14 +119,14 @@ namespace ActiveLearning.Business.Common
             int defaultAllowedFileSize = 4;
             string key = "AllowedFileSize";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
-            if(settings ==null || settings.Length ==0)
+            if (settings == null || settings.Length == 0)
             {
                 return defaultAllowedFileSize;
             }
             else
             {
                 int allowedFileSize = 0;
-                if(int.TryParse(settings[0], out allowedFileSize))
+                if (int.TryParse(settings[0], out allowedFileSize))
                 {
                     return allowedFileSize;
                 }

@@ -533,10 +533,9 @@ namespace ActiveLearning.Business.Implementation
 
             var currentStudentSids = GetEnrolledStudentSidsByCourseSid(courseSid, out message);
 
-            // no student enrolled in the course
-
             try
             {
+                // no student enrolled in the course
                 if (currentStudentSids == null || currentStudentSids.Count() == 0)
                 {
                     studentSidsToEnrol = studentSids;
@@ -694,7 +693,7 @@ namespace ActiveLearning.Business.Implementation
         public IEnumerable<Instructor> GetNonEnrolledInstructorsByCourseSid(int courseSid, out string message)
         {
             message = string.Empty;
-            IEnumerable<Instructor> list = new List<Instructor>();
+            var list = new List<Instructor>();
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -726,7 +725,11 @@ namespace ActiveLearning.Business.Implementation
                         }
                         else
                         {
-                            list = allActiveInstructors.SkipWhile(a => enrolledInstructors.Select(e => e.Sid).Contains(a.Sid));
+                            var enrolledInstructorSids = enrolledInstructors.Select(e => e.Sid).ToList();
+                            if (enrolledInstructorSids != null)
+                            {
+                                list.AddRange(allActiveInstructors.Where(a => !enrolledInstructorSids.Contains(a.Sid)));
+                            }
                             if (list == null || list.Count() == 0)
                             {
                                 message = Constants.ThereIsNoValueFound(Constants.NonEnrolledInstructor);
@@ -919,15 +922,18 @@ namespace ActiveLearning.Business.Implementation
 
             var currentInstructorSids = GetEnrolledInstructorSidsByCourseSid(courseSid, out message);
 
-            // no Instructor enrolled in the course
-            if (currentInstructorSids == null || currentInstructorSids.Count() == 0)
-            {
-                InstructorSidsToEnrol = InstructorSids;
-            }
             try
             {
-                InstructorSidsToEnrol = InstructorSids.SkipWhile(s => currentInstructorSids.Contains(s));
-                InstructorSidsToRemove = currentInstructorSids.SkipWhile(s => InstructorSids.Contains(s));
+                // no Instructor enrolled in the course
+                if (currentInstructorSids == null || currentInstructorSids.Count() == 0)
+                {
+                    InstructorSidsToEnrol = InstructorSids;
+                }
+                else
+                {
+                    InstructorSidsToEnrol = InstructorSids.SkipWhile(s => currentInstructorSids.Contains(s));
+                    InstructorSidsToRemove = currentInstructorSids.SkipWhile(s => InstructorSids.Contains(s));
+                }
             }
             catch (Exception ex)
             {
