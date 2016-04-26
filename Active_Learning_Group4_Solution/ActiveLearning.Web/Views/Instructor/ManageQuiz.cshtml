@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ActiveLearning.DB.QuizQuestion>
+
+@{
+    ViewBag.Title = "ManageQuiz";
+}
+
+<h2>Manage Quiz</h2>
+
+<p>
+    @Html.ActionLink("Create Quiz Question", "CreateQuizQuestion")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDT)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Sid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Sid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Sid })
+        </td>
+    </tr>
+}
+
+</table>

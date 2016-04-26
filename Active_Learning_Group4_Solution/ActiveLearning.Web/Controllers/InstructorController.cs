@@ -23,6 +23,24 @@ namespace ActiveLearning.Web.Controllers
             return View();
         }
 
+        public ActionResult CourseList()
+        {
+            string message = string.Empty;
+            using (var courseManager = new CourseManager())
+            {
+
+                var listCourse = courseManager.GetAllCourses(out message);
+                if (listCourse == null || listCourse.Count() == 0)
+                {
+                    ViewBag.Message = "The List is empty !";
+                }
+
+                return View(listCourse);
+            }
+
+        }
+
+
         public ActionResult Chat(string courseSid)
         {
             var claims = new List<Claim>();
@@ -85,5 +103,66 @@ namespace ActiveLearning.Web.Controllers
                 return View();
             }
         }
+
+        #region Quiz
+
+        public ActionResult ManageQuiz(int id)
+        {
+            string message = string.Empty;
+            using (var quizManager = new QuizManager())
+            {
+
+                var listQuiz = quizManager.GetActiveQuizQuestionsByCourseSid(id, out message);
+                if (listQuiz == null)
+                {
+                    ViewBag.Message = "The List is empty !";
+                }
+                TempData["cid"] = id;
+                TempData.Keep("cid");
+                return View(listQuiz);
+            }
+
+        }
+
+        // GET: ManageQuiz/CreateQuizQuestion
+        public ActionResult CreateQuizQuestion()
+        {
+            return View();
+
+        }
+
+        // POST: ManageStudent/CreateQuizQuestion
+        [HttpPost]
+        public ActionResult CreateQuizQuestion(QuizQuestion quizQuestion)
+        {
+
+            try
+            {
+
+                int cid = Convert.ToInt32(TempData["cid"]);
+                string message = string.Empty;
+                using (var quizManager = new QuizManager())
+                {
+                    
+                    if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
+                    {
+                        ViewBag.Message = message;
+                        return View();
+                    }
+                }
+                ViewBag.Message = "Quiz Question Created !";
+                
+                return RedirectToAction("ManageQuiz", new { id = cid });
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(quizQuestion);
+        }
+        #endregion
+
+
+
     }
 }
