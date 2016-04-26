@@ -96,7 +96,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return quizQuestions;
+                    return quizQuestions.ToList();
                 }
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
-            return quizQuestions.Select(q => q.Sid);
+            return quizQuestions.Select(q => q.Sid).ToList();
         }
 
         public QuizQuestion AddQuizQuestionToCourse(QuizQuestion quizQuestion, int courseSid, out string message)
@@ -270,7 +270,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return quizOptions;
+                    return quizOptions.ToList();
                 }
             }
             catch (Exception ex)
@@ -287,7 +287,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
-            return quizOptions.Select(o => o.Sid);
+            return quizOptions.Select(o => o.Sid).ToList();
         }
         public QuizOption AddQuizOptionToQuizQuestion(QuizOption quizOption, int quizQuestionSid, out string message)
         {
@@ -444,7 +444,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return quizAnswers;
+                    return quizAnswers.ToList();
                 }
             }
             catch (Exception ex)
@@ -461,7 +461,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
-            return quizAnswers.Select(a => a.Sid);
+            return quizAnswers.Select(a => a.Sid).ToList();
         }
         public QuizAnswer AddQuizAnswerToQuizQuestionAndOption(QuizAnswer quizAnswer, int quizQuestionSid, int quizOptionSid, int studentSid, out string message)
         {
