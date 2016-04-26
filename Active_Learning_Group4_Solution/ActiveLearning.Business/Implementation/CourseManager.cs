@@ -223,7 +223,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.Student_Course_Enrolment);
                 return null;
             }
-            return allList;
+            return allList.ToList();
         }
         public IEnumerable<Student> GetEnrolledStudentsByCourseSid(int courseSid, out string message)
         {
@@ -316,7 +316,7 @@ namespace ActiveLearning.Business.Implementation
                                 activeStudent.HasEnrolled = false;
                             }
                             message = string.Empty;
-                            return allActiveStudents;
+                            return allActiveStudents.ToList();
                         }
                         if (enrolledStudents.Count() == allActiveStudents.Count())
                         {
@@ -624,7 +624,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.Instructor_Course_Enrolment);
                 return null;
             }
-            return allList;
+            return allList.ToList();
         }
         public IEnumerable<Instructor> GetEnrolledInstructorsByCourseSid(int courseSid, out string message)
         {
@@ -716,7 +716,7 @@ namespace ActiveLearning.Business.Implementation
                                 i.HasEnrolled = false;
                             }
                             message = string.Empty;
-                            return allActiveInstructors;
+                            return allActiveInstructors.ToList();
                         }
                         if (enrolledInstructors.Count() == allActiveInstructors.Count())
                         {

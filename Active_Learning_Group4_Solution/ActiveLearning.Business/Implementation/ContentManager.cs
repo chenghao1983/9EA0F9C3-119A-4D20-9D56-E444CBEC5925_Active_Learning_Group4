@@ -51,7 +51,7 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     message = string.Empty;
-                    return contents;
+                    return contents.ToList();
                 }
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
-            return contents.Select(c => c.Sid);
+            return contents.Select(c => c.Sid).ToList();
         }
         public Content AddContent(Content content, int courseSid, out string message)
         {
