@@ -107,12 +107,19 @@ namespace ActiveLearning.Business.Common
 
         #region Upload
 
-        public static string GetAllowedFileExtentionFromConfig()
+        public static string GetAllowedFileExtensionFromConfig()
         {
-            string defaultExtentions = "mp4, ppt, pptx";
+            string defaultExtentions = "mp4,ppt,pptx,txt,doc,docx,pdf,xls,xlsx";
             string key = "AllowedFileExtentions";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
             return settings == null || settings.Length == 0 ? defaultExtentions : settings[0];
+        }
+        public static string GetVideoFormatsFromConfig()
+        {
+            string defaultVideoFormats = "mp4";
+            string key = "VideoFormats";
+            string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
+            return settings == null || settings.Length == 0 ? defaultVideoFormats : settings[0];
         }
         public static int GetAllowedFileSizeFromConfig()
         {
@@ -136,7 +143,7 @@ namespace ActiveLearning.Business.Common
                 }
             }
         }
-        public static string GetUploadFolder()
+        public static string GetUploadFolderFromConfig()
         {
             string defaultFolder = "~/App_Data/Upload/";
             string key = "UploadPath";

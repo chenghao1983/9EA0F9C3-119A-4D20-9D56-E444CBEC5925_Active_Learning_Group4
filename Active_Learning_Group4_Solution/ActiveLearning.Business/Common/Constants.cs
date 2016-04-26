@@ -9,14 +9,17 @@ namespace ActiveLearning.Business.Common
     public class Constants
     {
         #region User Role
-
         public const string User_Role_Student_Code = "S";
         public const string User_Role_Instructor_Code = "I";
         public const string User_Role_Admin_Code = "A";
-
         //public const string User_Role_Student_Name = "Student";
         //public const string User_Role_Instructor_Name = "Instructor";
         //public const string User_Role_Admin_Name = "Admin";
+        #endregion
+
+        #region Content Type
+        public const string Content_Type_Video = "V";
+        public const string Content_Type_File = "F";
         #endregion
 
         #region Error Message
@@ -47,12 +50,21 @@ namespace ActiveLearning.Business.Common
         public const string QuizAnswer = "Quiz Answer";
         public const string QuizTitle = "Quiz Title";
 
+        public const string SourceController = "Source Controller";
         public const string Content = "Content";
+        public const string File = "File";
+        public const string FileSize = "File Size";
+        public const string FilePath = "File Path";
+        public const string FileExtension = "File Extension";
 
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
 
+        public static string ValueNotAllowed(string value)
+        {
+            return  value + " is not allowed";
+        }
         public static string PleaseEnterValue(string value)
         {
             return "Please enter " + value;

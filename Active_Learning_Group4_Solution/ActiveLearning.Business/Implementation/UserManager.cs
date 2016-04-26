@@ -189,6 +189,11 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.User);
                 return false;
             }
+            if(courseSid == 0)
+            {
+                message = Constants.ValueIsEmpty(Constants.Course);
+                return false;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
