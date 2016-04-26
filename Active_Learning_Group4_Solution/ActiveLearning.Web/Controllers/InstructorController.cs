@@ -106,6 +106,7 @@ namespace ActiveLearning.Web.Controllers
 
         #region Quiz
 
+        // GET: ManageQuiz
         public ActionResult ManageQuiz(int id)
         {
             string message = string.Empty;
@@ -119,6 +120,7 @@ namespace ActiveLearning.Web.Controllers
                 }
                 TempData["cid"] = id;
                 TempData.Keep("cid");
+                TempData.Peek("cid");
                 return View(listQuiz);
             }
 
@@ -131,7 +133,7 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
-        // POST: ManageStudent/CreateQuizQuestion
+        // POST: ManageQuiz/CreateQuizQuestion
         [HttpPost]
         public ActionResult CreateQuizQuestion(QuizQuestion quizQuestion)
         {
@@ -140,10 +142,11 @@ namespace ActiveLearning.Web.Controllers
             {
 
                 int cid = Convert.ToInt32(TempData["cid"]);
+
                 string message = string.Empty;
                 using (var quizManager = new QuizManager())
                 {
-                    
+
                     if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
                     {
                         ViewBag.Message = message;
@@ -151,7 +154,7 @@ namespace ActiveLearning.Web.Controllers
                     }
                 }
                 ViewBag.Message = "Quiz Question Created !";
-                
+
                 return RedirectToAction("ManageQuiz", new { id = cid });
             }
             catch (Exception e)
@@ -160,7 +163,116 @@ namespace ActiveLearning.Web.Controllers
             }
             return View(quizQuestion);
         }
+
+
+        // GET: ManageQuiz/DeleteQuizQuestion/6
+        public ActionResult DeleteQuizQuestion(int id)
+        {
+            string message = string.Empty;
+            using (var quizManager = new QuizManager())
+            {
+
+
+                QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(id, out message);
+                if (quizQuesion == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(quizQuesion);
+            }
+
+        }
+
+
+        // POST: ManageQuiz/DeleteQuizQuestion/6
+        [HttpPost, ActionName("DeleteQuizQuestion")]
+        public ActionResult DeleteQuiz(int id)
+        {
+            try
+            {
+
+                int cid = Convert.ToInt32(TempData["cid"]);
+                string message = string.Empty;
+                using (var deleteQuiz = new QuizManager())
+                {
+                    QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(id, out message);
+                    if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
+                    {
+                        return RedirectToAction("ManageQuiz", new { id = cid });
+                    }
+                    return RedirectToError(message);
+                };
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+
+        }
+
+        // GET: ManageQuiz/EditQuizQuestio/6
+        public ActionResult EditQuizQuestion(int id)
+        {
+            string message = string.Empty;
+            using (var getQuizQuestion = new QuizManager())
+            {
+                QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(id, out message);
+                if (quizQuesion == null)
+                {
+                    return HttpNotFound();
+                }
+                TempData["QuizQuesion"] = quizQuesion;
+                return View(quizQuesion);
+            };
+        }
+
+        // POST: ManageQuiz/EditQuizQuestio/6
+        [HttpPost, ActionName("EditQuizQuestion")]
+        public ActionResult updateQuizQus(QuizQuestion quizQuestion)
+        {
+            try
+            {
+                int cid = Convert.ToInt32(TempData["cid"]);
+                string message = string.Empty;
+                var quizQusToUpdate = TempData["QuizQuesion"] as QuizQuestion;
+                quizQusToUpdate.Title = quizQuestion.Title;
+
+                using (var updateQus = new QuizManager())
+                {
+                    if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
+                    {
+                        return RedirectToAction("ManageQuiz", new { id = cid });
+                    }
+                    ViewBag.Message = message;
+                    return RedirectToError(message);
+                }
+            }
+            catch (Exception e)
+            {
+                if (this.HttpContext.IsDebuggingEnabled)
+                {
+                    ModelState.AddModelError(string.Empty, e.ToString());
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
+                }
+                return View();
+            }
+        }
+
         #endregion
+
+
+
 
 
 
