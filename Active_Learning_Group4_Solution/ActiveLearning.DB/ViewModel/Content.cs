@@ -13,7 +13,8 @@ namespace ActiveLearning.DB
     {
         public class ContentMetadata
         {
-
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            public DateTime CreateDT { get; set; }
         }
     }
 }

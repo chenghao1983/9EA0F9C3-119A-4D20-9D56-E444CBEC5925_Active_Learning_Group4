@@ -17,6 +17,10 @@ namespace ActiveLearning.DB
             [Required(ErrorMessage = Constants.Please_Enter + "Course Name")]
             [Display(Name = "Course Name")]
             public string CourseName { get; set; }
+
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            public DateTime CreateDT { get; set; }
         }
+
     }
 }

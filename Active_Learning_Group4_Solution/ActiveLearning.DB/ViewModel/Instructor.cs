@@ -12,5 +12,7 @@ namespace ActiveLearning.DB
     {
         [Display(Name = "Enrolled")]
         public bool HasEnrolled { get; set; }
+
+
     }
 }
