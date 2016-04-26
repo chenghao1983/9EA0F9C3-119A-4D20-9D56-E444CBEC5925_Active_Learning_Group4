@@ -168,7 +168,6 @@ namespace ActiveLearning.Web.Controllers
         // POST: ManageCourse/Details/6
         #endregion
 
-
         #region Instructor
 
         // GET: ManageInstructor
@@ -437,8 +436,6 @@ namespace ActiveLearning.Web.Controllers
 
         }
         #endregion
-
-
 
         #region Student
 
@@ -739,7 +736,4 @@ namespace ActiveLearning.Web.Controllers
     }
 
     #endregion
-
-
-
 }
