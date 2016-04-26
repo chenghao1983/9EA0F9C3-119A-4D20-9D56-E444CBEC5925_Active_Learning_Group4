@@ -37,7 +37,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             if (!HasAccessToCourse(courseSid, out message))
             {
-                return new HttpUnauthorizedResult(message);
+                return RedirectToError(message);
             }
             var claims = new List<Claim>();
 
@@ -59,11 +59,15 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
-        public ActionResult Download()
+        public ActionResult Content(int courseSid)
         {
             if (GetLoginUser() == null)
             {
                 return RedirectToLogin();
+            }
+            if (courseSid == 0)
+            {
+
             }
             // TODO 
             // Get course ID

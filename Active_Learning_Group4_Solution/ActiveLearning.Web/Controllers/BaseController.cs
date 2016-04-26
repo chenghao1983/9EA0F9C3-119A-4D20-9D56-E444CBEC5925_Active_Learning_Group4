@@ -19,7 +19,11 @@ namespace ActiveLearning.Web.Controllers
         private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-
+        public ActionResult RedirectToError(string message)
+        {
+            ViewBag.Message = message;
+            return View("Error");
+        }
         public RedirectResult RedirectToLogin()
         {
             LogUserOut();
