@@ -136,6 +136,8 @@ DELETE from [dbo].[QuizOption]
 GO
 DELETE from [dbo].[QuizQuestion]
 GO
+DELETE FROM [dbo].[Content]
+GO
 DELETE FROM [dbo].[Course]
 GO
 
@@ -243,9 +245,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Instructor_Course_Map] OFF
 GO
 
--- Quiz Question an Option --
-
-
+-- Quiz Question --
 
 SET IDENTITY_INSERT [dbo].[QuizQuestion] ON 
 GO
@@ -340,6 +340,9 @@ INSERT [dbo].[QuizQuestion] ([Sid], [Title], [CreateDT], [UpdateDT], [DeleteDT],
 GO
 SET IDENTITY_INSERT [dbo].[QuizQuestion] OFF
 GO
+
+-- QuizOption --
+
 
 SET IDENTITY_INSERT [dbo].[QuizOption] ON
 GO
@@ -697,3 +700,11 @@ INSERT [dbo].[QuizOption] ([Sid], [QuizQuestionSid], [Title], [IsCorrect], [Crea
 GO
 SET IDENTITY_INSERT [dbo].[QuizOption] OFF
 
+-- Content --
+
+SET IDENTITY_INSERT [dbo].[Content] ON
+INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(1, 1, 'F', '', '0e682838-8ea1-4f47-b8b7-7e55fe322769.txt', 'test.txt', Getdate(), null,  null)
+GO
+INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(2, 1, 'V', '', 'B2ADDC26-CBA3-4F78-AA45-57832EB2AF12.mp4', 'Repository Pattern with C# and Entity Framework, Done Right.mp4', Getdate(), null,  null)
+GO
+SET IDENTITY_INSERT [dbo].[Content] OFF
