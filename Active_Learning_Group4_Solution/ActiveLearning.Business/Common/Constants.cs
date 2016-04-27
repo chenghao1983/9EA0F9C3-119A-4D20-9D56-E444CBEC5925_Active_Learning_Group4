@@ -126,6 +126,10 @@ namespace ActiveLearning.Business.Common
         {
             return value + " is successful";
         }
+        public static string ValueSuccessfuly(string value)
+        {
+            return value + " successfully";
+        }
         #endregion
 
     }

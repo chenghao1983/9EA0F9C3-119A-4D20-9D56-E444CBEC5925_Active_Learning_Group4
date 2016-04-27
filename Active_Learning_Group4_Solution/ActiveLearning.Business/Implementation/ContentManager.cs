@@ -114,7 +114,7 @@ namespace ActiveLearning.Business.Implementation
 
             var allowedFileSize = Util.GetAllowedFileSizeFromConfig();
 
-            if (fileSize * 1024 > allowedFileSize)
+            if (fileSize > allowedFileSize * 1024 * 1024)
             {
                 message = Constants.ValueNotAllowed(Constants.FileSize);
                 return null;
@@ -141,6 +141,7 @@ namespace ActiveLearning.Business.Implementation
                 content.CourseSid = courseSid;
                 content.CreateDT = DateTime.Now;
                 content.FileName = GUIDFileName;
+                content.OriginalFileName = file.FileName;
                 if (Util.GetVideoFormatsFromConfig().Contains(fileExtension))
                 {
                     content.Type = Constants.Content_Type_Video;
@@ -166,7 +167,7 @@ namespace ActiveLearning.Business.Implementation
             }
         }
 
-        public bool DeleteContent(Content content, out string message)
+        public bool DeleteContent(Controller controller, Content content, out string message)
         {
             message = string.Empty;
             if (content == null || content.Sid == 0)
@@ -174,9 +175,9 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.File);
                 return false;
             }
-            return DeleteContent(content.Sid, out message);
+            return DeleteContent(controller, content.Sid, out message);
         }
-        public bool DeleteContent(int contentSid, out string message)
+        public bool DeleteContent(Controller controller, int contentSid, out string message)
         {
             message = string.Empty;
             if (contentSid == 0)
@@ -188,7 +189,10 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    unitOfWork.Contents.Get(contentSid).DeleteDT = DateTime.Now;
+                    var content = unitOfWork.Contents.Get(contentSid);
+                    string path = controller.Server.MapPath( content.Path + content.FileName);
+                    File.Delete(path);
+                    content.DeleteDT = DateTime.Now;
                     unitOfWork.Complete();
                 }
                 return true;
@@ -207,7 +211,7 @@ namespace ActiveLearning.Business.Implementation
             try
             {
                 var content = GetContentByContentSid(contentSid, out message);
-                if(content == null)
+                if (content == null)
                 {
                     message = Constants.ValueNotFound(Constants.Content);
                     return null;

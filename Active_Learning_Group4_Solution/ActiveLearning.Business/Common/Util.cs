@@ -109,10 +109,10 @@ namespace ActiveLearning.Business.Common
 
         public static string GetAllowedFileExtensionFromConfig()
         {
-            string defaultExtensions = "mp4,ppt,pptx,txt,doc,docx,pdf,xls,xlsx";
+            string defaultExtensions = ".mp4,.ppt,.pptx,.txt,.doc,.docx,.pdf,.xls,.xlsx";
             string key = "AllowedFileExtensions";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
-            return settings == null || settings.Length == 0 ? defaultExtensions : settings[0];
+            return settings == null || settings.Length == 0 ? defaultExtensions : "." + settings[0].Replace(",", ",."); 
         }
         public static string GetVideoFormatsFromConfig()
         {
