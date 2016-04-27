@@ -85,6 +85,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         [HttpGet]
         public ActionResult ManageContent(int courseSid)
+
         {
             if (GetLoginUser() == null)
             {
@@ -107,7 +108,8 @@ namespace ActiveLearning.Web.Controllers
                 }
             }
             ViewBag.CourseSid = courseSid;
-            ViewBag.Message = TempData["message"];
+            ViewBag.Message = TempData["Message"];
+            ViewBag.Error = TempData["Error"];
             return View(items);
         }
 
@@ -115,24 +117,58 @@ namespace ActiveLearning.Web.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
-
+            if (Request.UrlReferrer == null)
+            {
+                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            }
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
             using (var contentManger = new ContentManager())
             {
                 var content = contentManger.AddContent(this, file, courseSid, out message);
                 if (content != null)
                 {
-                    TempData["message"] = Business.Common.Constants.ValueIsSuccessful(Business.Common.Constants.Upload);
-                    return new RedirectResult(Request.UrlReferrer.ToString());
+                    TempData["Message"] = Business.Common.Constants.ValueSuccessfuly("File has been uploaded");
                 }
                 else
                 {
-                    TempData["message"] = message;
-                    return new RedirectResult(Request.UrlReferrer.ToString());
+                    TempData["Error"] = message;
                 }
-
             }
+            //return new RedirectResult(Request.UrlReferrer.ToString());
+            return RedirectToAction("ManageContent", new { courseSid = courseSid });
         }
+
+
+        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
+        public ActionResult Delete(int courseSid, int contentSid)
+        {
+            if (Request.UrlReferrer == null)
+            {
+                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            }
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            using (var contentManager = new ContentManager())
+            {
+                if (contentManager.DeleteContent(this, contentSid, out message))
+                {
+                    TempData["Message"] = Business.Common.Constants.ValueSuccessfuly("File hase been deleted");
+                }
+                else
+                {
+                    TempData["Error"] = message;
+                }
+            }
+            return RedirectToAction("ManageContent", new { courseSid = courseSid });
+        }
+
         //try
         //{
 

@@ -8,11 +8,21 @@
 
 @if (ViewBag.Message != null)
 {
-    <label class="alert-info center-block text-center" style="margin-top:100px">@ViewBag.Message</label>
+    <div class="alert alert-success text-center">
+        <strong class="text-center">@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
 }
 @if (Model == null || Model.Count() == 0)
 {
-    <label class="alert-info center-block text-center" style="margin-top:100px">@Constants.ThereIsNoValueFound(Constants.Content)</label>
+    <div class="alert alert-info text-center">
+        <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+    </div>
 }
 
 <div class="container modal-footer">
@@ -27,7 +37,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Choose File</h4>
+                    <h4 class="modal-title small">Choose File</h4>
                 </div>
                 <div class="modal-body">
                     @using (Html.BeginForm("Upload", "instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -36,17 +46,15 @@
                         <fieldset>
                             @*<legend>Upload a file</legend>*@
 
-                            @Html.Raw(ViewBag.Message)
-
-                            <div class="editor-field panel-info">
+                            <div class="editor-field panel-info" style="margin-left:25%">
                                 @Html.TextBox("file", "", new { type = "file", @class = "btn btn-info btn-group-sm" })
-                                <label id="error" class="alert-info btn-group-sm"></label>
+                                <label id="error" class="alert-info" style="margin-right:50%"></label>
                             </div>
 
                             <br />
                             <input hidden="hidden" name="CourseSid" value="@ViewBag.CourseSid" />
                             <div class="editor-field">
-                                <input type="submit" value="Upload File" class="btn" onclick="return checkFileSelected()" />
+                                <input type="submit" value="Upload File" class="btn btn-success" style="margin-right:25%;width:100%" onclick="return checkFileSelected()" />
                             </div>
 
                         </fieldset>
@@ -62,7 +70,7 @@
 
 </div>
 
-@if (Model != null)
+@if (Model != null && Model.Count() > 0)
 {
     using (Html.BeginForm("Download", "Student", FormMethod.Post))
     {
@@ -89,15 +97,22 @@
                             <label class="text-primary">File</label>
                         }
                     </td>
-                    <td>
+                    <td style="width:20%">
                         @if (Model[i].Type.Equals(Constants.Content_Type_Video, StringComparison.CurrentCultureIgnoreCase))
                         {
                             @Html.ActionLink("Watch", "Download", new { courseSid = ViewBag.CourseSid, contentSid = @Model[i].Sid, originalFileName = @Model[i].OriginalFileName }, new { @class = "btn-md" })
+                            <label> &nbsp; |  &nbsp;</label>
+                            @Html.ActionLink("Delete", "Delete", new { courseSid = ViewBag.CourseSid, contentSid = @Model[i].Sid }, new { onclick = "return confirm('Confirm to delete the content ?')", @class = "btn-md", })
                         }
                         else if (Model[i].Type.Equals(Constants.Content_Type_File, StringComparison.CurrentCultureIgnoreCase))
                         {
                             @Html.ActionLink("Download", "Download", new { courseSid = ViewBag.CourseSid, contentSid = @Model[i].Sid, originalFileName = @Model[i].OriginalFileName }, new { @class = "btn-md" })
+                            <label> &nbsp; | &nbsp;</label>
+                            @Html.ActionLink("Delete", "Delete", new { courseSid = ViewBag.CourseSid, contentSid = @Model[i].Sid }, new { onclick = "return confirm('Confirm to delete the content ?')" ,  @class = "btn-md", })
                         }
+
+
+
                     </td>
                 </tr>
             }
