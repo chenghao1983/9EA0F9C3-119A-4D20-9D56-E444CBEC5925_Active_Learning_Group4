@@ -35,7 +35,10 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Index()
         {
-
+            if (GetLoginUser() == null)
+            {
+                return RedirectToLogin();
+            }
             return View();
         }
 
@@ -43,8 +46,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageCourse
-        //[CustomAuthorize(Roles =Constants.Admin)]
-
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageCourse()
         {
             string message = string.Empty;
@@ -63,6 +65,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageCourse/CreateCourse
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse()
         {
 
@@ -79,6 +82,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageCourse/CreateCourse
         [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse(Course course)
         {
             try
@@ -112,6 +116,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageCourse/DeleteCourse/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCourse(int id)
         {
             string message = string.Empty;
@@ -130,6 +135,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageCourse/DeleteCourse/6
         [HttpPost, ActionName("DeleteCourse")]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCou(int id)
         {
             try
@@ -171,6 +177,7 @@ namespace ActiveLearning.Web.Controllers
         #region Instructor
 
         // GET: ManageInstructor
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageInstructor()
         {
             string message = string.Empty;
@@ -188,6 +195,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageInstructor/EditInstructor/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditInstructor(int id)
         {
             string message = string.Empty;
@@ -204,6 +212,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // POST: ManageInstructor/EditInstructor/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         [HttpPost, ActionName("EditInstructor")]
         public ActionResult updateIns(Instructor instructor)
         {
@@ -241,6 +250,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageInstructor/CreateInstructor
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateInstructor()
         {
             return View();
@@ -262,6 +272,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageInstructor/CreateInstructor
         [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateInstructor(Instructor instructor)
         {
 
@@ -300,6 +311,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageInstructor/DeleteInstructor/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteInstructor(int id)
         {
             string message = string.Empty;
@@ -317,6 +329,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageInstructor/DeleteInstructor/6
         [HttpPost, ActionName("DeleteInstructor")]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteIns(int id)
         {
             try
@@ -352,6 +365,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageInstructor/InstructorDetails
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult InstructorDetails(int id)
         {
             string message = string.Empty;
@@ -368,6 +382,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // POST: ManageInstructor/ActivateInstructor
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateInstructor(int id)
         {
             try
@@ -402,6 +417,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // POST: ManageStudent/DeactivateInstructor
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateInstructor(int id)
         {
             try
@@ -441,6 +457,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageStudent
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageStudent()
         {
             string message = string.Empty;
@@ -459,6 +476,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageStudent/StudentDetails
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult StudentDetails(int id)
         {
             string message = string.Empty;
@@ -475,6 +493,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageStudent/CreateStudent
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent()
         {
             return View();
@@ -483,6 +502,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/CreateStudent
         [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent(Student student)
         {
 
@@ -510,6 +530,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageStudent/EditStudent/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditStudent(int id)
         {
             string message = string.Empty;
@@ -527,6 +548,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/EditStudent/6
         [HttpPost, ActionName("EditStudent")]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult updateStu(Student student)
         {
             try
@@ -563,6 +585,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // GET: ManageStudent/DeleteStudent/6
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteStudent(int id)
         {
             string message = string.Empty;
@@ -581,6 +604,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/DeleteStudent/6
         [HttpPost, ActionName("DeleteStudent")]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Delete(int id)
         {
             try
@@ -618,6 +642,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/ActivateStudent
         [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateStudent(int id)
         {
             try
@@ -654,6 +679,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/DeactivateStudent
         [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateStudent(int id)
         {
             try
@@ -693,6 +719,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // GET: ManageCourse
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageEnrolment(int id)
         {
             string message = string.Empty;
@@ -713,6 +740,7 @@ namespace ActiveLearning.Web.Controllers
         }
         // POST: ManageCourse/UpdateEnrolment
         //ttpPost, ActionName("ManageEnrolment")]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult UpdateEnrolment(IList<Student> student)
         {
             string message = string.Empty;
@@ -725,9 +753,10 @@ namespace ActiveLearning.Web.Controllers
 
             using (var enrolStudent = new CourseManager())
             {
-                if (enrolStudent.UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(studentEnrol, courseId, out message)) { 
-                   //var enrolList = enrolStudent.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseId, out message);  
-                    return RedirectToAction("ManageEnrolment", new { id = courseId });            
+                if (enrolStudent.UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(studentEnrol, courseId, out message))
+                {
+                    //var enrolList = enrolStudent.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseId, out message);  
+                    return RedirectToAction("ManageEnrolment", new { id = courseId });
                 }
                 return View();
             }

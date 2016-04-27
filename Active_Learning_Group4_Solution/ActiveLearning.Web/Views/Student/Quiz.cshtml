@@ -3,12 +3,9 @@
     ViewBag.Title = "Quiz";
 }
 
-<h2>Index</h2>
+<h2>Quiz</h2>
 
-
-
-<div id="bodyContainer"></div>
-
+<div id="bodyContainer" style="margin-top:100px"></div>
 <script type="text/x-handlebars" id="index">
     <section id="content">
         <div class="container">
@@ -60,7 +57,7 @@
                 var question = App.Question.create();
                 this.set('question', question);
 
-                jQuery.getJSON("/api/QuizQuestion", function (response) {
+                jQuery.getJSON("/api/QuizQuestion",{'courseSid': @ViewBag.CourseSid}, function (response) {
                     //alert(JSON.stringify(response));
                     question.setProperties(response);
                 }).fail(function () { question.set('title', "Oops... something went wrong") });

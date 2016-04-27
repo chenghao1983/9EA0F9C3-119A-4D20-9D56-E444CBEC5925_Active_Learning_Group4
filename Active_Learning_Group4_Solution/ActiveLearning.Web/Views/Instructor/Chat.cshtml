@@ -1,20 +1,29 @@
 ﻿@using ActiveLearning.Web.Controllers;
 @using ActiveLearning.DB;
+
 @{
     ViewBag.Title = "Chat";
 }
 
-<h2>Chat</h2>
+<h2>Let's Chat</h2>
 <div class="container; left" style="width:100%">
-    <div style="height:400px;overflow-y:auto" id="discussionDiv"><ul id="discussion" style="height:380px"></ul></div>
-    <br />
-    <input type="text" id="message" style="width:600px" class="glyphicon-send" />
-    <input type="button" id="sendmessage" value="Send" class="glyphicon-send" />
-    <input type="hidden" id="displayname" />
-    <br />
-    <label id="error" class="alert-danger"></label>
-
+    <div style="height:400px;overflow-y:auto" id="discussionDiv">
+        <ul id="discussion" style="height:380px"></ul>
+    </div>
 </div>
+<br />
+<div class="form-group-lg">
+    <div class="col-sm-10">
+        <input type="text" id="message" class="form-control col-sm-4" style="max-width:600px" />
+        <input type="button" id="sendmessage" value="Send" class="btn-primary form-control" />
+        <input type="hidden" id="displayname" />
+    </div>
+</div>
+<br />
+<div>
+    <label id="error" class="alert-info left"></label>
+</div>
+
 @section scripts {
     <!--Reference the jQuery library. -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -66,7 +75,7 @@
                         return;
                     }
                     // Call the Send method on the hub.
-                    chat.server.send(@studentSid,$('#displayname').val(), $('#message').val());
+                    chat.server.send(@Model, @studentSid, $('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                     $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));

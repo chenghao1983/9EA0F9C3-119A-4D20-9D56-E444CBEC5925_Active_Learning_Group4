@@ -12,74 +12,94 @@ using System.Web.Http;
 using System.Web;
 using ActiveLearning.Business.ViewModel;
 using System.Web.SessionState;
+using ActiveLearning.Web.Controllers;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class QuizQuestionController : ApiController
     {
-        //private ActiveLearningContext db;
-
-        //private QuizManager quizManager = new QuizManager();
-        //private StatisticsService statisticsService;
-
         public QuizQuestionController()
-        {
-            //this.db = new ActiveLearningContext();
-            //this.statisticsService = new StatisticsService();
-        }
+        { }
 
-        public async Task<QuizQuestion> Get()
+        public async Task<QuizQuestion> Get(int courseSid)
         {
-            //var userId = User.Identity.Name;
+            if (courseSid == 0)
+            {
+                return null;
+            }
+            var session = SessionStateUtility.GetHttpSessionStateFromContext(HttpContext.Current);
+
+            if (session == null || session[BaseController.UserSessionParam] == null)
+            {
+                return null;
+                //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            var user = session[BaseController.UserSessionParam] as User;
+            string message = string.Empty;
+            using (var userManager = new UserManager())
+            {
+                if (!userManager.HasAccessToCourse(user, courseSid, out message))
+                {
+                    throw new UnauthorizedAccessException(message);
+                }
+            }
+
             using (var quizManager = new QuizManager())
             {
-                int userId = 1;
-                int courseID = 1;
+                int studentSid = user.Students.FirstOrDefault().Sid;
+                int courseID = courseSid;
 
-                var session = SessionStateUtility.GetHttpSessionStateFromContext(HttpContext.Current);
-
-                if (session == null || session[BaseController.UserSessionParam] ==null)
-                {
-                    throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-                }
-                
-                User user = session[BaseController.UserSessionParam] as User;
-
-
-                QuizQuestion nextQuestion = await quizManager.NextQuestionAsync(user.Students.FirstOrDefault().Sid, courseID);
+                QuizQuestion nextQuestion = await quizManager.NextQuestionAsync(studentSid, courseID);
 
                 if (nextQuestion == null)
                 {
-                    throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                    return null;
+                    //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
                 }
 
                 return nextQuestion;
             }
         }
-
-        public async Task<HttpResponseMessage> Post(QuizAnswer answer)
+        [HttpPost]
+        public async Task<HttpResponseMessage> Post(int QuizQuestionSid, int QuizOptionSid)//QuizAnswer answer)
         {
             if (ModelState.IsValid)
             {
-                //answer.StudentSid = User.Identity.Name;
+                //if (courseSid == 0)
+                //{
+                //    return null;
+                //}
+                var session = SessionStateUtility.GetHttpSessionStateFromContext(HttpContext.Current);
 
-                //TODO
-                int userId = 1;
-                int courseID = 1;
-
-                answer.StudentSid = 1;
-                answer.CreateDT = DateTime.Now;
-
-                // await this.statisticsService.NotifyUpdates();
+                if (session == null || session[BaseController.UserSessionParam] == null)
+                {
+                    return null;
+                    //throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                }
+                var user = session[BaseController.UserSessionParam] as User;
+                string message = string.Empty;
+                using (var userManager = new UserManager())
+                {
+                    if (!userManager.HasAccessToCourse(user, 1, out message))
+                    {
+                        throw new UnauthorizedAccessException(message);
+                    }
+                }
 
                 using (var quizManager = new QuizManager())
                 {
-                    var isCorrect = await quizManager.StoreAsync(answer);
+                    int studentSid = user.Students.FirstOrDefault().Sid;
+                    //int courseID = courseSid;
+                    var answer = new QuizAnswer();
+                    answer.StudentSid = 1;
+                    answer.CreateDT = DateTime.Now;
 
-                    //TODO: change parameter
-                    await quizManager.NotifyUpdates(courseID);
+                    var isCorrect = await quizManager.StoreAsync(answer);
+ 
+                    await quizManager.NotifyUpdates(1);
                     return Request.CreateResponse(HttpStatusCode.Created, isCorrect);
                 }
+ 
             }
             else
             {

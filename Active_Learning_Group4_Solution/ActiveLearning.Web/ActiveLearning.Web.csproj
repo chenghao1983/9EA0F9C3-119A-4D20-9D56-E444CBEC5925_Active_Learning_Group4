@@ -188,7 +188,6 @@
     <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
-    <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
     <Compile Include="Controllers\QuizStatisticsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -243,6 +242,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\statistics.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Upload\0e682838-8ea1-4f47-b8b7-7e55fe322769.txt" />
+    <Content Include="Upload\B2ADDC26-CBA3-4F78-AA45-57832EB2AF12.mp4" />
+    <Content Include="Views\Shared\Video.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -252,7 +254,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -262,8 +266,6 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_LoginAdminPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Quiz\Index.cshtml" />
-    <Content Include="Views\QuizStatistics\Index.cshtml" />
     <Content Include="Views\Admin\CreateStudent.cshtml" />
     <Content Include="Views\Admin\DeleteStudent.cshtml" />
     <Content Include="Views\Admin\EditStudent.cshtml" />
@@ -285,14 +287,20 @@
     <Content Include="Views\Student\Quiz.cshtml" />
     <Content Include="Views\Student\Content.cshtml" />
     <Content Include="Views\Instructor\QuizStatistics.cshtml" />
-    <Content Include="Views\Instructor\Upload.cshtml" />
+    <Content Include="Views\Instructor\ManageContent.cshtml" />
     <Content Include="Views\Instructor\Chat.cshtml" />
     <Content Include="Views\Student\CourseList.cshtml" />
+    <Content Include="Views\Admin\InstructorDetails.cshtml" />
+    <Content Include="Views\Instructor\CourseList.cshtml" />
+    <Content Include="Views\Instructor\CreateQuizQuestion.cshtml" />
+    <Content Include="Views\Instructor\DeleteQuizQuestion.cshtml" />
+    <Content Include="Views\Instructor\EditQuizQuestion.cshtml" />
+    <Content Include="Views\Instructor\ManageQuiz.cshtml" />
+    <Content Include="Upload\web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Upload\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Log\" />
-    <Folder Include="Models\" />
     <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>

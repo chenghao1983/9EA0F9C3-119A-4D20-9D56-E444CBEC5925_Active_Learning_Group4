@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
-using ActiveLearning.Business.Interface;
 using ActiveLearning.Business.Implementation;
 using ActiveLearning.DB;
 using System.Linq;
-using ActiveLearning.Business.Common;
 using ActiveLearning.Web.Filter;
-using ActiveLearning.Business.Common;
 
 namespace ActiveLearning.Web.Controllers
 {
     public class StudentController : BaseController
     {
-        // GET: Student
+        #region Index
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Index()
         {
@@ -27,6 +23,28 @@ namespace ActiveLearning.Web.Controllers
             }
             return View();
         }
+        #endregion
+
+        #region course
+
+        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
+        public ActionResult CourseList()
+        {
+            if (GetLoginUser() == null)
+            {
+                return RedirectToLogin();
+            }
+
+            string message = string.Empty;
+            using (var courseManager = new CourseManager())
+            {
+                var courseList = courseManager.GetEnrolledCoursesByStudentSid(GetLoginUser().Students.FirstOrDefault().Sid, out message);
+                return View(courseList);
+            }
+        }
+        #endregion
+
+        #region chat
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Chat(int courseSid)
         {
@@ -53,11 +71,32 @@ namespace ActiveLearning.Web.Controllers
                 IsPersistent = true
             }, identity);
 
-
             return View(courseSid);
 
         }
+        #endregion
 
+        #region quiz
+        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
+        public ActionResult Quiz(int courseSid)
+        {
+            if (GetLoginUser() == null)
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
+            ViewBag.CourseSid = courseSid;
+            return View();
+        }
+
+        #endregion
+
+        #region content
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Content(int courseSid)
         {
@@ -85,43 +124,46 @@ namespace ActiveLearning.Web.Controllers
             return View(items);
         }
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
-        public FileResult Download(int courseSid, string GUIDFileName, string originalFileName)
-        {
-            if (GetLoginUser() == null)
-            {
-                return null;
-            }
-            string message = string.Empty;
-            if (!HasAccessToCourse(courseSid, out message))
-            {
-                return null;
-            }
-            message = string.Empty;
-            string path;
-            using (var contentManager = new ContentManager())
-            {
-                path = contentManager.GetContentPathByContentGUIDName(GUIDFileName, out message);
-            }
-            var file = File(path, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
-            if (file == null)
-                return null;
-            return file;
-        }
-
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
-        public ActionResult CourseList()
+        public ActionResult Download(int courseSid, int contentSid, string originalFileName)
         {
             if (GetLoginUser() == null)
             {
                 return RedirectToLogin();
             }
-
             string message = string.Empty;
-            using (var courseManager = new CourseManager())
+            if (!HasAccessToCourse(courseSid, out message))
             {
-                var courseList = courseManager.GetEnrolledCoursesByStudentSid(GetLoginUser().Students.FirstOrDefault().Sid, out message);
-                return View(courseList);
+                return RedirectToError(message);
             }
+            string filepath;
+            string fileType;
+            using (var contentManager = new ContentManager())
+            {
+                var content = contentManager.GetContentByContentSid(contentSid, out message);
+                if (content == null)
+                {
+                    return RedirectToError(message);
+                }
+                filepath = content.Path + content.FileName;
+                fileType = content.Type;
+            }
+            var file = File(filepath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
+            if (file == null)
+            {
+                return RedirectToError(ActiveLearning.Business.Common.Constants.ValueNotFound(ActiveLearning.Business.Common.Constants.File));
+            }
+            if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_Video))
+            {
+
+                ViewBag.VideoPath = filepath;
+                return View("Video");
+            }
+            else if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_File))
+            {
+                return file;
+            }
+            return null;
         }
+        #endregion
     }
 }

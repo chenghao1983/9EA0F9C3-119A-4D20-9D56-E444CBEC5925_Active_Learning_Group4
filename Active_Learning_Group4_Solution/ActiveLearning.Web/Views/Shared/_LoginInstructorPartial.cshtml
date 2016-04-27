@@ -8,19 +8,15 @@
 
     using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-        var tempUser = TempData[BaseController.UserSessionParam] as User;
+        var tempUser = TempData.Peek(BaseController.UserSessionParam) as User;
+
         @*@html.antiforgerytoken();*@
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + tempUser.FullName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Hello " + tempUser.FullName, "", null, new { onclick = "javascript:return false;" })
             </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Manage Quiz</a></li>
-                    <li><a href="#">Manage Content</a></li>
-                </ul>
-            </li>
+            <li>@Html.ActionLink("Home", "Index", "instructor")</li>
+            <li>@Html.ActionLink("My Course", "CourseList", "instructor")</li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
 

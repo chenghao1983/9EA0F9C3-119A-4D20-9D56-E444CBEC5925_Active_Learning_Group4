@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "Student Login Page";
+    ViewBag.Title = "Student Home Page";
 }
 <br/>
-<div class="jumbotron">
+<div class="jumbotron" style="margin-top:10%">
     <h1>Welcome !</h1>
     <br />
     <p class="lead">Go to My Course to start Chat and Quiz</p>
     <br />
-    <p>@Html.ActionLink("My Course","courselist","student",new { @class="btn btn-primary btn-lg"})</p>
+    <p>@Html.ActionLink("My Course", "CourseList", "student",new { @class="btn btn-primary btn-lg"})</p>
 </div>
 

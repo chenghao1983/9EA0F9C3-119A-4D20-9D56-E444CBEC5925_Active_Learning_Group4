@@ -1,13 +1,18 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Course>
 @using ActiveLearning.Business.Common;
+@{
+    ViewBag.Title = "Course List";
+}
+
+<h2>Course List</h2>
 
 @if (Model == null || Model.Count() == 0)
 {
-    <label  class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Course)</label>
+    <label class="alert-info center-block text-center" style="margin-top:100px">@Constants.ThereIsNoValueFound(Constants.Course)</label>
 }
 else
 {
-    <table class="table">
+    <table class="table" style="margin-top:100px">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CourseName)

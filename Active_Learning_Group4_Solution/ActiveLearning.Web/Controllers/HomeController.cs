@@ -13,10 +13,10 @@ namespace ActiveLearning.Web.Controllers
 {
     public class HomeController : BaseController
     {
-
+        [HttpGet]
         public ActionResult Index()
-
         {
+            LogUserOut();
             return Redirect("~/Home/login");
         }
 
