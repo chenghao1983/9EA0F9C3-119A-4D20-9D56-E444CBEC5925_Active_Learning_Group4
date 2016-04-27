@@ -15,7 +15,7 @@ namespace ActiveLearning.Business.Interface
         Content GetContentByContentSid(int contentSid, out string message);
         IEnumerable<Content> GetContentsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetContentSidsByCounrseSid(int courseSid, out string message);
-        String GetContentPathByContentGUIDName(string GUIDName, out string message);
+        String GetContentPathByContentSid(int contentSid, out string message);
         Content AddContent(Controller controller, HttpPostedFileBase file, int courseSid, out string message);
         bool DeleteContent(Content conten, out string message);
         bool DeleteContent(int contentSid, out string message);

@@ -119,7 +119,7 @@ namespace ActiveLearning.Business.Common
         }
         public static string NOAccess(string value)
         {
-            return "Sorry you don't have access to the " + value;
+            return "Sorry you don't have access to this " + value;
         }
         #endregion
 

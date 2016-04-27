@@ -217,7 +217,7 @@ namespace ActiveLearning.Business.Implementation
                             return true;
                             break;
                         case Constants.User_Role_Instructor_Code:
-                            if (user.Students == null || user.Students.Count() == 0)
+                            if (user.Instructors == null || user.Instructors.Count() == 0)
                             {
                                 message = Constants.ValueIsEmpty(Constants.Instructor);
                                 return false;

@@ -109,10 +109,10 @@ namespace ActiveLearning.Business.Common
 
         public static string GetAllowedFileExtensionFromConfig()
         {
-            string defaultExtentions = "mp4,ppt,pptx,txt,doc,docx,pdf,xls,xlsx";
-            string key = "AllowedFileExtentions";
+            string defaultExtensions = "mp4,ppt,pptx,txt,doc,docx,pdf,xls,xlsx";
+            string key = "AllowedFileExtensions";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
-            return settings == null || settings.Length == 0 ? defaultExtentions : settings[0];
+            return settings == null || settings.Length == 0 ? defaultExtensions : settings[0];
         }
         public static string GetVideoFormatsFromConfig()
         {
@@ -145,7 +145,7 @@ namespace ActiveLearning.Business.Common
         }
         public static string GetUploadFolderFromConfig()
         {
-            string defaultFolder = "~/App_Data/Upload/";
+            string defaultFolder = "/Upload/";
             string key = "UploadPath";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
             return settings == null || settings.Length == 0 ? defaultFolder : settings[0];

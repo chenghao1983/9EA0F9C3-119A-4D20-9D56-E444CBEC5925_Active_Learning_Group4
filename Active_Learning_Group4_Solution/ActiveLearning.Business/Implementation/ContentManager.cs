@@ -200,13 +200,19 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
-        public string GetContentPathByContentGUIDName(string GUIDName, out string message)
+        public string GetContentPathByContentSid(int contentSid, out string message)
         {
             message = string.Empty;
             string path = string.Empty;
             try
             {
-                path = Util.GetUploadFolderFromConfig() + GUIDName;
+                var content = GetContentByContentSid(contentSid, out message);
+                if(content == null)
+                {
+                    message = Constants.ValueNotFound(Constants.Content);
+                    return null;
+                }
+                path = content.Path + content.FileName;
                 return path;
             }
             catch (Exception ex)
