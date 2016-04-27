@@ -22,7 +22,7 @@ namespace ActiveLearning.Business.Common
         public const string Content_Type_File = "F";
         #endregion
 
-        #region Error Message
+        #region Message
         public const string Role = "Role";
         public const string User = "User";
         public const string Student = "Student";
@@ -56,6 +56,7 @@ namespace ActiveLearning.Business.Common
         public const string FileSize = "File Size";
         public const string FilePath = "File Path";
         public const string FileExtension = "File Extension";
+        public const string Upload = "Upload";
 
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
         public const string Authenticating_User = "Authenticating User ";
@@ -120,6 +121,10 @@ namespace ActiveLearning.Business.Common
         public static string NOAccess(string value)
         {
             return "Sorry you don't have access to this " + value;
+        }
+        public static string ValueIsSuccessful(string value)
+        {
+            return value + " is successful";
         }
         #endregion
 
