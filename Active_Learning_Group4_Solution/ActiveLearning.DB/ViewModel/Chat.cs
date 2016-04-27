@@ -17,7 +17,11 @@ namespace ActiveLearning.DB
             [Required(ErrorMessage = Constants.Please_Enter + "message")]
             [Display(Name = "Message")]
             public string Message { get; set; }
+
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            public DateTime CreateDT { get; set; }
+
         }
-        
+
     }
 }
