@@ -78,11 +78,12 @@ namespace ActiveLearning.Web.Controllers
 
             return View(courseSid);
         }
-        
+
         #endregion
 
         #region Content
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
+        [HttpGet]
         public ActionResult ManageContent(int courseSid)
         {
             if (GetLoginUser() == null)
@@ -106,49 +107,73 @@ namespace ActiveLearning.Web.Controllers
                 }
             }
             ViewBag.CourseSid = courseSid;
+            ViewBag.Message = TempData["message"];
             return View(items);
         }
 
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
-        public ActionResult Upload(HttpPostedFileBase file)
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
-            try
+
+            string message = string.Empty;
+            using (var contentManger = new ContentManager())
             {
-                if (file.ContentLength > 0)
+                var content = contentManger.AddContent(this, file, courseSid, out message);
+                if (content != null)
                 {
-                    string guid = Guid.NewGuid().ToString();
-
-                    var fileName = Path.GetFileName(file.FileName);
-                    Content fileDetail = new Content()
-                    {
-                        //TODO set the courseSID
-                        CourseSid = 2,
-                        Path = "~/App_Data/Upload/",
-                        OriginalFileName = fileName,
-                        FileName = guid + Path.GetExtension(fileName),
-                        Type = "",
-                        CreateDT = DateTime.Now
-                    };
-
-                    // Write to Database
-                    using (var fileManager = new ContentManager())
-                    {
-                        string message = string.Empty;
-                        fileManager.AddContent(this, file, 1, out message);
-                    }
-
-                    var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));
-                    file.SaveAs(path);
+                    TempData["message"] = Business.Common.Constants.ValueIsSuccessful(Business.Common.Constants.Upload);
+                    return new RedirectResult(Request.UrlReferrer.ToString());
                 }
-                ViewBag.Message = "Upload successful";
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = "Upload failed. " + ex.Message;
-                return View();
+                else
+                {
+                    TempData["message"] = message;
+                    return new RedirectResult(Request.UrlReferrer.ToString());
+                }
+
             }
         }
+        //try
+        //{
+
+        //}
+
+        //        if (file.ContentLength > 0)
+        //        {
+        //            string guid = Guid.NewGuid().ToString();
+
+        //            var fileName = Path.GetFileName(file.FileName);
+        //            Content fileDetail = new Content()
+        //            {
+        //                //TODO set the courseSID
+        //                CourseSid = 2,
+        //                Path = "~/App_Data/Upload/",
+        //                OriginalFileName = fileName,
+        //                FileName = guid + Path.GetExtension(fileName),
+        //                Type = "",
+        //                CreateDT = DateTime.Now
+        //            };
+
+        //            // Write to Database
+        //            using (var fileManager = new ContentManager())
+        //            {
+        //                string message = string.Empty;
+        //                fileManager.AddContent(this, file, 1, out message);
+        //            }
+
+        //            var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));
+        //            file.SaveAs(path);
+        //        }
+        //    ViewBag.Message = "Upload successful";
+        //    return View();
+        //}
+        //catch (Exception ex)
+        //{
+        //    ViewBag.Message = "Upload failed. " + ex.Message;
+
+
+        //}
+        //}
 
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Download(int courseSid, int contentSid, string originalFileName)
