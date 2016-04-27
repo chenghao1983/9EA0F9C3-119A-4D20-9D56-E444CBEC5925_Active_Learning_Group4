@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Student>
-
+@using ActiveLearning.Business.Common;
 
 @{
     ViewBag.Title = "ManageStudent";
@@ -14,9 +14,11 @@
 <table class="table">
 
 
-    @if (Model == null)
+    @if (Model == null || Model.Count() == 0)
     {
-        <div>There is no record here.</div>
+        <div class="alert alert-success">
+            <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+        </div>
     }
     else
     {
@@ -52,7 +54,7 @@
                     @Html.ActionLink("Edit", "EditStudent", new { id = item.Sid }) |
                     @Html.ActionLink("Details", "StudentDetails", new { id = item.Sid }) |
                     @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Sid })|
-                    @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateStudent" : "ActivateStudent", new { id = item.Sid }, new { onclick = "SetTextBoxValue('mydata')" })
+                    @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateStudent" : "ActivateStudent", "Admin", new { id = item.Sid }, new { onclick = "SetTextBoxValue('mydata')" })
 
                 </td>
             </tr>

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Instructor>
-
+@using ActiveLearning.Business.Common;
 @{
     ViewBag.Title = "ManageInstructor";
 }
@@ -12,9 +12,11 @@
 <table class="table">
 
 
-    @if (Model == null)
+    @if (Model == null || Model.Count() == 0)
     {
-        <div>There is no record here.</div>
+        <div class="alert alert-success">
+            <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+        </div>
     }
     else
     {

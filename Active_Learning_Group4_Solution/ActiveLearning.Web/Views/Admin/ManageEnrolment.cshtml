@@ -19,6 +19,7 @@
 
 <h2>Manage Course Enrolment</h2>
 
+
 @if (Model == null || Model.Count() == 0)
 {
     <label for="Name" class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Student)</label>
@@ -67,7 +68,7 @@ else
                             }
                         }*@
                     <td>
-                        @Html.CheckBoxFor(x => x[i].HasEnrolled)
+                        @Html.CheckBoxFor(x => x[i].HasEnrolled,new {@class = "checkbox"})
                     </td>
                     <td>
                         @Html.DisplayFor(x => x[i].User.FullName)
@@ -80,7 +81,7 @@ else
                     </td>
 
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = Model[i].Sid })
+
                     </td>
                 </tr>
             }
@@ -88,7 +89,7 @@ else
         </table>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" onclick="return Confirm('Confirm to update Student Enrollment ?')" />
+                <input type="submit" value="Save" class="btn btn-primary" onclick="return Confirm('Confirm to update Student Enrollment ?')" />
             </div>
         </div>
     }

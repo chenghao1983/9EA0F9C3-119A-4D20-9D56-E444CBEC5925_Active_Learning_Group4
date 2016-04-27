@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Course>
+@using ActiveLearning.Business.Common;
 
 @{
     ViewBag.Title = "ManageCourse";
@@ -10,9 +11,26 @@
     @Html.ActionLink("Create New Course", "CreateCourse")
 </p>
 <table class="table">
-    @if (Model == null)
+
+    @*@Html.Partial("~/Views/Shared/_StatusPartial.cshtml", Model)*@
+    @if (ViewBag.Message != null)
     {
-        <div>There is no record here.</div>
+        <div class="alert alert-success text-center">
+            <strong class="text-center">@ViewBag.Message</strong>
+        </div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger text-center">
+            <strong>@ViewBag.Error</strong>
+        </div>
+    }
+
+    @if (Model == null || Model.Count() == 0)
+    {
+        <div class="alert alert-success">
+            <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+        </div>
     }
     else
     {
@@ -43,7 +61,6 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditCourse", new { id = item.Sid }) |
-                    @Html.ActionLink("Details", "CourseDetails", new { id = item.Sid }) |
                     @Html.ActionLink("Delete", "DeleteCourse", new { id = item.Sid }) |
                     @Html.ActionLink("Manage Student", "ManageEnrolment", new { id = item.Sid })
 
