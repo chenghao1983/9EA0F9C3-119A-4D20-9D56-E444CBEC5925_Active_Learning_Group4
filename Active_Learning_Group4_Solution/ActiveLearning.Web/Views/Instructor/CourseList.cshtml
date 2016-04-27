@@ -43,7 +43,7 @@ else
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Manage Quiz", "ManageQuiz", new { id = item.Sid })</li>
                             <li>@Html.ActionLink("Manage Content", "ManageContent", new { courseSid = item.Sid })</li>
-                            <li>@Html.ActionLink("View Quiz Statistics", "Quiz Statistics", new { id = item.Sid })</li>
+                            <li>@Html.ActionLink("View Quiz Statistics", "QuizStatistics", new { courseSid = item.Sid })</li>
                         </ul>
                     </div>
                 </td>

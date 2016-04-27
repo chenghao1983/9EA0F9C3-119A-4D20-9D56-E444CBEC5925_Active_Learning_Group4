@@ -13,6 +13,7 @@ using ActiveLearning.Business.Implementation;
 using ActiveLearning.Business.Interface;
 using ActiveLearning.DB;
 using ActiveLearning.Web.Filter;
+using System.Threading.Tasks;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -423,6 +424,15 @@ namespace ActiveLearning.Web.Controllers
                     ModelState.AddModelError(string.Empty, "Some technical error happened.");
                 }
                 return View();
+            }
+        }
+
+        public async Task<ActionResult> QuizStatistics(int courseSid)
+        {
+            //var statisticsService = new StatisticsService();
+            using (var quizManager = new QuizManager())
+            {
+                return View(await quizManager.GenerateStatistics(courseSid));
             }
         }
 

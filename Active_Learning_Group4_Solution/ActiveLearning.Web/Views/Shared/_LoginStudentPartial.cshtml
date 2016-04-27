@@ -15,7 +15,7 @@
         <ul class="nav navbar-nav navbar-left"></ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + tempUser.FullName, "", null, new { onclick = "javascript:return false;" })
+                @Html.ActionLink("Hello " + tempUser == null ? "" : tempUser.FullName, "", null, new { onclick = "javascript:return false;" })
             </li>
             <li>@Html.ActionLink("Home", "Index", "student")</li>
             <li>@Html.ActionLink("My Course", "CourseList", "student")</li>
