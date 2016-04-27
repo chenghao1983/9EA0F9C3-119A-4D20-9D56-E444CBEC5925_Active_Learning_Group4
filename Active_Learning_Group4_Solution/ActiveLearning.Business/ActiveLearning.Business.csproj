@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatHub\StatisticsHub.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Implementation\ChatManager.cs" />

@@ -16,8 +16,6 @@ namespace ActiveLearning.Business.Implementation
 {
     public class QuizManager : BaseManager, IQuizManager
     {
-        ActiveLearningContext db = new ActiveLearningContext();
-
         #region Normal
         public bool QuizQuestionTitleExists(string quizTitle, out string message)
         {
