@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ActiveLearning.Business.Common;
 using System.Data.Entity;
 using ActiveLearning.Business.ViewModel;
+using ActiveLearning.Business.SignalRHub;
 using Microsoft.AspNet.SignalR;
 using System.Transactions;
 
@@ -589,11 +590,11 @@ namespace ActiveLearning.Business.Implementation
                     //var lastAnswer = unitOfWork.QuizAnswers.Find(a => a.StudentSid == studentSid).LastOrDefault();
 
                     //var lastQuestionId = lastQuestion.GroupBy(a => a.QuizQuestionSid).Select(g => new { QuestionId = g.Key, Count = g.Count() }).
-                          // OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId }).Select(q => q.QuestionId).FirstOrDefault();
+                    // OrderByDescending(q => new { q.Count, QuestionId = q.QuestionId }).Select(q => q.QuestionId).FirstOrDefault();
 
                     //var lastQuestionId = lastQuestion.FirstOrDefault().Sid;
 
-                    var question =  unitOfWork.QuizQuestions.Find(x => x.CourseSid == CourseSid);
+                    var question = unitOfWork.QuizQuestions.Find(x => x.CourseSid == CourseSid);
                     var questionsCount = question.Count();
 
                     //var questionsCount = await db.QuizQuestions.Where(x => x.CourseSid == CourseSid).CountAsync();
@@ -603,13 +604,21 @@ namespace ActiveLearning.Business.Implementation
                         return null;
                     }
                     //var nextQuestionId = (lastQuestionId % questionsCount) + 1;
-                    List<int> questionSids = question.Select(q=>q.Sid).ToList();
+                    List<int> questionSids = question.Select(q => q.Sid).ToList();
 
                     int ram = new Random().Next(questionsCount);
                     var nextQuestionId = questionSids.ElementAt(ram);
 
-                    var nextQuestion =  unitOfWork.QuizQuestions.Get(nextQuestionId);
-                    nextQuestion.QuizOptions = await unitOfWork.QuizOptions.FindAsync(o => o.QuizQuestionSid == nextQuestion.Sid) as ICollection<QuizOption>;
+                    var nextQuestion = unitOfWork.QuizQuestions.Get(nextQuestionId);
+                    nextQuestion.QuizOptions = await unitOfWork.QuizOptions.FindAsync(o => o.QuizQuestionSid == nextQuestion.Sid && !o.DeleteDT.HasValue) as ICollection<QuizOption>;
+
+                    if (nextQuestion.QuizOptions != null)
+                    {
+                        foreach (var option in nextQuestion.QuizOptions)
+                        {
+                            option.CourseSid = CourseSid;
+                        }
+                    }
 
                     return nextQuestion;
                     //return await db.QuizQuestions.Include(e => e.QuizOptions).FirstOrDefaultAsync(c => c.Sid == nextQuestionId);
@@ -657,17 +666,18 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
+                    answer.CreateDT = DateTime.Now;
                     unitOfWork.QuizAnswers.Add(answer);
                     await unitOfWork.CompleteAsync();
 
-                    var selectedOption = await unitOfWork.QuizOptions.SingleOrDefaultAsync(o => o.Sid == answer.QuizOptionSid && o.QuizQuestionSid == answer.QuizQuestionSid);
+                    var selectedOption = await unitOfWork.QuizOptions.SingleOrDefaultAsync(o => o.Sid == answer.QuizOptionSid && o.QuizQuestionSid == answer.QuizQuestionSid && !o.DeleteDT.HasValue);
                     return selectedOption.IsCorrect;
                 }
             }
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                throw;
+                return false;
             }
 
             //this.db.QuizAnswers.Add(answer);
@@ -693,9 +703,9 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var correctAnswerCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.IsCorrect && a.QuizOption.QuizQuestion.CourseSid == courseSid)).Count();
-                    var totalAnswerCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.QuizQuestion.CourseSid == courseSid)).Count();
-                    var totalUserCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.QuizQuestion.CourseSid == courseSid)).Select(s => s.StudentSid).Count();
+                    var correctAnswerCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.IsCorrect && a.QuizOption.QuizQuestion.CourseSid == courseSid && !a.DeleteDT.HasValue)).Count();
+                    var totalAnswerCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.QuizQuestion.CourseSid == courseSid && !a.DeleteDT.HasValue)).Count();
+                    var totalUserCount = (await unitOfWork.QuizAnswers.FindAsync(a => a.QuizOption.QuizQuestion.CourseSid == courseSid && !a.DeleteDT.HasValue)).Select(s => s.StudentSid).Count();
                     var incorrectAnswers = totalAnswerCount - correctAnswerCount;
 
                     return new StatisticsViewModel

@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatHub\StatisticsHub.cs" />
+    <Compile Include="SignalRHub\StatisticsHub.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Implementation\ChatManager.cs" />
@@ -83,8 +83,7 @@
     <Compile Include="Mock\MockCourseManager.cs" />
     <Compile Include="Mock\MockUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ChatHub\ChatHub.cs" />
-    <Compile Include="ViewModel\StatisticsHub.cs" />
+    <Compile Include="SignalRHub\ChatHub.cs" />
     <Compile Include="ViewModel\StatisticsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

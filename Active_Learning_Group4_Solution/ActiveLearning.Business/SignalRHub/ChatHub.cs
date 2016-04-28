@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using ActiveLearning.Business.Implementation;
 using ActiveLearning.DB;
 
-namespace ActiveLearning.Business.ChatHub
+namespace ActiveLearning.Business.SignalRHub
 {
     public class ChatHub : Hub
     {
