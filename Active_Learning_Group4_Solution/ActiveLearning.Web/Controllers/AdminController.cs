@@ -54,10 +54,13 @@ namespace ActiveLearning.Web.Controllers
             {
 
                 var listCourse = courseManager.GetAllCourses(out message);
-                if (listCourse == null || listCourse.Count() == 0)
-                {
-                    ViewBag.Message = "The List is empty !";
-                }
+                //if (listCourse == null || listCourse.Count() == 0)
+                //{
+                //    ViewBagError = message;
+                //}
+
+                ViewBagMessage = TempDataMessage;
+                ViewBagError = TempDataError;
 
                 return View(listCourse);
             }
@@ -90,18 +93,20 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var courseManager = _CourseManagerfactory.Create())
                 {
-                    if (courseManager.AddCourse(course, out message) == null)
+                    var newcourse = courseManager.AddCourse(course, out message);
+                    if (newcourse == null)
                     {
-                        ViewBag.Error = message;
+                        ViewBagError = message;
                         return View();
                     }
                 }
-                ViewBag.Message = "Create Succesfully!";
+                TempDataMessage = Constants.ValueSuccessfuly("Course has been created");
 
                 return RedirectToAction("ManageCourse");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                ExceptionLog(ex);
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             return View(course);
@@ -125,6 +130,9 @@ namespace ActiveLearning.Web.Controllers
                 Course course = deleteCourse.GetCourseByCourseSid(id, out message);
                 if (course == null)
                 {
+                    ViewBagError = message;
+                    TempDataError = message;
+
                     return HttpNotFound();
                 }
                 return View(course);
@@ -141,17 +149,16 @@ namespace ActiveLearning.Web.Controllers
             try
             {
                 string message = string.Empty;
-                using (var deleteCourse = new CourseManager())
+                using (var courseManager = new CourseManager())
                 {
-                    if (deleteCourse == null)
+                    if (courseManager.DeleteCourse(id, out message))
                     {
-                        return HttpNotFound();
-                    }
-                    var course = deleteCourse.GetCourseByCourseSid(id, out message);
-                    if (deleteCourse.DeleteCourse(course, out message))
-                    {
+                        TempDataMessage = Constants.ValueSuccessfuly("Course has been deleted");
+
                         return RedirectToAction("ManageCourse");
                     }
+                    var course = courseManager.GetCourseByCourseSid(id, out message);
+                    ViewBagError = message;
                     return View(course);
                 };
             }
@@ -167,7 +174,6 @@ namespace ActiveLearning.Web.Controllers
                 }
                 return View();
             }
-
         }
 
         // GET: ManageCourse/EditCourse/6
@@ -202,9 +208,10 @@ namespace ActiveLearning.Web.Controllers
                 {
                     if (updateCourse.UpdateCourse(courseToUpdate, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Course has been updated");
                         return RedirectToAction("ManageCourse");
                     }
-                    ViewBag.Message = message;
+                    ViewBagError = message;
                     return View();
                 }
             }
@@ -236,12 +243,11 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var userManager = new UserManager())
             {
+                var listInstructor = userManager.GetAllActiveInstructor(out message);
 
-                List<Instructor> listInstructor = (List<Instructor>)userManager.GetAllActiveInstructor(out message);
-                if (listInstructor == null || listInstructor.Count == 0)
-                {
-                    ViewBag.Message = "The List is empty !";
-                }
+                ViewBagMessage = TempDataMessage;
+                ViewBagError = TempDataError;
+
                 return View(listInstructor);
             }
 
@@ -282,9 +288,10 @@ namespace ActiveLearning.Web.Controllers
                 {
                     if (updateInstructor.UpdateInstructor(instructorToUpdate, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been updated");
                         return RedirectToAction("ManageInstructor");
                     }
-                    ViewBag.Message = message;
+                    ViewBagError = message;
                     return View();
                 }
             }
@@ -315,7 +322,6 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateInstructor(Instructor instructor)
         {
-
             try
             {
                 string message = string.Empty;
@@ -323,21 +329,19 @@ namespace ActiveLearning.Web.Controllers
                 {
                     if (userManager.AddInstructor(instructor, out message) == null)
                     {
-                        ViewBag.Message = message;
+                        ViewBagError = message;
                         return View();
                     }
                 }
-                ViewBag.Message = "Instructor Created !";
-
+                TempDataMessage = Constants.ValueSuccessfuly("Instructor has been created");
                 return RedirectToAction("ManageInstructor");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                ExceptionLog(ex);
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             return View(instructor);
-
-
 
             // HttpContext.User.Identity
             //string message = string.Empty;
@@ -377,15 +381,13 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var deleteInstructor = new UserManager())
                 {
-                    //if (student == null)
-                    //{
-                    //    return HttpNotFound();
-                    //}
                     Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
                     if (deleteInstructor.DeleteInstructor(instructor, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been deleted");
                         return RedirectToAction("ManageInstructor");
                     }
+                    ViewBagError = message;
                     return View(instructor);
                 };
             }
@@ -430,15 +432,14 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var activateInstructor = new UserManager())
                 {
-                    //if (student == null)
-                    //{
-                    //    return HttpNotFound();
-                    //}
+
                     var instructor = activateInstructor.GetInstructorByInstructorSid(id, out message);
                     if (activateInstructor.ActivateInstructor(instructor, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been activated");
                         return RedirectToAction("ManageInstructor");
                     }
+                    ViewBagError = message;
                     return View(instructor);
                 };
             }
@@ -465,15 +466,14 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var deactivateInstructor = new UserManager())
                 {
-                    //if (student == null)
-                    //{
-                    //    return HttpNotFound();
-                    //}
+
                     var instructor = deactivateInstructor.GetInstructorByInstructorSid(id, out message);
                     if (deactivateInstructor.DeactivateInstructor(instructor, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been deactivated");
                         return RedirectToAction("ManageInstructor");
                     }
+                    ViewBagError = message;
                     return View(instructor);
                 };
             }
@@ -503,16 +503,13 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var userManager = _UserManagerfactory.Create())
             {
+                var listStudent = userManager.GetAllStudent(out message);
 
-                List<Student> listStudent = (List<Student>)userManager.GetAllStudent(out message);
-                if (listStudent == null || listStudent.Count == 0)
-                {
-                    ViewBag.Message = "The List is empty !";
-                }
+                ViewBagMessage = TempDataMessage;
+                ViewBagError = TempDataError;
 
                 return View(listStudent);
             }
-
         }
 
         // GET: ManageStudent/StudentDetails
@@ -545,7 +542,6 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent(Student student)
         {
-
             try
             {
                 string message = string.Empty;
@@ -553,12 +549,11 @@ namespace ActiveLearning.Web.Controllers
                 {
                     if (userManager.AddStudent(student, out message) == null)
                     {
-                        ViewBag.Error = message;
+                        ViewBagError = message;
                         return View();
                     }
                 }
-                ViewBag.Message = "Student Created !";
-
+                TempDataMessage = Constants.ValueSuccessfuly("Student has been created");
                 return RedirectToAction("ManageStudent");
             }
             catch (Exception e)
@@ -567,7 +562,6 @@ namespace ActiveLearning.Web.Controllers
             }
             return View(student);
         }
-
 
         // GET: ManageStudent/EditStudent/6
         [CustomAuthorize(Roles = Constants.Admin)]
@@ -604,9 +598,10 @@ namespace ActiveLearning.Web.Controllers
                 {
                     if (updateStudent.UpdateStudent(studentToUpdate, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Student has been updated");
                         return RedirectToAction("ManageStudent");
                     }
-                    ViewBag.Message = message;
+                    ViewBagError = message;
                     return View();
                 }
             }
@@ -652,15 +647,13 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var deleteStudent = new UserManager())
                 {
-                    //if (student == null)
-                    //{
-                    //    return HttpNotFound();
-                    //}
                     Student student = deleteStudent.GetStudentByStudentSid(id, out message);
                     if (deleteStudent.DeleteStudent(student, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Student has been deleted");
                         return RedirectToAction("ManageStudent");
                     }
+                    ViewBagError = message;
                     return View(student);
                 };
             }
@@ -681,7 +674,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // POST: ManageStudent/ActivateStudent
-       // [HttpPost]
+        // [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateStudent(int id)
         {
@@ -697,8 +690,10 @@ namespace ActiveLearning.Web.Controllers
                     var student = activateStudent.GetStudentByStudentSid(id, out message);
                     if (activateStudent.ActivateStudent(student, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Student has been activated");
                         return RedirectToAction("ManageStudent");
                     }
+                    ViewBagError = message;
                     return View(student);
                 };
             }
@@ -719,7 +714,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/DeactivateStudent
         //[HttpPost]
-       [CustomAuthorize(Roles = Constants.Admin)]
+        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateStudent(int id)
         {
             try
@@ -734,8 +729,10 @@ namespace ActiveLearning.Web.Controllers
                     var student = deactivateStudent.GetStudentByStudentSid(id, out message);
                     if (deactivateStudent.DeactivateStudent(student, out message))
                     {
+                        TempDataMessage = Constants.ValueSuccessfuly("Student has been deactivated");
                         return RedirectToAction("ManageStudent");
                     }
+                    ViewBagError = message;
                     return View(student);
                 };
             }
@@ -775,9 +772,17 @@ namespace ActiveLearning.Web.Controllers
                 //TempData["CheckedStudent"] = checkedStudentId;
                 TempData["CourseId"] = id;
                 TempData["EntrolStudent"] = listStudent.ToList();
+
+                ViewBagMessage = TempDataMessage;
+                ViewBagError = TempDataError;
+
                 return View(listStudent.ToList());
             }
         }
+
+        // POST: ManageCourse/UpdateEnrolment
+        //[HttpPost, ActionName("ManageEnrolment")]
+
 
         // POST: ManageCourse/UpdateStudentEnrolment
         //[HttpPost, ActionName("ManageEnrolment")]
@@ -796,10 +801,10 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (enrolStudent.UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(studentEnrol, courseId, out message))
                 {
-                    //var enrolList = enrolStudent.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseId, out message);  
-                    ViewBag.Message = message;
+                    TempDataMessage = Constants.ValueSuccessfuly(Constants.Student_Course_Enrolment);
                     return RedirectToAction("ManageStudentEnrolment", new { id = courseId });
                 }
+                ViewBagError = message;
                 return View();
             }
         }

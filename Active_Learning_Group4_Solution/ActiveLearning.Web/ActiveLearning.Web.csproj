@@ -294,6 +294,7 @@
     <Content Include="Views\Instructor\ManageQuiz.cshtml" />
     <Content Include="Upload\web.config" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
+    <Content Include="Views\Shared\_ErrorMessageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

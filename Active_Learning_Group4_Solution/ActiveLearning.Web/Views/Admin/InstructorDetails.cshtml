@@ -6,52 +6,67 @@
 
 <h2>Instructor Details</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+@if (Model != null)
+{
+    <div style="margin-top:100px">
+        <hr />
+        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserSid)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserSid)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserSid)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Username)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserSid)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.Username)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.Username)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.User.Username)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Qualification)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Qualification)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Qualification)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Qualification)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.CreateDT)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.CreateDT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.CreateDT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.User.CreateDT)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.UpdateDT)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.UpdateDT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.UpdateDT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.User.UpdateDT)
+            </dd>
 
 
-    </dl>
-</div>
+        </dl>
+    </div>
+}
 <p>
     @Html.ActionLink("Back to List", "ManageInstructor")
 </p>

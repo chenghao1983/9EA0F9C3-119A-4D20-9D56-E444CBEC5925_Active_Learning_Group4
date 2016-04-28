@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ActiveLearning.DB.QuizQuestion>
+@using ActiveLearning.Business.Common;
 
 @{
     ViewBag.Title = "ManageQuiz";
@@ -6,41 +7,64 @@
 
 <h2>Manage Quiz</h2>
 
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+
 <p>
     @Html.ActionLink("Create Quiz Question", "CreateQuizQuestion")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdateDT)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateDT)
-        </td>
-
-        <td>
-            @Html.ActionLink("Edit", "EditQuizQuestion", new { id=item.Sid }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.Sid }) |*@
-            @Html.ActionLink("Delete", "DeleteQuizQuestion", new { id=item.Sid })
-        </td>
-    </tr>
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="alert alert-info text-center">
+        <strong>@Constants.ThereIsNoValueFound(Constants.Course)</strong>
+    </div>
 }
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDT)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDT)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "EditQuizQuestion", new { id = item.Sid }) |
+                    @*@Html.ActionLink("Details", "Details", new { id=item.Sid }) |*@
+                    @Html.ActionLink("Delete", "DeleteQuizQuestion", new { id = item.Sid })
+                </td>
+            </tr>
+        }
+    </table>
+}

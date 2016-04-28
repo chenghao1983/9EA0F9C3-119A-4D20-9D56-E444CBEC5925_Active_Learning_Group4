@@ -9,7 +9,7 @@
 @if (ViewBag.Message != null)
 {
     <div class="alert alert-success text-center">
-        <strong class="text-center">@ViewBag.Message</strong>
+        <strong>@ViewBag.Message</strong>
     </div>
 }
 @if (ViewBag.Error != null)
@@ -42,7 +42,7 @@
                 <div class="modal-body">
                     @using (Html.BeginForm("Upload", "instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                       @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
                         <fieldset>
                             @*<legend>Upload a file</legend>*@
 

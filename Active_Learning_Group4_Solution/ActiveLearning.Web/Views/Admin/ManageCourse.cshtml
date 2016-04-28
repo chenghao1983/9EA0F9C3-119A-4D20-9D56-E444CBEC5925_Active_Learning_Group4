@@ -7,33 +7,32 @@
 
 <h2>Manage Course</h2>
 
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+
 <p>
     @Html.ActionLink("Create New Course", "CreateCourse")
 </p>
-<table class="table">
 
-    @*@Html.Partial("~/Views/Shared/_StatusPartial.cshtml", Model)*@
-    @if (ViewBag.Message != null)
-    {
-        <div class="alert alert-success text-center">
-            <strong class="text-center">@ViewBag.Message</strong>
-        </div>
-    }
-    @if (ViewBag.Error != null)
-    {
-        <div class="alert alert-danger text-center">
-            <strong>@ViewBag.Error</strong>
-        </div>
-    }
-
-    @if (Model == null || Model.Count() == 0)
-    {
-        <div class="alert alert-success">
-            <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
-        </div>
-    }
-    else
-    {
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="alert alert-info text-center">
+        <strong>@Constants.ThereIsNoValueFound(Constants.Course)</strong>
+    </div>
+}
+else
+{
+    <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CourseName)
@@ -47,7 +46,7 @@
             <th></th>
         </tr>
 
-        foreach (var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -62,11 +61,10 @@
                 <td>
                     @Html.ActionLink("Edit", "EditCourse", new { id = item.Sid }) |
                     @Html.ActionLink("Delete", "DeleteCourse", new { id = item.Sid }) |
-                    @Html.ActionLink("Manage Student", "ManageEnrolment", new { id = item.Sid })
+                    @Html.ActionLink("Manage Student", "ManageStudentEnrolment", new { id = item.Sid })
 
                 </td>
             </tr>
         }
-    }
-
-</table>
+    </table>
+}

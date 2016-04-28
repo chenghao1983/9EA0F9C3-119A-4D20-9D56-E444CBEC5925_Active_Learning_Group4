@@ -6,11 +6,24 @@
 
 <h2>Create Course</h2>
 
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal" style="margin-top:100px">
 
         @if (ViewBag.Message != null)
         {

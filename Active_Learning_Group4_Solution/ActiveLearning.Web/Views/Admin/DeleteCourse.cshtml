@@ -6,43 +6,60 @@
 
 <h2>Delete Course</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+@if (Model != null)
+{
+    <h3 style="margin-top:100px">Confirm to delete ?</h3>
+    <div>
+        <h4>Course</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CourseName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDT)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreateDT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CreateDT)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateDT)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateDT)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UpdateDT)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.UpdateDT)
+            </dd>
 
-    </dl>
+        </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary"/> |
-            @Html.ActionLink("Back to List", "ManageCourse")
-        </div>
-    }
-</div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-primary" /> |
+            </div>
+        }
+    </div>
+}
+
+@Html.ActionLink("Back to List", "ManageCourse")

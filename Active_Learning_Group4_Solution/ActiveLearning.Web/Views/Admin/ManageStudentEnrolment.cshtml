@@ -2,7 +2,7 @@
 @using ActiveLearning.DB;
 @using ActiveLearning.Business.Common;
 @{
-    ViewBag.Title = "ManageEnrolment";
+    ViewBag.Title = "Manage Student Course Enrolment";
 }
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script type="text/javascript">
@@ -17,17 +17,30 @@
 </script>
 
 
-<h2>Manage Course Enrolment</h2>
+<h2>Manage Student Course Enrolment</h2>
 
-
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
 @if (Model == null || Model.Count() == 0)
 {
-    <label for="Name" class="alert-danger">@Constants.ThereIsNoValueFound(Constants.Student)</label>
+    <div class="alert alert-info text-center">
+        <strong>@Constants.ThereIsNoValueFound(Constants.Student_Course_Enrolment)</strong>
+    </div>
 }
 else
 {
 
-    using (Html.BeginForm("UpdateEnrolment", "Admin", FormMethod.Post))
+    using (Html.BeginForm("UpdateStudentEnrolment", "Admin", FormMethod.Post))
     {
         <table class="table">
             <tr>

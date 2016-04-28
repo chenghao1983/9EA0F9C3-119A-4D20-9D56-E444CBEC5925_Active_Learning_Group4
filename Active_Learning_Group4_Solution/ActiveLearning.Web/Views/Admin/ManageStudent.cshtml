@@ -10,63 +10,77 @@
 @if (ViewBag.Message != null)
 {
     <div class="alert alert-success text-center">
-        <strong class="text-center">@ViewBag.Message</strong>
+        <strong>@ViewBag.Message</strong>
     </div>
 }
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>@ViewBag.Error</strong>
+    </div>
+}
+
 <p>
     @Html.ActionLink("Create New Student", "CreateStudent")
 </p>
 
-<table class="table">
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="alert alert-info text-center">
+        <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+    </div>
+}
+else
+{
+    <table class="table">
 
 
-    @if (Model == null || Model.Count() == 0)
-    {
-        <div class="alert alert-success">
-            <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
-        </div>
-    }
-    else
-    {
-
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.User.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.FullName)
-            </th>
-            <th>
-                @Html.Label("IsActivated")
-            </th>
-            <th></th>
-        </tr>
-
-        foreach (var item in Model)
+        @if (Model == null || Model.Count() == 0)
         {
+            <div class="alert alert-success">
+                <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
+            </div>
+        }
+        else
+        {
+
             <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.IsActive)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditStudent", new { id = item.Sid }) |
-                    @Html.ActionLink("Details", "StudentDetails", new { id = item.Sid }) |
-                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Sid })|
-                    @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateStudent" : "ActivateStudent", "Admin", new { id = item.Sid }, new { onclick = "SetTextBoxValue('mydata')" })
-
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.User.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User.FullName)
+                </th>
+                <th>
+                    @Html.Label("IsActivated")
+                </th>
+                <th></th>
             </tr>
+
+            foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.IsActive)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditStudent", new { id = item.Sid }) |
+                        @Html.ActionLink("Details", "StudentDetails", new { id = item.Sid }) |
+                        @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Sid })|
+                        @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateStudent" : "ActivateStudent", "Admin", new { id = item.Sid }, new { onclick = "SetTextBoxValue('mydata')" })
+
+                    </td>
+                </tr>
+            }
+
         }
-
-    }
-
-
-</table>
+    </table>
+}
