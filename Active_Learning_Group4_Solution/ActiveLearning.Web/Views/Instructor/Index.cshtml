@@ -3,11 +3,35 @@
     ViewBag.Title = "Instructor Home Page";
 }
 
-<br />
-<div class="jumbotron" style="margin-top:10%">
-    <h1>Welcome !</h1>
-    <br />
-    <p class="lead">Go to My Course to manage Quiz and Content</p>
-    <br />
-    <p>@Html.ActionLink("My Course", "courseList", "instructor", new { @class = "btn btn-primary btn-lg" })</p>
+<div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="~/Images/slide_1.jpg">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Images/slide_2.jpg" alt="">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/Images/slide_3.jpg" alt="">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
 </div>
+
+
+
+
+

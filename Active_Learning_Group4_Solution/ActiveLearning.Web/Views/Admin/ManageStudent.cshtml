@@ -7,6 +7,12 @@
 
 <h2>Manage Student</h2>
 
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success text-center">
+        <strong class="text-center">@ViewBag.Message</strong>
+    </div>
+}
 <p>
     @Html.ActionLink("Create New Student", "CreateStudent")
 </p>

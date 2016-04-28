@@ -42,7 +42,7 @@
                 <div class="modal-body">
                     @using (Html.BeginForm("Upload", "instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
+                       @Html.AntiForgeryToken()
                         <fieldset>
                             @*<legend>Upload a file</legend>*@
 

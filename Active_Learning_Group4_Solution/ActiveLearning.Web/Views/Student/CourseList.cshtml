@@ -21,7 +21,7 @@ else
                 @Html.DisplayNameFor(model => model.CreateDT)
             </th>
             <th>
-        
+                @Html.DisplayNameFor(model => model.UpdateDT)
             </th>
             <th>
             
@@ -44,9 +44,7 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item.UpdateDT)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeleteDT)
-                </td>
+
                 <td>
                     @*@Html.ActionLink("Detail", "CourseDetail", new { courseSid = item.Sid })*@
                     @Html.ActionLink("Chat", "Chat", new { courseSid = item.Sid })

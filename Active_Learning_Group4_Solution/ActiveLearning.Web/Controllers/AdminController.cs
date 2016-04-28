@@ -681,7 +681,7 @@ namespace ActiveLearning.Web.Controllers
 
 
         // POST: ManageStudent/ActivateStudent
-        [HttpPost]
+       // [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateStudent(int id)
         {
