@@ -8,8 +8,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.DB
 {
+    [MetadataType(typeof(AdminMetadata))]
     public partial class Admin
     {
+        public class AdminMetadata
+        {
 
+        }
     }
 }

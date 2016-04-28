@@ -17,12 +17,12 @@ namespace ActiveLearning.DB
 
             [JsonIgnore]
             [ScriptIgnore]
-            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
             public Nullable<System.DateTime> UpdateDT { get; set; }
 
             [JsonIgnore]
             [ScriptIgnore]
-            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
             public Nullable<System.DateTime> DeleteDT { get; set; }
 
             [JsonIgnore]

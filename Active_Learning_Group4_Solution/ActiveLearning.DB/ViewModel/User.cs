@@ -15,20 +15,18 @@ namespace ActiveLearning.DB
         {
             [Required(ErrorMessage = Common.Constants.Please_Enter + "User Name")]
             [Display(Name = "User Name")]
-            public string Username
-            {
-                get;
-                set;
-            }
+            public string Username { get; set; }
+
+            [Display(Name = "Full Name")]
+            public string FullName { get; set; }
+
+            [Display(Name = "Is Active")]
+            public bool IsActive { get; set; }
 
             [Required(ErrorMessage = Common.Constants.Please_Enter + "Password")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
-
-            //[Required(ErrorMessage = Common.Constants.Please_Enter + "Full Name")]
-            //[Display(Name = "Full Name")]
-            //public string Fullname { get; set; }
 
             [Display(Name = "Created Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

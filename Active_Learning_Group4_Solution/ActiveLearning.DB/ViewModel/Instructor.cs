@@ -8,11 +8,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.DB
 {
+    [MetadataType(typeof(InstructorMetadata))]
     public partial class Instructor
     {
         [Display(Name = "Enrolled")]
         public bool HasEnrolled { get; set; }
 
-
+        public class InstructorMetadata
+        {
+         
+        }
     }
 }

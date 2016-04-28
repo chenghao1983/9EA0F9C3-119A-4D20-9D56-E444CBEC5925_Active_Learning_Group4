@@ -20,6 +20,14 @@ namespace ActiveLearning.DB
 
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             public DateTime CreateDT { get; set; }
+
+            [Display(Name = "Updated Date")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
+            public DateTime? UpdateDT { get; set; }
+
+            [Display(Name = "Deleted Date")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
+            public DateTime? DeleteDT { get; set; }
         }
 
     }
