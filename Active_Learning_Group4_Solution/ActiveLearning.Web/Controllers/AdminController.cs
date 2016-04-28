@@ -758,9 +758,9 @@ namespace ActiveLearning.Web.Controllers
         #region Enrolment
 
 
-        // GET: ManageCourse
+        // GET: ManageCourse/ManageStudentEnrolment
         [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult ManageEnrolment(int id)
+        public ActionResult ManageStudentEnrolment(int id)
         {
             string message = string.Empty;
             using (var enrol = new CourseManager())
@@ -778,11 +778,11 @@ namespace ActiveLearning.Web.Controllers
                 return View(listStudent.ToList());
             }
         }
-        
-        // POST: ManageCourse/UpdateEnrolment
+
+        // POST: ManageCourse/UpdateStudentEnrolment
         //[HttpPost, ActionName("ManageEnrolment")]
         [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult UpdateEnrolment(IList<Student> student)
+        public ActionResult UpdateStudentEnrolment(IList<Student> student)
         {
             string message = string.Empty;
             var studentEnrol = TempData["EntrolStudent"] as List<Student>;
@@ -798,11 +798,59 @@ namespace ActiveLearning.Web.Controllers
                 {
                     //var enrolList = enrolStudent.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseId, out message);  
                     ViewBag.Message = message;
-                    return RedirectToAction("ManageEnrolment", new { id = courseId });
+                    return RedirectToAction("ManageStudentEnrolment", new { id = courseId });
                 }
                 return View();
             }
         }
+
+        // GET: ManageCourse/ManageInstructorEnrolment
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult ManageInstructorEnrolment(int id)
+        {
+            string message = string.Empty;
+            using (var enrol = new CourseManager())
+            {
+
+                var listInstructor = enrol.GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(id, out message);
+                if (listInstructor == null)
+                {
+                    ViewBag.Message = message;
+                }
+                //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
+                //TempData["CheckedStudent"] = checkedStudentId;
+                TempData["CourseId"] = id;
+                TempData["EntrolInstructor"] = listInstructor.ToList();
+                return View(listInstructor.ToList());
+            }
+        }
+
+
+        // POST: ManageCourse/UpdateInstructorEnrolment
+        //[HttpPost, ActionName("ManageInstructorEnrolment")]
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult UpdateInstructorEnrolment(IList<Instructor> instructor)
+        {
+            string message = string.Empty;
+            var instructorEnrol = TempData["EntrolInstructor"] as List<Instructor>;
+            int courseId = Convert.ToInt32(TempData["CourseId"]);
+            for (int i = 0; i < instructorEnrol.Count(); i++)
+            {
+                instructorEnrol[i].HasEnrolled = instructor[i].HasEnrolled;
+            }
+
+            using (var enrolInstructor= new CourseManager())
+            {
+                if (enrolInstructor.UpdateInstructorsCourseEnrolmentByHasEnrolledIndicator(instructorEnrol, courseId, out message))
+                {
+                    
+                    ViewBag.Message = message;
+                    return RedirectToAction("ManageInstructorEnrolment", new { id = courseId });
+                }
+                return View();
+            }
+        }
+
 
     }
 
