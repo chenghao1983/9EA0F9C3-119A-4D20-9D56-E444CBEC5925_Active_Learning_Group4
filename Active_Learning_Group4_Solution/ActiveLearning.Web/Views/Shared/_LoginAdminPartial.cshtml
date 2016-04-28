@@ -11,11 +11,16 @@
     {
 
         var tempUser = TempData.Peek(BaseController.UserSessionParam) as User;
+        var userName = string.Empty;
+        if(tempUser != null)
+        {
+            userName = tempUser.FullName;
+        }
 
         @*@html.antiforgerytoken();*@
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + tempUser == null ? "" : tempUser.FullName, "", null, new { onclick = "javascript:return false;" })
+                @Html.ActionLink("Hello " + userName, "", null, new { onclick = "javascript:return false;" })
             </li>
             <li>@Html.ActionLink("Home", "Index", "Admin")</li>
             <li class="dropdown">

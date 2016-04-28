@@ -718,7 +718,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         // POST: ManageStudent/DeactivateStudent
-        [HttpPost]
+        //[HttpPost]
        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateStudent(int id)
         {

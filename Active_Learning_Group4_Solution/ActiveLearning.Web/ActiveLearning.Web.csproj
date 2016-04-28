@@ -189,7 +189,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
-    <Compile Include="Controllers\QuizStatisticsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filter\CustomAuthorizeAttribute.cs" />
@@ -298,7 +297,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Hubs\" />
     <Folder Include="Log\" />
     <Folder Include="obj\Release\" />
   </ItemGroup>

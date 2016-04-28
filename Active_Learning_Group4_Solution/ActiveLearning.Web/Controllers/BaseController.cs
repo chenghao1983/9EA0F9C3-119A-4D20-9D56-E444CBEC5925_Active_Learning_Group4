@@ -19,6 +19,30 @@ namespace ActiveLearning.Web.Controllers
         private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public string TempDataMessage
+        {
+            get { return TempData["Message"] ==null ? null : TempData["Message"].ToString(); }
+            set { TempData["Message"] = value; }
+        }
+
+        public string TempDataError
+        {
+            get { return TempData["Error"] == null ? null : TempData["Error"].ToString(); }
+            set { TempData["Error"] = value; }
+        }
+
+        public string ViewBagMessage
+        {
+            get { return ViewBag.Message; }
+            set { ViewBag.Message = value; }
+        }
+
+        public string ViewBagError
+        {
+            get { return ViewBag.Error; }
+            set { ViewBag.Error = value; }
+        }
+
         public ActionResult RedirectToError(string message)
         {
             ViewBag.Message = message;

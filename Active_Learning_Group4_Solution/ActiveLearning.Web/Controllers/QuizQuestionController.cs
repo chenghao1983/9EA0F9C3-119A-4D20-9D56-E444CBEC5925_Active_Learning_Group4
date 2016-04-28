@@ -60,15 +60,13 @@ namespace ActiveLearning.Web.Controllers
                 return nextQuestion;
             }
         }
-        [HttpPost]
-        public async Task<HttpResponseMessage> Post(int QuizQuestionSid, int QuizOptionSid)//QuizAnswer answer)
+
+        public async Task<HttpResponseMessage> Post(QuizAnswer answer)
         {
             if (ModelState.IsValid)
             {
-                //if (courseSid == 0)
-                //{
-                //    return null;
-                //}
+                int CourseSid = answer.CourseSid;
+
                 var session = SessionStateUtility.GetHttpSessionStateFromContext(HttpContext.Current);
 
                 if (session == null || session[BaseController.UserSessionParam] == null)
@@ -80,7 +78,7 @@ namespace ActiveLearning.Web.Controllers
                 string message = string.Empty;
                 using (var userManager = new UserManager())
                 {
-                    if (!userManager.HasAccessToCourse(user, 1, out message))
+                    if (!userManager.HasAccessToCourse(user, CourseSid, out message))
                     {
                         throw new UnauthorizedAccessException(message);
                     }
@@ -89,17 +87,13 @@ namespace ActiveLearning.Web.Controllers
                 using (var quizManager = new QuizManager())
                 {
                     int studentSid = user.Students.FirstOrDefault().Sid;
-                    //int courseID = courseSid;
-                    var answer = new QuizAnswer();
-                    answer.StudentSid = 1;
-                    answer.CreateDT = DateTime.Now;
+                    answer.StudentSid = studentSid;
 
                     var isCorrect = await quizManager.StoreAsync(answer);
  
-                    await quizManager.NotifyUpdates(1);
+                    await quizManager.NotifyUpdates(CourseSid);
                     return Request.CreateResponse(HttpStatusCode.Created, isCorrect);
                 }
- 
             }
             else
             {

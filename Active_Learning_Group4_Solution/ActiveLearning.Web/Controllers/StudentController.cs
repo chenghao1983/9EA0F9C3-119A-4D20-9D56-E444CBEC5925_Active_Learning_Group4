@@ -8,6 +8,10 @@ using ActiveLearning.Business.Implementation;
 using ActiveLearning.DB;
 using System.Linq;
 using ActiveLearning.Web.Filter;
+using System.Web.SessionState;
+using System;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -93,7 +97,6 @@ namespace ActiveLearning.Web.Controllers
             ViewBag.CourseSid = courseSid;
             return View();
         }
-
         #endregion
 
         #region content
