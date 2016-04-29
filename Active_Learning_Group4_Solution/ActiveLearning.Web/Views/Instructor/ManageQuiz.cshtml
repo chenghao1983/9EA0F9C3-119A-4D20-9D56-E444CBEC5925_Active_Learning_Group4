@@ -45,7 +45,8 @@
                 <td>
                     @Html.ActionLink("Edit", "EditQuizQuestion", new { quizQuestionSid = item.Sid }) |
                     @*@Html.ActionLink("Details", "Details", new { id=item.Sid }) |*@
-                    @Html.ActionLink("Delete", "DeleteQuizQuestion", new { quizQuestionSid = item.Sid })
+                    @Html.ActionLink("Delete", "DeleteQuizQuestion", new { quizQuestionSid = item.Sid })|
+                    @Html.ActionLink("ManageOption ", "ManageOption", new { quizQuestionSid = item.Sid })
                 </td>
             </tr>
         }
