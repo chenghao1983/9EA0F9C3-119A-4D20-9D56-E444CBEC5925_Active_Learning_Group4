@@ -103,6 +103,11 @@ namespace ActiveLearning.Web.Controllers
             }
             return RedirectToError("Unknow error");
         }
+
+        public void SetBackURL(string url)
+        {
+            ViewBag.BackURL = url;
+        }
         #endregion
 
         #region Access

@@ -55,6 +55,16 @@
         <hr />
 
     </div>
+    @*<div class="container">
+        <a href="#" class="navbar-nav"  style="font-size:medium;">Back To List</a>
+    </div>*@
+    @if (!String.IsNullOrEmpty(ViewBag.BackURL))
+    {
+        <div class="container">
+            <a href="@ViewBag.BackURL" class="navbar-nav" style="font-size:medium;">Back To List</a>
+        </div>
+    }
+    <br />
     <footer class="panel-footer" style="text-align:center">
         <p>&copy; @DateTime.Now.Year - PT4 Active Learning Application</p>
     </footer>

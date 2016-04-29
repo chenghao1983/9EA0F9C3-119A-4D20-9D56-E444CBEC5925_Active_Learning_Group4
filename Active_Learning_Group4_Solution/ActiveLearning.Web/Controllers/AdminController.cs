@@ -69,6 +69,7 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            SetBackURL("ManageCourse");
             return View();
         }
 
@@ -95,7 +96,7 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageCourse");
         }
 
-        public ActionResult DeleteCourse(int id)
+        public ActionResult DeleteCourse(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -104,7 +105,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deleteCourse = new CourseManager())
             {
-                Course course = deleteCourse.GetCourseByCourseSid(id, out message);
+                Course course = deleteCourse.GetCourseByCourseSid(courseSid, out message);
                 if (course == null)
                 {
                     SetError(message);
@@ -115,7 +116,7 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost, ActionName("DeleteCourse")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteCou(int id)
+        public ActionResult DeleteCou(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -124,18 +125,18 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var courseManager = new CourseManager())
             {
-                if (courseManager.DeleteCourse(id, out message))
+                if (courseManager.DeleteCourse(courseSid, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Course has been deleted"));
                     return RedirectToAction("ManageCourse");
                 }
-                var course = courseManager.GetCourseByCourseSid(id, out message);
+                var course = courseManager.GetCourseByCourseSid(courseSid, out message);
                 SetError(message);
                 return View(course);
             };
         }
 
-        public ActionResult EditCourse(int id)
+        public ActionResult EditCourse(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -144,7 +145,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var getCourse = new CourseManager())
             {
-                Course course = getCourse.GetCourseByCourseSid(id, out message);
+                Course course = getCourse.GetCourseByCourseSid(courseSid, out message);
                 if (course == null)
                 {
                     SetError(message);
@@ -197,7 +198,7 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        public ActionResult EditInstructor(int id)
+        public ActionResult EditInstructor(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -206,7 +207,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var getInstructor = new UserManager())
             {
-                var instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
+                var instructor = getInstructor.GetInstructorByInstructorSid(instructorSid, out message);
                 if (instructor == null)
                 {
                     SetError(message);
@@ -284,7 +285,7 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageInstructor");
         }
 
-        public ActionResult DeleteInstructor(int id)
+        public ActionResult DeleteInstructor(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -293,7 +294,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deleteInstructor = new UserManager())
             {
-                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
+                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(instructorSid, out message);
                 if (instructor == null)
                 {
                     SetError(message);
@@ -304,7 +305,7 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("DeleteInstructor")]
-        public ActionResult DeleteIns(int id)
+        public ActionResult DeleteIns(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -313,7 +314,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deleteInstructor = new UserManager())
             {
-                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
+                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(instructorSid, out message);
                 if (deleteInstructor.DeleteInstructor(instructor, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Instructor has been deleted"));
@@ -324,7 +325,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        public ActionResult InstructorDetails(int id)
+        public ActionResult InstructorDetails(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -333,7 +334,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var getInstructor = new UserManager())
             {
-                var instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
+                var instructor = getInstructor.GetInstructorByInstructorSid(instructorSid, out message);
                 if (instructor == null)
                 {
                     SetError(message);
@@ -342,7 +343,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        public ActionResult ActivateInstructor(int id)
+        public ActionResult ActivateInstructor(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -351,8 +352,8 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var activateInstructor = new UserManager())
             {
-                var instructor = activateInstructor.GetInstructorByInstructorSid(id, out message);
-                if (activateInstructor.ActivateInstructor(id, out message))
+                var instructor = activateInstructor.GetInstructorByInstructorSid(instructorSid, out message);
+                if (activateInstructor.ActivateInstructor(instructorSid, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Instructor has been activated"));
                 }
@@ -361,7 +362,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        public ActionResult DeactivateInstructor(int id)
+        public ActionResult DeactivateInstructor(int instructorSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -370,7 +371,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deactivateInstructor = new UserManager())
             {
-                if (deactivateInstructor.DeactivateInstructor(id, out message))
+                if (deactivateInstructor.DeactivateInstructor(instructorSid, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Instructor has been deactivated"));
                 }
@@ -396,7 +397,7 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        public ActionResult StudentDetails(int id)
+        public ActionResult StudentDetails(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -405,7 +406,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var getStudent = new UserManager())
             {
-                Student student = getStudent.GetStudentByStudentSid(id, out message);
+                Student student = getStudent.GetStudentByStudentSid(studentSid, out message);
                 if (student == null)
                 {
                     SetError(message);
@@ -446,7 +447,7 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageStudent");
         }
 
-        public ActionResult EditStudent(int id)
+        public ActionResult EditStudent(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -455,7 +456,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var getStudent = new UserManager())
             {
-                var student = getStudent.GetStudentByStudentSid(id, out message);
+                var student = getStudent.GetStudentByStudentSid(studentSid, out message);
                 if (student == null)
                 {
                     SetError(message);
@@ -497,7 +498,7 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        public ActionResult DeleteStudent(int id)
+        public ActionResult DeleteStudent(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -506,7 +507,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deleteStudent = new UserManager())
             {
-                Student student = deleteStudent.GetStudentByStudentSid(id, out message);
+                Student student = deleteStudent.GetStudentByStudentSid(studentSid, out message);
                 if (student == null)
                 {
                     SetError(message);
@@ -519,7 +520,7 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/DeleteStudent/6
         [HttpPost, ActionName("DeleteStudent")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -528,7 +529,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var deleteStudent = new UserManager())
             {
-                Student student = deleteStudent.GetStudentByStudentSid(id, out message);
+                Student student = deleteStudent.GetStudentByStudentSid(studentSid, out message);
                 if (deleteStudent.DeleteStudent(student, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Student has been deleted"));
@@ -540,7 +541,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
 
-        public ActionResult ActivateStudent(int id)
+        public ActionResult ActivateStudent(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -549,7 +550,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var userManager = new UserManager())
             {
-                if (userManager.ActivateStudent(id, out message))
+                if (userManager.ActivateStudent(studentSid, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Student has been activated"));
                 }
@@ -558,7 +559,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        public ActionResult DeactivateStudent(int id)
+        public ActionResult DeactivateStudent(int studentSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -567,7 +568,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var userManager = new UserManager())
             {
-                if (userManager.DeactivateStudent(id, out message))
+                if (userManager.DeactivateStudent(studentSid, out message))
                 {
                     SetMessage(Constants.ValueSuccessfuly("Student has been deactivated"));
                 }
@@ -579,7 +580,7 @@ namespace ActiveLearning.Web.Controllers
 
         #region Enrolment
 
-        public ActionResult ManageStudentEnrolment(int id)
+        public ActionResult ManageStudentEnrolment(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -588,7 +589,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var enrol = new CourseManager())
             {
-                var listStudent = enrol.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(id, out message);
+                var listStudent = enrol.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(courseSid, out message);
                 if (listStudent == null)
                 {
                     SetError(message);
@@ -596,7 +597,7 @@ namespace ActiveLearning.Web.Controllers
                 }
                 //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
                 //TempData["CheckedStudent"] = checkedStudentId;
-                TempData["CourseId"] = id;
+                TempData["CourseId"] = courseSid;
                 TempData["EntrolStudent"] = listStudent.ToList();
 
                 GetErrorAneMessage();
@@ -630,11 +631,11 @@ namespace ActiveLearning.Web.Controllers
                     SetMessage(Constants.ValueSuccessfuly(Constants.Student_Course_Enrolment));
                 }
                 SetError(message);
-                return RedirectToAction("ManageStudentEnrolment", new { id = courseId });
+                return RedirectToAction("ManageStudentEnrolment", new { courseSid = courseId });
             }
         }
 
-        public ActionResult ManageInstructorEnrolment(int id)
+        public ActionResult ManageInstructorEnrolment(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -643,7 +644,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var enrol = new CourseManager())
             {
-                var listInstructor = enrol.GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(id, out message);
+                var listInstructor = enrol.GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(courseSid, out message);
                 if (listInstructor == null)
                 {
                     SetError(message);
@@ -651,15 +652,15 @@ namespace ActiveLearning.Web.Controllers
                 }
                 //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
                 //TempData["CheckedStudent"] = checkedStudentId;
-                TempData["CourseId"] = id;
+                TempData["CourseId"] = courseSid;
                 TempData["EntrolInstructor"] = listInstructor.ToList();
                 return View(listInstructor.ToList());
             }
         }
 
         //[HttpPost, ActionName("ManageInstructorEnrolment")]
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult UpdateInstructorEnrolment(IList<Instructor> instructor)
         {
@@ -682,7 +683,7 @@ namespace ActiveLearning.Web.Controllers
                     SetMessage(Constants.ValueSuccessfuly(Constants.Instructor_Course_Enrolment));
                 }
                 SetError(message);
-                return RedirectToAction("ManageInstructorEnrolment", new { id = courseId });
+                return RedirectToAction("ManageInstructorEnrolment", new { courseSid = courseId });
             }
 
         }

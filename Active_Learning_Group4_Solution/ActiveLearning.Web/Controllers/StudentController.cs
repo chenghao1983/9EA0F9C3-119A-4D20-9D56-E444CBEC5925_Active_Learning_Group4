@@ -43,6 +43,10 @@ namespace ActiveLearning.Web.Controllers
             using (var courseManager = new CourseManager())
             {
                 var courseList = courseManager.GetEnrolledCoursesByStudentSid(GetLoginUser().Students.FirstOrDefault().Sid, out message);
+                if(courseList==null || courseList.Count() ==0)
+                {
+                    SetError(message);
+                }
                 return View(courseList);
             }
         }
@@ -121,8 +125,13 @@ namespace ActiveLearning.Web.Controllers
                 {
                     items = contents.ToList();
                 }
+                else
+                {
+                    SetError(message);
+                }
             }
             ViewBag.CourseSid = courseSid;
+            SetBackURL("courselist");
             return View(items);
         }
 

@@ -8,10 +8,10 @@
 
 @Html.Partial("_MessageBoxPartial")
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal" style="margin-top:100px">
 
         <hr />
@@ -55,7 +55,3 @@
     </div>
     @ViewBag.Message;
 }
-
-<div>
-    @Html.ActionLink("Back to List", "ManageStudent")
-</div>

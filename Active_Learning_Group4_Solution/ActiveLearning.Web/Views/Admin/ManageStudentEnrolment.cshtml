@@ -13,12 +13,13 @@
 {
     using (Html.BeginForm("UpdateStudentEnrolment", "Admin", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <table class="table">
             <tr>
                 <th>
                     <input type="checkbox" id="checkBoxAll" />
                 </th>
-                <th>
+                <th style="width:50%">
                     Full Name   @*@Html.DisplayNameFor(model => model.BatchNo)*@
                 </th>
                 <th>
@@ -26,8 +27,6 @@
                 </th>
                 <th>
                     Batch No
-                </th>
-                <th>
                 </th>
             </tr>
 
@@ -60,13 +59,12 @@
                     <td>
                         @Html.DisplayFor(x => x[i].BatchNo)
                     </td>
-                    <td></td>
                 </tr>
             }
         </table>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10 text-right">
-                <input type="submit" value="Save" class="btn btn-primary" style="width:100px" onclick="return Confirm('Confirm to update Student Enrollment ?')" />
+                <input type="submit" value="Save" class="btn btn-primary" style="width:100px" />
             </div>
         </div>
     }

@@ -281,24 +281,24 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int cid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData["cid"]);
 
             string message = string.Empty;
-            if (!HasAccessToCourse(cid, out message))
+            if (!HasAccessToCourse(courseSid, out message))
             {
                 return RedirectToError(message);
             }
 
             using (var quizManager = new QuizManager())
             {
-                if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
+                if (quizManager.AddQuizQuestionToCourse(quizQuestion, courseSid, out message) == null)
                 {
                     SetError(message);
                     return View();
                 }
             }
             SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been created"));
-            return RedirectToAction("ManageQuiz", new { id = cid });
+            return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
         }
 
 
@@ -327,18 +327,18 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost, ActionName("DeleteQuizQuestion")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteQuiz(int id)
+        public ActionResult DeleteQuiz(int quizQuestionSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
 
-            int cid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData["cid"]);
             string message = string.Empty;
             using (var deleteQuiz = new QuizManager())
             {
-                QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(id, out message);
+                QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
                 {
                     SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been deleted"));
@@ -347,7 +347,7 @@ namespace ActiveLearning.Web.Controllers
                 {
                     SetError(message);
                 }
-                return RedirectToAction("ManageQuiz", new { id = cid });
+                return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             };
         }
 
@@ -407,7 +407,7 @@ namespace ActiveLearning.Web.Controllers
                 {
                     SetError(message);
                 }
-                return RedirectToAction("ManageQuiz", new { id = courseSid });
+                return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             }
         }
 

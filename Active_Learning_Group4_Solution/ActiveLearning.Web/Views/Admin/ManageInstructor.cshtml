@@ -2,7 +2,7 @@
 @using ActiveLearning.Business.Common;
 
 @{
-    ViewBag.Title = "ManageInstructor";
+    ViewBag.Title = "Manage Instructor";
 }
 
 <h2>Manage Instructor</h2>
@@ -18,11 +18,11 @@
     <table class="table">
 
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User.Username)
+            <th style="width:50%">
+                @Html.DisplayNameFor(model => model.User.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.FullName)
+                @Html.DisplayNameFor(model => model.User.Username)
             </th>
             <th>
                 @Html.Label("IsActivated")
@@ -34,24 +34,29 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.IsActive)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.IsActive)
+                </td>
 
-            <td>
-                @Html.ActionLink("Edit", "EditInstructor", new { id = item.Sid }) |
-                @Html.ActionLink("Details", "InstructorDetails", new { id = item.Sid }) |
-                @Html.ActionLink("Delete", "DeleteInstructor", new { id = item.Sid }) |
-                @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateInstructor" : "ActivateInstructor", new { id = item.Sid })
-            </td>
-        </tr>
+                <td>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Edit", "EditInstructor", new { instructorSid = item.Sid }) </li>
+                            <li>@Html.ActionLink("Details", "InstructorDetails", new { instructorSid = item.Sid }) </li>
+                            <li>@Html.ActionLink("Delete", "DeleteInstructor", new { instructorSid = item.Sid }) </li>
+                            <li>@Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateInstructor" : "ActivateInstructor", new { instructorSid = item.Sid })</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
         }
     </table>
 }
