@@ -351,7 +351,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        public ActionResult EditQuizQuestion(int courseSid)
+        public ActionResult EditQuizQuestion(int quizQuestionSid)
         {
             if (!IsUserAuthenticated())
             {
@@ -359,14 +359,14 @@ namespace ActiveLearning.Web.Controllers
             }
 
             string message = string.Empty;
-            if (!HasAccessToCourse(courseSid, out message))
-            {
-                return RedirectToError(message);
-            }
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
 
             using (var getQuizQuestion = new QuizManager())
             {
-                QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(courseSid, out message);
+                QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (quizQuesion == null)
                 {
                     SetError(message);
