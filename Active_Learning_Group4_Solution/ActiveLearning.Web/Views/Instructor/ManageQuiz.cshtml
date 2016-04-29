@@ -9,13 +9,13 @@
 
 @Html.Partial("_MessageBoxPartial")
 
-<p>
+<div class="container text-right" style="width:90%">
     @Html.ActionLink("Create Quiz Question", "CreateQuizQuestion")
-</p>
-
+</div>
+<br />
 @if (Model != null && Model.Count() > 0)
 {
-    <table class="table" style="margin-top:100px">
+    <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)

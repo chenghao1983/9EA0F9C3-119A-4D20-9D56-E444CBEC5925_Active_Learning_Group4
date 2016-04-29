@@ -9,6 +9,10 @@ using ActiveLearning.Web.Filter;
 using log4net;
 using ActiveLearning.Business.Implementation;
 using ActiveLearning.Business.Common;
+using Microsoft.Owin;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace ActiveLearning.Web.Controllers
 {
@@ -114,13 +118,13 @@ namespace ActiveLearning.Web.Controllers
             }
             switch (GetLoginUserRole())
             {
-                case Constants.User_Role_Student_Code:
+                case Business.Common.Constants.User_Role_Student_Code:
                     return Redirect("~/student");
                     break;
-                case Constants.User_Role_Instructor_Code:
+                case Business.Common.Constants.User_Role_Instructor_Code:
                     return Redirect("~/instructor");
                     break;
-                case Constants.User_Role_Admin_Code:
+                case Business.Common.Constants.User_Role_Admin_Code:
                     return Redirect("~/admin");
                     break;
                 default:
@@ -186,8 +190,24 @@ namespace ActiveLearning.Web.Controllers
             return (TempData.Peek(UserSessionParam) as User).Role;
         }
 
+        List<Claim> claims = new List<Claim>();
+        ClaimsIdentity identity;
         public void LogUserIn(User user)
         {
+            claims.Add(new Claim(ClaimTypes.PrimarySid, user.Sid.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.FullName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Username));
+            claims.Add(new Claim(ClaimTypes.Role, user.Role));
+
+            identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+            {
+                //ExpiresUtc = DateTime.UtcNow.(200),
+                IsPersistent = true
+            }, identity);
+
+
             if (Session != null)
                 Session[UserSessionParam] = user;
 

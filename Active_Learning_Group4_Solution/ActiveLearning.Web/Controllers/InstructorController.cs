@@ -292,7 +292,7 @@ namespace ActiveLearning.Web.Controllers
                 if (quizManager.AddQuizQuestionToCourse(quizQuestion, courseSid, out message) == null)
                 {
                     SetViewBagError(message);
-                    SetBackURL("ManageQuiz");
+                    SetBackURL("ManageQuiz?coursesid=" + courseSid);
                     return View();
                 }
             }
@@ -320,7 +320,7 @@ namespace ActiveLearning.Web.Controllers
                 {
                     SetViewBagError(message);
                 }
-                SetBackURL("ManageQuiz");
+                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
                 return View(quizQuesion);
             }
         }
@@ -372,7 +372,7 @@ namespace ActiveLearning.Web.Controllers
                     SetViewBagError(message);
                 }
                 TempData["QuizQuesion"] = quizQuesion;
-                SetBackURL("ManageQuiz");
+                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
                 return View(quizQuesion);
             };
         }
@@ -455,7 +455,7 @@ namespace ActiveLearning.Web.Controllers
                 TempData.Keep("quizQuestionSid");
 
                 //TempData.Peek("cid");
-                SetBackURL("ManageQuiz");
+                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
                 return View(listOption);
             }
 
@@ -493,7 +493,7 @@ namespace ActiveLearning.Web.Controllers
 
             using (var quizManager = new QuizManager())
             {
-                if (quizManager.AddQuizOptionToQuizQuestion(quizOption, quizQuestionSid,out message) == null)
+                if (quizManager.AddQuizOptionToQuizQuestion(quizOption, quizQuestionSid, out message) == null)
                 {
                     SetViewBagError(message);
                     return View();
