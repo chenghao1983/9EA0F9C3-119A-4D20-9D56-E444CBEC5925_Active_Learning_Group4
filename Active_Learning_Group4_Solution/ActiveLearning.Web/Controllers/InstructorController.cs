@@ -138,10 +138,10 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToError(message);
             }
-            if (Request.UrlReferrer == null)
-            {
-                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
-            }
+            //if (Request.UrlReferrer == null)
+            //{
+            //    return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            //}
 
             using (var contentManger = new ContentManager())
             {
@@ -244,21 +244,26 @@ namespace ActiveLearning.Web.Controllers
 
         // GET: ManageQuiz
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
-        public ActionResult ManageQuiz(int id)
+        public ActionResult ManageQuiz(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
             using (var quizManager = new QuizManager())
             {
-                var listQuiz = quizManager.GetActiveQuizQuestionsByCourseSid(id, out message);
+                var listQuiz = quizManager.GetActiveQuizQuestionsByCourseSid(courseSid, out message);
                 if (listQuiz == null)
                 {
                     SetError(message);
                 }
-                TempData["cid"] = id;
+                TempData["cid"] = courseSid;
                 TempData.Keep("cid");
                 //TempData.Peek("cid");
                 return View(listQuiz);
@@ -290,12 +295,16 @@ namespace ActiveLearning.Web.Controllers
             int cid = Convert.ToInt32(TempData["cid"]);
 
             string message = string.Empty;
+            if (!HasAccessToCourse(cid, out message))
+            {
+                return RedirectToError(message);
+            }
+
             using (var quizManager = new QuizManager())
             {
                 if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
                 {
-                    ViewBag.Message = message;
-
+                    SetError(message);
                     return View();
                 }
             }
@@ -306,19 +315,24 @@ namespace ActiveLearning.Web.Controllers
 
         // GET: ManageQuiz/DeleteQuizQuestion/6
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
-        public ActionResult DeleteQuizQuestion(int id)
+        public ActionResult DeleteQuizQuestion(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
             using (var quizManager = new QuizManager())
             {
-                QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(id, out message);
+                QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(courseSid, out message);
                 if (quizQuesion == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 return View(quizQuesion);
             }
@@ -341,27 +355,37 @@ namespace ActiveLearning.Web.Controllers
                 QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(id, out message);
                 if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
                 {
-                    return RedirectToAction("ManageQuiz", new { id = cid });
+                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been deleted"));
                 }
-                return RedirectToError(message);
+                else
+                {
+                    SetError(message);
+                }
+                return RedirectToAction("ManageQuiz", new { id = cid });
             };
         }
 
         // GET: ManageQuiz/EditQuizQuestio/6
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
-        public ActionResult EditQuizQuestion(int id)
+        public ActionResult EditQuizQuestion(int courseSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
+
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
             using (var getQuizQuestion = new QuizManager())
             {
-                QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(id, out message);
+                QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(courseSid, out message);
                 if (quizQuesion == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 TempData["QuizQuesion"] = quizQuesion;
                 return View(quizQuesion);
@@ -378,8 +402,13 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int cid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData["cid"]);
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
             var quizQusToUpdate = TempData["QuizQuesion"] as QuizQuestion;
             quizQusToUpdate.Title = quizQuestion.Title;
 
@@ -387,10 +416,14 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
                 {
-                    return RedirectToAction("ManageQuiz", new { id = cid });
+                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been updated"));
+
                 }
-                ViewBag.Message = message;
-                return RedirectToError(message);
+                else
+                {
+                    SetError(message);
+                }
+                return RedirectToAction("ManageQuiz", new { id = courseSid });
             }
         }
 
