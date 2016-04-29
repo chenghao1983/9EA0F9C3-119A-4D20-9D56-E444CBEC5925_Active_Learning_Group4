@@ -57,7 +57,7 @@ namespace ActiveLearning.Web.Controllers
                             break;
                     }
                 }
-                SetError(message);
+                SetViewBagError(message);
                 return result;
             }
         }

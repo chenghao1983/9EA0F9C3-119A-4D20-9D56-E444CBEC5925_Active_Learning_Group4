@@ -9,24 +9,24 @@
 
 @Html.Partial("_MessageBoxPartial")
 
-<div class="container; left" style="width:100%">
-    <div style="height:400px;overflow-y:auto" id="discussionDiv">
-        <ul id="discussion" style="height:380px"></ul>
+<div class="container left" style="width:100%">
+    <div style="height:600px;overflow-y:scroll;text-wrap:normal" id="discussionDiv" class="wordwrap">
+        @*<ul id="discussion" style="height:380px" class="list-group-item-info"></ul>*@
+        <div class="list-group" id="discussion"></div>
+    </div>
+    <br />
+    <div class="form-group-lg container">
+        <div class="col-sm-10">
+            <input type="text" id="message" class="form-control col-sm-4" style="max-width:600px" />
+            <input type="button" id="sendmessage" value="Send" class="btn-primary form-control col-sm-4" style="margin-left:20px;width:100px" />
+            <input type="hidden" id="displayname" />
+        </div>
+    </div>
+    <br />
+    <div>
+        <label id="error" class="text-info right"></label>
     </div>
 </div>
-<br />
-<div class="form-group-lg">
-    <div class="col-sm-10">
-        <input type="text" id="message" class="form-control col-sm-4" style="max-width:600px" />
-        <input type="button" id="sendmessage" value="Send" class="btn-primary form-control" />
-        <input type="hidden" id="displayname" />
-    </div>
-</div>
-<br />
-<div>
-    <label id="error" class="alert-info left"></label>
-</div>
-
 @section scripts {
     <!--Reference the jQuery library. -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -40,19 +40,22 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        function getRandomClass() {
+            var x = Math.floor((Math.random() * 4) + 1);
+            var classes = ["success","info","warning","danger"];
+            return classes[x];
+        }
+
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getRandomClass()+'">' + htmlEncode("Instructor: "+name)
+                    + ': ' + htmlEncode(message) + '</a>');
                 $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
             };
-            // Get the user name and store it to prepend to messages.
-            // $('#displayname').val(prompt('Enter your name:', ''));
-
 
             $('#displayname').val("");
 
@@ -99,4 +102,12 @@
         });
     </script>
 }
-
+<style>
+    .wordwrap {
+        white-space: pre-wrap; /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap; /* Opera <7 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* IE */
+    }
+</style>

@@ -41,46 +41,42 @@ namespace ActiveLearning.Web.Controllers
                 var courseList = courseManager.GetEnrolledCoursesByInstructorSid(GetLoginUser().Instructors.FirstOrDefault().Sid, out message);
                 if (courseList == null || courseList.Count() == 0)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
+                GetErrorAneMessage();
                 return View(courseList);
             }
         }
         #endregion
 
         #region Chat
-        public ActionResult Chat(int courseSid)
-        {
-            if (!IsUserAuthenticated())
-            {
-                return RedirectToLogin();
-            }
-            string message = string.Empty;
-            if (!HasAccessToCourse(courseSid, out message))
-            {
-                return RedirectToError(message);
-            }
-            var claims = new List<Claim>();
-            try
-            {
-                claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
-                claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
+        //public ActionResult Chat(int courseSid)
+        //{
+        //    if (!IsUserAuthenticated())
+        //    {
+        //        return RedirectToLogin();
+        //    }
+        //    string message = string.Empty;
+        //    if (!HasAccessToCourse(courseSid, out message))
+        //    {
+        //        return RedirectToError(message);
+        //    }
+        //    var claims = new List<Claim>();
 
-                var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
-                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
-                {
-                    //ExpiresUtc = DateTime.UtcNow.(200),
-                    IsPersistent = true
-                }, identity);
-            }
-            catch (Exception ex)
-            {
-                ExceptionLog(ex);
-                SetError(Business.Common.Constants.OperationFailedDuringRetrievingValue(Business.Common.Constants.Chat));
-            }
-            return View(courseSid);
-        }
+        //    claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
+        //    claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
+
+        //    var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+        //    HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+        //    {
+        //        //ExpiresUtc = DateTime.UtcNow.(200),
+        //        IsPersistent = true
+        //    }, identity);
+        //    SetBackURL("courselist");
+        //    return View(courseSid);
+        //}
 
         #endregion
 
@@ -109,17 +105,18 @@ namespace ActiveLearning.Web.Controllers
                 }
                 else
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                     return View(items);
                 }
             }
             ViewBag.CourseSid = courseSid;
             GetErrorAneMessage();
+            SetBackURL("courselist");
             return View(items);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -141,11 +138,11 @@ namespace ActiveLearning.Web.Controllers
                 var content = contentManger.AddContent(this, file, courseSid, out message);
                 if (content != null)
                 {
-                    SetMessage(Business.Common.Constants.ValueSuccessfuly("File has been uploaded"));
+                    SetTempDataMessage(Business.Common.Constants.ValueSuccessfuly("File has been uploaded"));
                 }
                 else
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                 }
             }
             //return new RedirectResult(Request.UrlReferrer.ToString());
@@ -172,11 +169,11 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (contentManager.DeleteContent(this, contentSid, out message))
                 {
-                    SetMessage(Business.Common.Constants.ValueSuccessfuly("File hase been deleted"));
+                    SetTempDataMessage(Business.Common.Constants.ValueSuccessfuly("File hase been deleted"));
                 }
                 else
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                 }
             }
             return RedirectToAction("ManageContent", new { courseSid = courseSid });
@@ -204,7 +201,7 @@ namespace ActiveLearning.Web.Controllers
                 var content = contentManager.GetContentByContentSid(contentSid, out message);
                 if (content == null)
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                     return RedirectToAction("ManageContent", new { courseSid = courseSid });
                     //return RedirectToError(message);
                 }
@@ -214,7 +211,7 @@ namespace ActiveLearning.Web.Controllers
             var file = File(filepath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
             if (file == null)
             {
-                SetError(ActiveLearning.Business.Common.Constants.ValueNotFound(ActiveLearning.Business.Common.Constants.File));
+                SetTempDataError(ActiveLearning.Business.Common.Constants.ValueNotFound(ActiveLearning.Business.Common.Constants.File));
                 return RedirectToAction("ManageContent", new { courseSid = courseSid });
                 //return RedirectToError());
             }
@@ -252,11 +249,12 @@ namespace ActiveLearning.Web.Controllers
                 var listQuiz = quizManager.GetActiveQuizQuestionsByCourseSid(courseSid, out message);
                 if (listQuiz == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
                 TempData["cid"] = courseSid;
                 TempData.Keep("cid");
                 //TempData.Peek("cid");
+                SetBackURL("courselist");
                 return View(listQuiz);
             }
 
@@ -293,11 +291,12 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (quizManager.AddQuizQuestionToCourse(quizQuestion, courseSid, out message) == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
+                    SetBackURL("ManageQuiz");
                     return View();
                 }
             }
-            SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been created"));
+            SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been created"));
             return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
         }
 
@@ -319,8 +318,9 @@ namespace ActiveLearning.Web.Controllers
                 QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (quizQuesion == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
+                SetBackURL("ManageQuiz");
                 return View(quizQuesion);
             }
         }
@@ -341,11 +341,11 @@ namespace ActiveLearning.Web.Controllers
                 QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
                 {
-                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been deleted"));
+                    SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been deleted"));
                 }
                 else
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                 }
                 return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             };
@@ -369,9 +369,10 @@ namespace ActiveLearning.Web.Controllers
                 QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (quizQuesion == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
                 TempData["QuizQuesion"] = quizQuesion;
+                SetBackURL("ManageQuiz");
                 return View(quizQuesion);
             };
         }
@@ -400,12 +401,12 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
                 {
-                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been updated"));
+                    SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been updated"));
 
                 }
                 else
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                 }
                 return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             }
@@ -448,12 +449,13 @@ namespace ActiveLearning.Web.Controllers
                 var listOption = quizManager.GetQuizOptionsByQuizQuestionSid(quizQuestionSid, out message);
                 if (listOption == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
                 TempData["quizQuestionSid"] = quizQuestionSid;
                 TempData.Keep("quizQuestionSid");
 
                 //TempData.Peek("cid");
+                SetBackURL("ManageQuiz");
                 return View(listOption);
             }
 
@@ -493,11 +495,11 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (quizManager.AddQuizOptionToQuizQuestion(quizOption, quizQuestionSid,out message) == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                     return View();
                 }
             }
-            SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Option has been created"));
+            SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Option has been created"));
             return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
         }
 
@@ -519,7 +521,7 @@ namespace ActiveLearning.Web.Controllers
                 QuizOption quizOption = quizManager.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
                 if (quizOption == null)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
                 return View(quizOption);
             }
@@ -542,11 +544,11 @@ namespace ActiveLearning.Web.Controllers
                 QuizOption quizOption = deleteOption.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
                 if (deleteOption.DeleteQuizOption(quizOption, out message))
                 {
-                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz option has been deleted"));
+                    SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz option has been deleted"));
                 }
                 else
                 {
-                    SetError(message);
+                    SetTempDataError(message);
                 }
                 return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
             };
