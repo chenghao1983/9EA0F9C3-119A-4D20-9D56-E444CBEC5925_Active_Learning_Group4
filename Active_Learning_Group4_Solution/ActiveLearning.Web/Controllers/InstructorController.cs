@@ -302,21 +302,21 @@ namespace ActiveLearning.Web.Controllers
         }
 
 
-        public ActionResult DeleteQuizQuestion(int courseSid)
+        public ActionResult DeleteQuizQuestion(int quizQuestionSid)
         {
             if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
             string message = string.Empty;
-            if (!HasAccessToCourse(courseSid, out message))
-            {
-                return RedirectToError(message);
-            }
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
 
             using (var quizManager = new QuizManager())
             {
-                QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(courseSid, out message);
+                QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (quizQuesion == null)
                 {
                     SetError(message);
