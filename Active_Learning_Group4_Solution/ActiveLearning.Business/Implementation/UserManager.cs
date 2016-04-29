@@ -189,7 +189,7 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.User);
                 return false;
             }
-            if(courseSid == 0)
+            if (courseSid == 0)
             {
                 message = Constants.ValueIsEmpty(Constants.Course);
                 return false;
@@ -206,7 +206,7 @@ namespace ActiveLearning.Business.Implementation
                                 message = Constants.ValueIsEmpty(Constants.Student);
                                 return false;
                             }
-                            var student= user.Students.FirstOrDefault();
+                            var student = user.Students.FirstOrDefault();
                             var student_Course_Map = unitOfWork.Student_Course_Maps.Find(m => m.StudentSid == student.Sid && m.CourseSid == courseSid);
                             if (student_Course_Map == null || student_Course_Map.Count() == 0)
                             {
@@ -418,11 +418,11 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.UserName);
                 return false;
             }
-            if (string.IsNullOrEmpty(student.User.Password.Trim()))
-            {
-                message = Constants.ValueIsEmpty(Constants.Password);
-                return false;
-            }
+            //if ( string.IsNullOrEmpty(student.User.Password.Trim()))
+            //{
+            //    message = Constants.ValueIsEmpty(Constants.Password);
+            //    return false;
+            //}
             try
             {
 
@@ -433,6 +433,7 @@ namespace ActiveLearning.Business.Implementation
                     var userToUpdate = unitOfWork.Users.Get(student.User.Sid);
                     Util.CopyNonNullProperty(student.User, userToUpdate);
                     userToUpdate.UpdateDT = DateTime.Now;
+                    if (userToUpdate.Password != null) userToUpdate.Password = userToUpdate.Password.Trim();
                     if (!string.IsNullOrEmpty(userToUpdate.Password))
                     {
                         userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
@@ -744,11 +745,11 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.UserName);
                 return false;
             }
-            if (string.IsNullOrEmpty(instructor.User.Password.Trim()))
-            {
-                message = Constants.ValueIsEmpty(Constants.Password);
-                return false;
-            }
+            //if (string.IsNullOrEmpty(instructor.User.Password.Trim()))
+            //{
+            //    message = Constants.ValueIsEmpty(Constants.Password);
+            //    return false;
+            //}
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -759,6 +760,7 @@ namespace ActiveLearning.Business.Implementation
                         Util.CopyNonNullProperty(instructor, unitOfWork.Instructors.Get(instructor.Sid));
                         var instructorToUpdate = unitOfWork.Users.Get(instructor.User.Sid);
                         Util.CopyNonNullProperty(instructor.User, instructorToUpdate);
+                        if (instructorToUpdate.Password != null) instructorToUpdate.Password = instructorToUpdate.Password.Trim();
                         if (!string.IsNullOrEmpty(instructorToUpdate.Password))
                         {
                             instructorToUpdate.Password = Util.CreateHash(instructorToUpdate.Password, instructorToUpdate.PasswordSalt);
