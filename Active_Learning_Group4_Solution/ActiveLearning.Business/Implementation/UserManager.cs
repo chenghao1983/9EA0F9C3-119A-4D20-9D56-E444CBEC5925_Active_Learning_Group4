@@ -354,21 +354,36 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (student == null || student.User == null)
             {
-                message = Constants.ValueIsEmpty(Constants.Student);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.ValueIsEmpty(Constants.Student);
                 return null;
             }
-            if (string.IsNullOrEmpty(student.User.Username.Trim()))
+            if (string.IsNullOrEmpty(student.User.Username) || string.IsNullOrEmpty(student.User.Username.Trim()))
             {
-                message = Constants.ValueIsEmpty(Constants.UserName);
-                return null;
-            }
-            if (string.IsNullOrEmpty(student.User.Password.Trim()))
-            {
-                message = Constants.ValueIsEmpty(Constants.Password);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.UserName);
                 return null;
             }
             if (UserNameExists(student.User.Username, out message))
             {
+                return null;
+            }
+            if (string.IsNullOrEmpty(student.User.Password) || string.IsNullOrEmpty(student.User.Password.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.Password);
+                return null;
+            }
+            if (string.IsNullOrEmpty(student.User.FullName) || string.IsNullOrEmpty(student.User.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.FullName);
+                return null;
+            }
+            if (string.IsNullOrEmpty(student.BatchNo) || string.IsNullOrEmpty(student.BatchNo.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.BatchNo);
                 return null;
             }
             var hasedUser = GenerateHashedUser(student.User, out message);
@@ -410,19 +425,28 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (student == null || student.User == null)
             {
-                message = Constants.ValueIsEmpty(Constants.Student);
+                message = Constants.PleaseFillInAllRequiredFields();
+               // message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
-            if (string.IsNullOrEmpty(student.User.Username.Trim()))
+            if (string.IsNullOrEmpty(student.User.Username) || string.IsNullOrEmpty(student.User.Username.Trim()))
             {
-                message = Constants.ValueIsEmpty(Constants.UserName);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.UserName);
                 return false;
             }
-            //if ( string.IsNullOrEmpty(student.User.Password.Trim()))
-            //{
-            //    message = Constants.ValueIsEmpty(Constants.Password);
-            //    return false;
-            //}
+            if (string.IsNullOrEmpty(student.User.FullName) || string.IsNullOrEmpty(student.User.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.FullName);
+                return false;
+            }
+            if (string.IsNullOrEmpty(student.BatchNo) || string.IsNullOrEmpty(student.BatchNo.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.BatchNo);
+                return false;
+            }
             try
             {
 
@@ -632,7 +656,8 @@ namespace ActiveLearning.Business.Implementation
             }
             return instructor;
         }
-        public IEnumerable<Instructor> GetAllActiveInstructor(out string message)
+
+        public IEnumerable<Instructor> GetAllInstructor(out string message)
         {
             message = string.Empty;
             List<Instructor> list = new List<Instructor>();
@@ -672,6 +697,16 @@ namespace ActiveLearning.Business.Implementation
                 return null;
             }
         }
+        public IEnumerable<Instructor> GetAllActiveInstructor(out string message)
+        {
+            var allInstructors = GetAllInstructor(out message);
+            if (allInstructors == null || allInstructors.Count() == 0)
+            {
+                return null;
+            }
+            message = string.Empty;
+            return allInstructors.Where(s => s.User.IsActive).ToList();
+        }
         /*
          *Will check username
          *If username exists, will return null and username already exists message 
@@ -681,21 +716,36 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructor == null || instructor.User == null)
             {
-                message = Constants.ValueIsEmpty(Constants.Instructor);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.ValueIsEmpty(Constants.Instructor);
                 return null;
             }
-            if (string.IsNullOrEmpty(instructor.User.Username.Trim()))
+            if (string.IsNullOrEmpty(instructor.User.Username) || string.IsNullOrEmpty(instructor.User.Username.Trim()))
             {
-                message = Constants.ValueIsEmpty(Constants.UserName);
-                return null;
-            }
-            if (string.IsNullOrEmpty(instructor.User.Password.Trim()))
-            {
-                message = Constants.ValueIsEmpty(Constants.Password);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.UserName);
                 return null;
             }
             if (UserNameExists(instructor.User.Username, out message))
             {
+                return null;
+            }
+            if (string.IsNullOrEmpty(instructor.User.Password) || string.IsNullOrEmpty(instructor.User.Password.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.Password);
+                return null;
+            }
+            if (string.IsNullOrEmpty(instructor.User.FullName) || string.IsNullOrEmpty(instructor.User.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.FullName);
+                return null;
+            }
+            if (string.IsNullOrEmpty(instructor.Qualification) || string.IsNullOrEmpty(instructor.Qualification.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.Qualification);
                 return null;
             }
             var hasedUser = GenerateHashedUser(instructor.User, out message);
@@ -703,6 +753,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 return null;
             }
+
             instructor.User = hasedUser;
             try
             {
@@ -737,19 +788,28 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             if (instructor == null || instructor.User == null)
             {
-                message = Constants.ValueIsEmpty(Constants.Instructor);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.ValueIsEmpty(Constants.Instructor);
                 return false;
             }
-            if (string.IsNullOrEmpty(instructor.User.Username.Trim()))
+            if (string.IsNullOrEmpty(instructor.User.Username) || string.IsNullOrEmpty(instructor.User.Username.Trim()))
             {
-                message = Constants.ValueIsEmpty(Constants.UserName);
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.UserName);
                 return false;
             }
-            //if (string.IsNullOrEmpty(instructor.User.Password.Trim()))
-            //{
-            //    message = Constants.ValueIsEmpty(Constants.Password);
-            //    return false;
-            //}
+            if (string.IsNullOrEmpty(instructor.User.FullName) || string.IsNullOrEmpty(instructor.User.FullName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.FullName);
+                return false;
+            }
+            if (string.IsNullOrEmpty(instructor.Qualification) || string.IsNullOrEmpty(instructor.Qualification.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.Qualification);
+                return false;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))

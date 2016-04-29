@@ -267,6 +267,11 @@ namespace ActiveLearning.Business.Mock
 
         }
 
+        public IEnumerable<Instructor> GetAllInstructor(out string message)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         #endregion

@@ -100,6 +100,12 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Course);
                 return null;
             }
+            if(string.IsNullOrEmpty(course.CourseName) || string.IsNullOrEmpty(course.CourseName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.CourseName);
+                return null;
+            }
             if (CourseNameExists(course.CourseName, out message))
             {
                 return null;
@@ -132,6 +138,12 @@ namespace ActiveLearning.Business.Implementation
             if (course == null)
             {
                 message = Constants.ValueIsEmpty(Constants.Course);
+                return false;
+            }
+            if (string.IsNullOrEmpty(course.CourseName) || string.IsNullOrEmpty(course.CourseName.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.CourseName);
                 return false;
             }
             try
@@ -204,7 +216,7 @@ namespace ActiveLearning.Business.Implementation
         #endregion
 
         #region Student Enrolment
-        public IEnumerable<Student> GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        public IEnumerable<Student> GetAllStudentsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
         {
             var enrolledList = GetEnrolledStudentsByCourseSid(courseSid, out message);
             var nonEnrolledList = GetNonEnrolledStudentsByCourseSid(courseSid, out message);
@@ -243,7 +255,7 @@ namespace ActiveLearning.Business.Implementation
                     {
                         using (var userManager = new UserManager())
                         {
-                            var student = userManager.GetActiveStudentByStudentSid(map.StudentSid, out message);
+                            var student = userManager.GetStudentByStudentSid(map.StudentSid, out message);
                             {
                                 if (student != null)
                                 {
@@ -300,9 +312,9 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (var userManager = new UserManager())
                     {
-                        var allActiveStudents = userManager.GetAllActiveStudent(out message);
+                        var allStudents = userManager.GetAllStudent(out message);
 
-                        if (allActiveStudents == null || allActiveStudents.Count() == 0)
+                        if (allStudents == null || allStudents.Count() == 0)
                         {
                             message = Constants.ThereIsNoValueFound(Constants.Student);
                             return null;
@@ -311,14 +323,14 @@ namespace ActiveLearning.Business.Implementation
                         var enrolledStudents = GetEnrolledStudentsByCourseSid(courseSid, out message);
                         if (enrolledStudents == null || enrolledStudents.Count() == 0)
                         {
-                            foreach (var activeStudent in allActiveStudents)
+                            foreach (var student in allStudents)
                             {
-                                activeStudent.HasEnrolled = false;
+                                student.HasEnrolled = false;
                             }
                             message = string.Empty;
-                            return allActiveStudents.ToList();
+                            return allStudents.ToList();
                         }
-                        if (enrolledStudents.Count() == allActiveStudents.Count())
+                        if (enrolledStudents.Count() == allStudents.Count())
                         {
                             message = Constants.ThereIsNoValueFound(Constants.NonEnrolledStudent);
                             return null;
@@ -328,7 +340,7 @@ namespace ActiveLearning.Business.Implementation
                             var enrolledStudentSids = enrolledStudents.Select(e => e.Sid).ToList();
                             if (enrolledStudentSids != null)
                             {
-                                list.AddRange(allActiveStudents.Where(a => !enrolledStudentSids.Contains(a.Sid)));
+                                list.AddRange(allStudents.Where(a => !enrolledStudentSids.Contains(a.Sid)));
                             }
                             //list = allActiveStudents.SkipWhile(a => enrolledStudentSids.Contains(a.Sid));
                             if (list == null || list.Count() == 0)
@@ -605,7 +617,7 @@ namespace ActiveLearning.Business.Implementation
         #endregion
 
         #region Instructor enrolment
-        public IEnumerable<Instructor> GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
+        public IEnumerable<Instructor> GetAllInstructorsWithHasEnrolledIndicatorByCourseSid(int courseSid, out string message)
         {
             var enrolledList = GetEnrolledInstructorsByCourseSid(courseSid, out message);
             var nonEnrolledList = GetNonEnrolledInstructorsByCourseSid(courseSid, out message);
@@ -644,7 +656,7 @@ namespace ActiveLearning.Business.Implementation
                     {
                         using (var userManager = new UserManager())
                         {
-                            var Instructor = userManager.GetActiveInstructorByInstructorSid(map.InstructorSid, out message);
+                            var Instructor = userManager.GetInstructorByInstructorSid(map.InstructorSid, out message);
                             {
                                 if (Instructor != null)
                                 {
@@ -700,9 +712,9 @@ namespace ActiveLearning.Business.Implementation
                 {
                     using (var userManager = new UserManager())
                     {
-                        var allActiveInstructors = userManager.GetAllActiveInstructor(out message);
+                        var allInstructors = userManager.GetAllInstructor(out message);
 
-                        if (allActiveInstructors == null || allActiveInstructors.Count() == 0)
+                        if (allInstructors == null || allInstructors.Count() == 0)
                         {
                             message = Constants.ThereIsNoValueFound(Constants.Instructor);
                             return null;
@@ -711,14 +723,14 @@ namespace ActiveLearning.Business.Implementation
                         var enrolledInstructors = GetEnrolledInstructorsByCourseSid(courseSid, out message);
                         if (enrolledInstructors == null || enrolledInstructors.Count() == 0)
                         {
-                            foreach (var i in allActiveInstructors)
+                            foreach (var i in allInstructors)
                             {
                                 i.HasEnrolled = false;
                             }
                             message = string.Empty;
-                            return allActiveInstructors.ToList();
+                            return allInstructors.ToList();
                         }
-                        if (enrolledInstructors.Count() == allActiveInstructors.Count())
+                        if (enrolledInstructors.Count() == allInstructors.Count())
                         {
                             message = Constants.ThereIsNoValueFound(Constants.NonEnrolledInstructor);
                             return null;
@@ -728,7 +740,7 @@ namespace ActiveLearning.Business.Implementation
                             var enrolledInstructorSids = enrolledInstructors.Select(e => e.Sid).ToList();
                             if (enrolledInstructorSids != null)
                             {
-                                list.AddRange(allActiveInstructors.Where(a => !enrolledInstructorSids.Contains(a.Sid)));
+                                list.AddRange(allInstructors.Where(a => !enrolledInstructorSids.Contains(a.Sid)));
                             }
                             if (list == null || list.Count() == 0)
                             {
@@ -931,8 +943,8 @@ namespace ActiveLearning.Business.Implementation
                 }
                 else
                 {
-                    InstructorSidsToEnrol = InstructorSids.SkipWhile(s => currentInstructorSids.Contains(s));
-                    InstructorSidsToRemove = currentInstructorSids.SkipWhile(s => InstructorSids.Contains(s));
+                    InstructorSidsToEnrol = InstructorSids.Where(s => !currentInstructorSids.Contains(s));
+                    InstructorSidsToRemove = currentInstructorSids.Where(s => !InstructorSids.Contains(s));
                 }
             }
             catch (Exception ex)

@@ -36,9 +36,13 @@ namespace ActiveLearning.Business.Common
         public const string Student_Course_Enrolment = "Student Course Enrolment ";
         public const string Instructor_Course_Enrolment = "Instructor Course Enrolment ";
 
+        public const string AllRequiredFields = "All Required Fields";
         public const string Admin = "Admin";
         public const string UserName = "User Name";
         public const string Password = "Password";
+        public const string FullName = "Full Name";
+        public const string Qualification = "Qualification";
+        public const string BatchNo = "Batch No";
         public const string Course = "Course";
         public const string CourseName = "Course Name";
         public const string EnrolledCourse = "Enrolled Course";
@@ -49,6 +53,7 @@ namespace ActiveLearning.Business.Common
         public const string QuizOption = "Quiz Option";
         public const string QuizAnswer = "Quiz Answer";
         public const string QuizTitle = "Quiz Title";
+        public const string OptionTitle = "Option Title";
 
         public const string SourceController = "Source Controller";
         public const string Content = "Content";
@@ -65,6 +70,10 @@ namespace ActiveLearning.Business.Common
         public static string ValueNotAllowed(string value)
         {
             return  value + " is not allowed";
+        }
+        public static string PleaseFillInAllRequiredFields()
+        {
+            return "Please fill in all required fields";
         }
         public static string PleaseEnterValue(string value)
         {

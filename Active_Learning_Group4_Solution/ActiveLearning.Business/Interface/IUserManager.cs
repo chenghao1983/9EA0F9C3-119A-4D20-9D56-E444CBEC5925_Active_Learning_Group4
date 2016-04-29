@@ -36,6 +36,7 @@ namespace ActiveLearning.Business.Interface
         #region Instructor
         Instructor GetInstructorByInstructorSid(int instructorSid, out string message);
         Instructor GetActiveInstructorByInstructorSid(int instructorSid, out string message);
+        IEnumerable<Instructor> GetAllInstructor(out string message);
         IEnumerable<Instructor> GetAllActiveInstructor(out string message);
         Instructor AddInstructor(Instructor instructor, out string message);
         bool UpdateInstructor(Instructor instructor, out string message);

@@ -127,6 +127,12 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Course);
                 return null;
             }
+            if(string.IsNullOrEmpty(quizQuestion.Title)|| string.IsNullOrEmpty(quizQuestion.Title.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.QuizTitle);
+                return null;
+            }
             if (QuizQuestionTitleExists(quizQuestion.Title, out message))
             {
                 return null;
@@ -159,6 +165,12 @@ namespace ActiveLearning.Business.Implementation
             if (quizQuestion == null || quizQuestion.Sid == 0)
             {
                 message = Constants.ValueIsEmpty(Constants.QuizQuestion);
+                return false;
+            }
+            if (string.IsNullOrEmpty(quizQuestion.Title) || string.IsNullOrEmpty(quizQuestion.Title.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.QuizTitle);
                 return false;
             }
             try
@@ -300,6 +312,12 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.QuizQuestion);
                 return null;
             }
+            if (string.IsNullOrEmpty(quizOption.Title) || string.IsNullOrEmpty(quizOption.Title.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.OptionTitle);
+                return null;
+            }
             try
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
@@ -329,6 +347,12 @@ namespace ActiveLearning.Business.Implementation
             if (quizOption == null || quizOption.Sid == 0)
             {
                 message = Constants.ValueIsEmpty(Constants.QuizOption);
+                return false;
+            }
+            if (string.IsNullOrEmpty(quizOption.Title) || string.IsNullOrEmpty(quizOption.Title.Trim()))
+            {
+                message = Constants.PleaseFillInAllRequiredFields();
+                //message = Constants.PleaseEnterValue(Constants.OptionTitle);
                 return false;
             }
             try
