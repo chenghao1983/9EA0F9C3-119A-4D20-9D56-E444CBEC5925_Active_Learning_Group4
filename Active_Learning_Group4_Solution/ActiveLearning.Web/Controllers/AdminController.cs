@@ -14,6 +14,7 @@ using System.Text;
 
 namespace ActiveLearning.Web.Controllers
 {
+    [CustomAuthorize(Roles = Constants.Admin)]
     public class AdminController : BaseController
     {
         private IManagerFactoryBase<ICourseManager> _CourseManagerfactory { get; set; }
@@ -31,7 +32,6 @@ namespace ActiveLearning.Web.Controllers
             _UserManagerfactory = _userFactory;
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Index()
         {
             if (!IsUserAuthenticated())
@@ -43,7 +43,6 @@ namespace ActiveLearning.Web.Controllers
 
         #region Course
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageCourse()
         {
             if (!IsUserAuthenticated())
@@ -64,7 +63,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse()
         {
             if (!IsUserAuthenticated())
@@ -76,7 +74,6 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse(Course course)
         {
             if (!IsUserAuthenticated())
@@ -97,7 +94,6 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageCourse");
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCourse(int id)
         {
             if (!IsUserAuthenticated())
@@ -118,7 +114,6 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost, ActionName("DeleteCourse")]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCou(int id)
         {
             if (!IsUserAuthenticated())
@@ -139,7 +134,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditCourse(int id)
         {
             if (!IsUserAuthenticated())
@@ -161,7 +155,6 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost, ActionName("EditCourse")]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult updateCou(Course course)
         {
             if (!IsUserAuthenticated())
@@ -187,7 +180,6 @@ namespace ActiveLearning.Web.Controllers
 
         #region Instructor
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageInstructor()
         {
             if (!IsUserAuthenticated())
@@ -203,7 +195,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditInstructor(int id)
         {
             if (!IsUserAuthenticated())
@@ -228,7 +219,6 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(Roles = Constants.Admin)]
         [HttpPost, ActionName("EditInstructor")]
         public ActionResult updateIns(Instructor instructor)
         {
@@ -259,7 +249,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateInstructor()
         {
             if (!IsUserAuthenticated())
@@ -271,7 +260,6 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateInstructor(Instructor instructor)
         {
             if (!IsUserAuthenticated())
@@ -292,7 +280,6 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageInstructor");
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteInstructor(int id)
         {
             if (!IsUserAuthenticated())
@@ -313,7 +300,6 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("DeleteInstructor")]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteIns(int id)
         {
             if (!IsUserAuthenticated())
@@ -334,7 +320,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult InstructorDetails(int id)
         {
             if (!IsUserAuthenticated())
@@ -353,7 +338,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateInstructor(int id)
         {
             if (!IsUserAuthenticated())
@@ -373,7 +357,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateInstructor(int id)
         {
             if (!IsUserAuthenticated())
@@ -394,7 +377,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Student
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageStudent()
         {
             if (!IsUserAuthenticated())
@@ -410,7 +392,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult StudentDetails(int id)
         {
             if (!IsUserAuthenticated())
@@ -429,7 +410,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent()
         {
             if (!IsUserAuthenticated())
@@ -441,7 +421,6 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent(Student student)
         {
             if (!IsUserAuthenticated())
@@ -462,7 +441,6 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageStudent");
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditStudent(int id)
         {
             if (!IsUserAuthenticated())
@@ -488,7 +466,6 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("EditStudent")]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult updateStu(Student student)
         {
             if (!IsUserAuthenticated())
@@ -514,7 +491,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteStudent(int id)
         {
             if (!IsUserAuthenticated())
@@ -537,7 +513,6 @@ namespace ActiveLearning.Web.Controllers
 
         // POST: ManageStudent/DeleteStudent/6
         [HttpPost, ActionName("DeleteStudent")]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Delete(int id)
         {
             if (!IsUserAuthenticated())
@@ -559,7 +534,6 @@ namespace ActiveLearning.Web.Controllers
         }
 
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateStudent(int id)
         {
             if (!IsUserAuthenticated())
@@ -578,7 +552,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateStudent(int id)
         {
             if (!IsUserAuthenticated())
@@ -600,7 +573,6 @@ namespace ActiveLearning.Web.Controllers
 
         #region Enrolment
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageStudentEnrolment(int id)
         {
             if (!IsUserAuthenticated())
@@ -630,7 +602,6 @@ namespace ActiveLearning.Web.Controllers
         //[HttpPost, ActionName("ManageEnrolment")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult UpdateStudentEnrolment(IList<Student> student)
         {
             if (!IsUserAuthenticated())
@@ -656,7 +627,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageInstructorEnrolment(int id)
         {
             if (!IsUserAuthenticated())
@@ -683,7 +653,6 @@ namespace ActiveLearning.Web.Controllers
         //[HttpPost, ActionName("ManageInstructorEnrolment")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult UpdateInstructorEnrolment(IList<Instructor> instructor)
         {
             if (!IsUserAuthenticated())

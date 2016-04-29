@@ -15,10 +15,11 @@ using Newtonsoft.Json;
 
 namespace ActiveLearning.Web.Controllers
 {
+    [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
     public class StudentController : BaseController
     {
         #region Index
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
+        
         public ActionResult Index()
         {
             if (!IsUserAuthenticated())
@@ -31,7 +32,6 @@ namespace ActiveLearning.Web.Controllers
 
         #region course
 
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult CourseList()
         {
             if (!IsUserAuthenticated())
@@ -49,7 +49,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region chat
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Chat(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -81,7 +80,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region quiz
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Quiz(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -100,7 +98,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region content
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Content(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -126,7 +123,6 @@ namespace ActiveLearning.Web.Controllers
             ViewBag.CourseSid = courseSid;
             return View(items);
         }
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Download(int courseSid, int contentSid, string originalFileName)
         {
             if (!IsUserAuthenticated())

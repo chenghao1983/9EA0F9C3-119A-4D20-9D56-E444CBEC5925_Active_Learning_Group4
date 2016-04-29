@@ -3,25 +3,20 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
-using ActiveLearning.Business.Common;
 using ActiveLearning.Business.Implementation;
-using ActiveLearning.Business.Interface;
-using ActiveLearning.DB;
 using ActiveLearning.Web.Filter;
 using System.Threading.Tasks;
 
 namespace ActiveLearning.Web.Controllers
 {
+    [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
     public class InstructorController : BaseController
     {
-        // GET: Instructor
         #region Index
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Index()
         {
             if (!IsUserAuthenticated())
@@ -33,7 +28,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Course
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CourseList()
         {
             if (!IsUserAuthenticated())
@@ -54,7 +48,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Chat
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Chat(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -91,7 +84,6 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Content
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         [HttpGet]
         public ActionResult ManageContent(int courseSid)
         {
@@ -125,7 +117,6 @@ namespace ActiveLearning.Web.Controllers
             return View(items);
         }
 
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
@@ -160,7 +151,6 @@ namespace ActiveLearning.Web.Controllers
         }
 
 
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Delete(int courseSid, int contentSid)
         {
             if (!IsUserAuthenticated())
@@ -190,7 +180,6 @@ namespace ActiveLearning.Web.Controllers
             return RedirectToAction("ManageContent", new { courseSid = courseSid });
         }
 
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Download(int courseSid, int contentSid, string originalFileName)
         {
             if (!IsUserAuthenticated())
@@ -243,7 +232,6 @@ namespace ActiveLearning.Web.Controllers
         #region Quiz
 
         // GET: ManageQuiz
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult ManageQuiz(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -271,8 +259,6 @@ namespace ActiveLearning.Web.Controllers
 
         }
 
-        // GET: ManageQuiz/CreateQuizQuestion
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CreateQuizQuestion()
         {
             if (!IsUserAuthenticated())
@@ -282,9 +268,7 @@ namespace ActiveLearning.Web.Controllers
             return View();
         }
 
-        // POST: ManageQuiz/CreateQuizQuestion
         [HttpPost]
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CreateQuizQuestion(QuizQuestion quizQuestion)
         {
             if (!IsUserAuthenticated())
@@ -313,8 +297,6 @@ namespace ActiveLearning.Web.Controllers
         }
 
 
-        // GET: ManageQuiz/DeleteQuizQuestion/6
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult DeleteQuizQuestion(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -338,9 +320,7 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        // POST: ManageQuiz/DeleteQuizQuestion/6
         [HttpPost, ActionName("DeleteQuizQuestion")]
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult DeleteQuiz(int id)
         {
             if (!IsUserAuthenticated())
@@ -365,8 +345,6 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        // GET: ManageQuiz/EditQuizQuestio/6
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult EditQuizQuestion(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -392,9 +370,7 @@ namespace ActiveLearning.Web.Controllers
             };
         }
 
-        // POST: ManageQuiz/EditQuizQuestio/6
         [HttpPost, ActionName("EditQuizQuestion")]
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult updateQuizQus(QuizQuestion quizQuestion)
         {
             if (!IsUserAuthenticated())
