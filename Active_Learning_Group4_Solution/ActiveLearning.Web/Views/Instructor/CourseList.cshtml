@@ -39,7 +39,7 @@
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Manage Quiz", "ManageQuiz", new { id = item.Sid })</li>
+                            <li>@Html.ActionLink("Manage Quiz", "ManageQuiz", new { courseSid = item.Sid })</li>
                             <li>@Html.ActionLink("Manage Content", "ManageContent", new { courseSid = item.Sid })</li>
                             <li>@Html.ActionLink("View Quiz Statistics", "QuizStatistics", new { courseSid = item.Sid })</li>
                         </ul>
