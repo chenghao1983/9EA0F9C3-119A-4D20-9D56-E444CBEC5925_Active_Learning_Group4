@@ -26,7 +26,7 @@ namespace ActiveLearning.Business.Implementation
                     var content = unitOfWork.Contents.Find(c => c.Sid == contentSid && !c.DeleteDT.HasValue).FirstOrDefault();
                     if (content == null)
                     {
-                        message = Constants.ValueNotFound(Constants.File);
+                        message = Constants.ValueNotFound(Constants.Content);
                         return null;
                     }
                     message = string.Empty;
@@ -36,7 +36,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue(Constants.File);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Content);
                 return null;
             }
         }
@@ -50,7 +50,7 @@ namespace ActiveLearning.Business.Implementation
                     var contents = unitOfWork.Contents.Find(c => c.CourseSid == courseSid && !c.DeleteDT.HasValue);
                     if (contents == null || contents.Count() == 0)
                     {
-                        message = Constants.ThereIsNoValueFound(Constants.File);
+                        message = Constants.ThereIsNoValueFound(Constants.Content);
                         return null;
                     }
                     message = string.Empty;
@@ -60,7 +60,7 @@ namespace ActiveLearning.Business.Implementation
             catch (Exception ex)
             {
                 ExceptionLog(ex);
-                message = Constants.OperationFailedDuringRetrievingValue(Constants.File);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Content);
                 return null;
             }
         }
