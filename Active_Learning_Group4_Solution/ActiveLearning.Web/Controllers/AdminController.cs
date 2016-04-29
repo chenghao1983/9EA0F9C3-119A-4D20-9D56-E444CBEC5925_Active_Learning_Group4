@@ -74,6 +74,7 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration =0)]
         public ActionResult CreateCourse(Course course)
         {
             if (!IsUserAuthenticated())
@@ -155,6 +156,7 @@ namespace ActiveLearning.Web.Controllers
 
         [HttpPost, ActionName("EditCourse")]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult updateCou(Course course)
         {
             if (!IsUserAuthenticated())
@@ -220,6 +222,7 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("EditInstructor")]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult updateIns(Instructor instructor)
         {
             if (!IsUserAuthenticated())
@@ -260,6 +263,7 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CreateInstructor(Instructor instructor)
         {
             if (!IsUserAuthenticated())
@@ -421,6 +425,7 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CreateStudent(Student student)
         {
             if (!IsUserAuthenticated())
@@ -466,6 +471,7 @@ namespace ActiveLearning.Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ActionName("EditStudent")]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult updateStu(Student student)
         {
             if (!IsUserAuthenticated())
@@ -602,6 +608,7 @@ namespace ActiveLearning.Web.Controllers
         //[HttpPost, ActionName("ManageEnrolment")]
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult UpdateStudentEnrolment(IList<Student> student)
         {
             if (!IsUserAuthenticated())
@@ -653,6 +660,7 @@ namespace ActiveLearning.Web.Controllers
         //[HttpPost, ActionName("ManageInstructorEnrolment")]
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult UpdateInstructorEnrolment(IList<Instructor> instructor)
         {
             if (!IsUserAuthenticated())

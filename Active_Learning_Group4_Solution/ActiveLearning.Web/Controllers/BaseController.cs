@@ -19,6 +19,9 @@ namespace ActiveLearning.Web.Controllers
         protected const string LF = "\r\n";
         private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        // 6 hours
+        public const int Cache_Length = 21600;
+
         #endregion
 
         #region Message

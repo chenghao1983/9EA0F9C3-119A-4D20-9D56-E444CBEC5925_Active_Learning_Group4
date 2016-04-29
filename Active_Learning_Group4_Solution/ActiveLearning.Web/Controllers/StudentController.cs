@@ -31,7 +31,7 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region course
-
+        [OutputCache(Duration = Cache_Length)]
         public ActionResult CourseList()
         {
             if (!IsUserAuthenticated())
@@ -80,6 +80,7 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region quiz
+        [OutputCache(Duration = Cache_Length)]
         public ActionResult Quiz(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -98,6 +99,7 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region content
+        [OutputCache(Duration = Cache_Length)]
         public ActionResult Content(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -123,6 +125,7 @@ namespace ActiveLearning.Web.Controllers
             ViewBag.CourseSid = courseSid;
             return View(items);
         }
+
         public ActionResult Download(int courseSid, int contentSid, string originalFileName)
         {
             if (!IsUserAuthenticated())

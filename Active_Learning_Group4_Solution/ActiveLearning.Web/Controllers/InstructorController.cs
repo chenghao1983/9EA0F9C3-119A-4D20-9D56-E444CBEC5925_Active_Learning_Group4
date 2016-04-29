@@ -28,6 +28,7 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Course
+        [OutputCache(Duration = Cache_Length)]
         public ActionResult CourseList()
         {
             if (!IsUserAuthenticated())
@@ -118,6 +119,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -232,6 +234,7 @@ namespace ActiveLearning.Web.Controllers
         #region Quiz
 
         // GET: ManageQuiz
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ManageQuiz(int courseSid)
         {
             if (!IsUserAuthenticated())
@@ -258,7 +261,7 @@ namespace ActiveLearning.Web.Controllers
             }
 
         }
-
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CreateQuizQuestion()
         {
             if (!IsUserAuthenticated())
@@ -269,6 +272,8 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CreateQuizQuestion(QuizQuestion quizQuestion)
         {
             if (!IsUserAuthenticated())
@@ -321,6 +326,7 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [HttpPost, ActionName("DeleteQuizQuestion")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteQuiz(int id)
         {
             if (!IsUserAuthenticated())
@@ -371,6 +377,8 @@ namespace ActiveLearning.Web.Controllers
         }
 
         [HttpPost, ActionName("EditQuizQuestion")]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult updateQuizQus(QuizQuestion quizQuestion)
         {
             if (!IsUserAuthenticated())

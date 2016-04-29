@@ -32,7 +32,7 @@
             </div>
         </div>
         <br />
-
+         
         <div class="form-group col-lg-offset-10">
             <div class="text-center">
                 <button type="submit" value="Login" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnLogin">
@@ -43,15 +43,15 @@
         </div>
     </div>
 }
-<script type="text/javascript">
-    //<![CDATA[
-    $(window).load(function () {
-        $(function () {
-            $('a, button').click(function () {
-                $(this).toggleClass('active');
-            });
-        });
-    });//]]> 
+<script type="text/javascript" defer="defer">
+    $("button").click(function () {
+        var $btn = $(this);
+        $btn.button('loading');
+        // simulating a timeout
+        setTimeout(function () {
+            $btn.button('reset');
+        }, 1000);
+    });
 
 </script>
 <style type="text/css">
@@ -90,6 +90,4 @@
         width: 19px;
     }
 </style>
-<div>
-    @*@Html.ActionLink("Back to List", "Index")*@
-</div>
+

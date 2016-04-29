@@ -24,6 +24,7 @@ namespace ActiveLearning.Web.Controllers
         #region login
         // GET: /Home/Login
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Login()
         {
             LogUserOut();
@@ -32,6 +33,7 @@ namespace ActiveLearning.Web.Controllers
 
         //POST: /Home/Login
         [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Login(User user)
         {
             ActionResult result = View();
