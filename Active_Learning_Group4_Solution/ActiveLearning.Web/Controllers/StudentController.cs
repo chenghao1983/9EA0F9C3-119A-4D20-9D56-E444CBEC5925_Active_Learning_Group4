@@ -19,7 +19,7 @@ namespace ActiveLearning.Web.Controllers
     public class StudentController : BaseController
     {
         #region Index
-        
+
         public ActionResult Index()
         {
             if (!IsUserAuthenticated())
@@ -43,9 +43,9 @@ namespace ActiveLearning.Web.Controllers
             using (var courseManager = new CourseManager())
             {
                 var courseList = courseManager.GetEnrolledCoursesByStudentSid(GetLoginUser().Students.FirstOrDefault().Sid, out message);
-                if(courseList==null || courseList.Count() ==0)
+                if (courseList == null || courseList.Count() == 0)
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
                 return View(courseList);
             }
@@ -77,7 +77,7 @@ namespace ActiveLearning.Web.Controllers
                 //ExpiresUtc = DateTime.UtcNow.(200),
                 IsPersistent = true
             }, identity);
-
+            SetBackURL("courselist");
             return View(courseSid);
 
         }
@@ -97,8 +97,17 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToError(message);
             }
 
-            ViewBag.CourseSid = courseSid;
-            return View();
+            using (var quizManager = new QuizManager())
+            {
+                var allQuizs = quizManager.GetActiveQuizQuestionsByCourseSid(courseSid, out message);
+                if (allQuizs == null || allQuizs.Count() == 0)
+                {
+                    SetViewBagError(message);
+                }
+                ViewBag.CourseSid = courseSid;
+                SetBackURL("courselist");
+                return View(allQuizs);
+            }
         }
         #endregion
 
@@ -127,7 +136,7 @@ namespace ActiveLearning.Web.Controllers
                 }
                 else
                 {
-                    SetError(message);
+                    SetViewBagError(message);
                 }
             }
             ViewBag.CourseSid = courseSid;
@@ -166,6 +175,7 @@ namespace ActiveLearning.Web.Controllers
             if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_Video))
             {
                 ViewBag.VideoPath = filepath;
+                SetBackURL("Content?courseSid=" + courseSid);
                 return View("Video");
             }
             else if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_File))
