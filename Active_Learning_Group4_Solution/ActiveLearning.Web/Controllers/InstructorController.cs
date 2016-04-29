@@ -428,6 +428,129 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
+
+        // GET: ManageOption
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult ManageOption(int quizQuestionSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
+
+            using (var quizManager = new QuizManager())
+            {
+                var listOption = quizManager.GetQuizOptionsByQuizQuestionSid(quizQuestionSid, out message);
+                if (listOption == null)
+                {
+                    SetError(message);
+                }
+                TempData["quizQuestionSid"] = quizQuestionSid;
+                TempData.Keep("quizQuestionSid");
+
+                //TempData.Peek("cid");
+                return View(listOption);
+            }
+
+        }
+
+
+        // GET: ManageOption/CreateQuizOption
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult CreateQuizOption()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult CreateQuizOption(QuizOption quizOption)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
+
+            string message = string.Empty;
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
+
+            using (var quizManager = new QuizManager())
+            {
+                if (quizManager.AddQuizOptionToQuizQuestion(quizOption, quizQuestionSid,out message) == null)
+                {
+                    SetError(message);
+                    return View();
+                }
+            }
+            SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Option has been created"));
+            return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
+        }
+
+
+        public ActionResult DeleteQuizOption(int quizOptionSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
+
+            using (var quizManager = new QuizManager())
+            {
+                QuizOption quizOption = quizManager.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
+                if (quizOption == null)
+                {
+                    SetError(message);
+                }
+                return View(quizOption);
+            }
+        }
+
+
+        [HttpPost, ActionName("DeleteQuizOption")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteQuizOp(int quizOptionSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
+            string message = string.Empty;
+            using (var deleteOption = new QuizManager())
+            {
+                QuizOption quizOption = deleteOption.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
+                if (deleteOption.DeleteQuizOption(quizOption, out message))
+                {
+                    SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz option has been deleted"));
+                }
+                else
+                {
+                    SetError(message);
+                }
+                return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
+            };
+        }
         #endregion
     }
 }

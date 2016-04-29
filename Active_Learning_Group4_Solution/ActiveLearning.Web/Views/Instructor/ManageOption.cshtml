@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ActiveLearning.DB.QuizOption>
+
+@{
+    ViewBag.Title = "Manage Option";
+}
+
+<h2>Manage Option</h2>
+
+@Html.Partial("_MessageBoxPartial")
+
+<p>
+    @Html.ActionLink("Create New Option", "CreateQuizOption")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDT)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.QuizQuestion.Title)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCorrect)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDT)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.QuizQuestion.Title)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "DeleteQuizOption", new { quizOptionSid = item.Sid})
+        </td>
+    </tr>
+}
+
+</table>
