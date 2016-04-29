@@ -10,8 +10,14 @@
 
 @if (Model != null)
 {
-    <div style="margin-top:100px">
-        <hr />
+    <div class="container text-center">
+        <h4>Instructor Detail</h4>
+    </div>
+
+    <hr />
+
+    <div class="form-group" style="margin-left:35%">
+
         <dl class="dl-horizontal">
 
             <dt>
@@ -20,6 +26,13 @@
 
             <dd>
                 @Html.DisplayFor(model => model.UserSid)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.User.FullName)
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.User.Username)

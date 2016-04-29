@@ -19,7 +19,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Sid)
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left:25%">
                 @Html.LabelFor(model => model.User.Username, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.User.Username, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", autocomplete = "off" } })
@@ -27,15 +27,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left:25%">
                 @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+                    @*@Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })*@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left:25%">
                 @Html.LabelFor(model => model.User.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.User.FullName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left:25%">
                 @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Qualification, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-left:45%">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>

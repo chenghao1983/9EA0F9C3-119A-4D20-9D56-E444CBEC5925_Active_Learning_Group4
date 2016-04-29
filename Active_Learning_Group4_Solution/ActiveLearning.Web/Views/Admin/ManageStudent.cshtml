@@ -9,10 +9,10 @@
 
 @Html.Partial("_MessageBoxPartial")
 
-<p>
+<div class="container text-right" style="width:90%">
     @Html.ActionLink("Create New Student", "CreateStudent")
-</p>
-
+</div>
+<br />
 @if (Model != null && Model.Count() > 0)
 {
     <table class="table">
@@ -26,7 +26,7 @@
             <th>
                 @Html.Label("IsActivated")
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
 
         @foreach (var item in Model)

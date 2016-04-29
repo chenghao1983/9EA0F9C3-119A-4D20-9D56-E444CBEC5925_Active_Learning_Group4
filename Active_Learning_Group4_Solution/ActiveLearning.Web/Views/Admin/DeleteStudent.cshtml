@@ -10,10 +10,11 @@
 
 @if (Model != null)
 {
-    <h3 style="margin-top:100px">Confirm to delete ?</h3>
-    <div>
-        <h4>Student</h4>
-        <hr />
+    <div class="container text-center">
+        <h4 style="margin-top:100px">Confirm to delete ?</h4>
+    </div>
+    <hr />
+    <div class="form-group" style="margin-left:35%">
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.BatchNo)
@@ -45,7 +46,7 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
+            <div class="form-group" style="margin-left:45%">
                 <input type="submit" value="Delete" class="btn btn-primary" /> |
             </div>
         }

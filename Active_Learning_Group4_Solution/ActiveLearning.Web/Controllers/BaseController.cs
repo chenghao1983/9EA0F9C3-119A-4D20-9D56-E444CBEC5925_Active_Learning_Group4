@@ -50,15 +50,49 @@ namespace ActiveLearning.Web.Controllers
             ViewBagMessage = TempDataMessage;
             ViewBagError = TempDataError;
         }
+        public void SetViewBagError(string error)
+        {
+            TempDataError = null;
+            TempDataMessage = null;
+            ViewBagError = error;
+            ViewBagMessage = null;
+        }
+        public void SetTempDataError(string error)
+        {
+            TempDataError = error;
+            TempDataMessage = null;
+            ViewBagError = null;
+            ViewBagMessage = null;
+        }
+        public void SetViewBagMessage(string message)
+        {
+            TempDataError = null;
+            TempDataMessage = null;
+            ViewBagError = null;
+            ViewBagMessage = message;
+        }
+        public void SetTempDataMessage(string message)
+        {
+            TempDataError = null;
+            TempDataMessage = message;
+            ViewBagError = null;
+            ViewBagMessage = null;
+        }
+
         public void SetError(string error)
         {
             TempDataError = error;
             ViewBagError = error;
+            TempDataMessage = null;
+            ViewBagMessage = null;
         }
         public void SetMessage(string message)
         {
             TempDataMessage = message;
             ViewBagMessage = message;
+            TempDataError = null;
+            ViewBagError = null;
+
         }
         #endregion
 
