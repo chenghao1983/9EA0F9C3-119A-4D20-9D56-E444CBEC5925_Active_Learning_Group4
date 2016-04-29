@@ -18,6 +18,7 @@ namespace ActiveLearning.DB
         {
             [JsonIgnore]
             [ScriptIgnore]
+            [Display(Name = "Createdt Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
             public DateTime CreateDT { get; set; }
 

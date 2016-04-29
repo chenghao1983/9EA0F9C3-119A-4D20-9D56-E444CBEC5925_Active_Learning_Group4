@@ -19,6 +19,7 @@ namespace ActiveLearning.DB
             public string Message { get; set; }
 
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            [Display(Name = "Created Date")]
             public DateTime CreateDT { get; set; }
 
             [Display(Name = "Updated Date")]

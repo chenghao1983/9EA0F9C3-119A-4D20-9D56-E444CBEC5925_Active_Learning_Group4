@@ -14,6 +14,7 @@ namespace ActiveLearning.DB
         public class ContentMetadata
         {
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            [Display(Name = "Created Date")]
             public DateTime CreateDT { get; set; }
 
             [Display(Name = "Updated Date")]

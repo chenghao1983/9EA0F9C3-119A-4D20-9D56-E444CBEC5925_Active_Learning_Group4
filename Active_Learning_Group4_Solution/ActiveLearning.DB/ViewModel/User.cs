@@ -17,6 +17,7 @@ namespace ActiveLearning.DB
             [Display(Name = "User Name")]
             public string Username { get; set; }
 
+            [Required(ErrorMessage = Common.Constants.Please_Enter + "Full Name")]
             [Display(Name = "Full Name")]
             public string FullName { get; set; }
 
@@ -39,6 +40,7 @@ namespace ActiveLearning.DB
             [Display(Name = "Deleted Date")]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", NullDisplayText = "-")]
             public DateTime? DeleteDT { get; set; }
+
 
         }
     }
