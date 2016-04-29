@@ -375,7 +375,18 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    unitOfWork.QuizOptions.Get(quizOptionSid).DeleteDT = DateTime.Now;
+                    var quizOptions = unitOfWork.QuizOptions.Find(o => o.Sid == quizOptionSid).ToList();
+
+                    if (quizOptions == null)
+                    {
+                        message = Constants.ValueNotFound(Constants.QuizOption);
+                        return false;
+                    }
+                    foreach (var option in quizOptions)
+                    {
+                        option.DeleteDT = DateTime.Now;
+                    }
+                    //unitOfWork.QuizOptions.Get(quizOptionSid).DeleteDT = DateTime.Now;
 
                     using (TransactionScope scope = new TransactionScope())
                     {
