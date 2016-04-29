@@ -20,45 +20,13 @@ namespace ActiveLearning.Web.Controllers
             return Redirect("~/Home/login");
         }
 
-        public ActionResult About()
-        {
-
-            //User user = new DB.User();
-            //user.Username = "superman";
-            //user.Password = "police";
-
-            //IUserManager userMaanager = new UserManager();
-            ////userMaanager.AddNewInstructor(user);
-            //userMaanager.isAuthenticated(user);
-
-            //CourseManager asd = new CourseManager();
-            //asd.RemoveStudentFromCourse(1, 15);
-
-
-
-
-
-
-
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-
+   
         #region login
         // GET: /Home/Login
         [HttpGet]
         public ActionResult Login()
         {
-            //Session.Clear();
+            LogUserOut();
             return View();
         }
 
@@ -87,7 +55,7 @@ namespace ActiveLearning.Web.Controllers
                             break;
                     }
                 }
-                ViewBag.Message = message;
+                SetError(message);
                 return result;
             }
         }

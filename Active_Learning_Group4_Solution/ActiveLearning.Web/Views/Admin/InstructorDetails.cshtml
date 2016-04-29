@@ -1,23 +1,13 @@
 ﻿@model ActiveLearning.DB.Instructor
 
 @{
-    ViewBag.Title = "InstructorDetails";
+    ViewBag.Title = "Instructor Details";
 }
 
 <h2>Instructor Details</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success text-center">
-        <strong>@ViewBag.Message</strong>
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger text-center">
-        <strong>@ViewBag.Error</strong>
-    </div>
-}
+@Html.Partial("_MessageBoxPartial")
+
 @if (Model != null)
 {
     <div style="margin-top:100px">

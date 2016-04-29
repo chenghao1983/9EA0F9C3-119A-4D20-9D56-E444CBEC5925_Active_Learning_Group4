@@ -1,17 +1,18 @@
-﻿@model IList<ActiveLearning.DB.Student>
+﻿@model IList<ActiveLearning.DB.Instructor>
 @using ActiveLearning.DB;
 @using ActiveLearning.Business.Common;
+
 @{
-    ViewBag.Title = "Manage Student Course Enrolment";
+    ViewBag.Title = "Manage Instructor Course Enrolment";
 }
 
-<h2>Manage Student Course Enrolment</h2>
+<h2>Manage Instructor Course Enrolment</h2>
 
 @Html.Partial("_MessageBoxPartial")
 
 @if (Model != null && Model.Count() > 0)
 {
-    using (Html.BeginForm("UpdateStudentEnrolment", "Admin", FormMethod.Post))
+    using (Html.BeginForm("UpdateInstructorEnrolment", "Admin", FormMethod.Post))
     {
         <table class="table">
             <tr>
@@ -19,13 +20,13 @@
                     <input type="checkbox" id="checkBoxAll" />
                 </th>
                 <th>
-                    Full Name   @*@Html.DisplayNameFor(model => model.BatchNo)*@
+                    Full Name
                 </th>
                 <th>
-                    User Name   @*@Html.DisplayNameFor(model => model.User.Username)*@
+                    User Name
                 </th>
                 <th>
-                    Batch No
+                    Qualification
                 </th>
                 <th>
                 </th>
@@ -33,6 +34,7 @@
 
             @for (int i = 0; i < Model.Count(); i++)
             {
+
                 <tr>
                     @*@{if (TempData.Peek("CheckedStudent") != null)
                             {
@@ -46,6 +48,7 @@
                                 {
                                     <input type="checkbox" class="checkbox" value="@item.UserSid" name="studentId" />
                                 }
+
                             }
                         }*@
                     <td>
@@ -58,19 +61,22 @@
                         @Html.DisplayFor(x => x[i].User.Username)
                     </td>
                     <td>
-                        @Html.DisplayFor(x => x[i].BatchNo)
+                        @Html.DisplayFor(x => x[i].Qualification)
                     </td>
+
                     <td></td>
                 </tr>
             }
+
         </table>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-right">
-                <input type="submit" value="Save" class="btn btn-primary" style="width:100px" onclick="return Confirm('Confirm to update Student Enrollment ?')" />
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" onclick="return confirm('Confirm to update Instructor Enrollment ?')" />
             </div>
         </div>
     }
 }
+
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {

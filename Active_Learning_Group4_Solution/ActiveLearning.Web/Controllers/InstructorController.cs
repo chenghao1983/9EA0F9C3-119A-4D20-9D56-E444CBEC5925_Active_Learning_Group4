@@ -24,7 +24,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Index()
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -36,15 +36,18 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CourseList()
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
-
             string message = string.Empty;
             using (var courseManager = new CourseManager())
             {
                 var courseList = courseManager.GetEnrolledCoursesByInstructorSid(GetLoginUser().Instructors.FirstOrDefault().Sid, out message);
+                if (courseList == null || courseList.Count() == 0)
+                {
+                    SetError(message);
+                }
                 return View(courseList);
             }
         }
@@ -54,7 +57,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Chat(int courseSid)
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -64,19 +67,24 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToError(message);
             }
             var claims = new List<Claim>();
-
-
-            claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
-
-            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+            try
             {
-                //ExpiresUtc = DateTime.UtcNow.(200),
-                IsPersistent = true
-            }, identity);
+                claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
+                claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
 
+                var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+                {
+                    //ExpiresUtc = DateTime.UtcNow.(200),
+                    IsPersistent = true
+                }, identity);
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                SetError(Business.Common.Constants.OperationFailedDuringRetrievingValue(Business.Common.Constants.Chat));
+            }
             return View(courseSid);
         }
 
@@ -86,9 +94,8 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         [HttpGet]
         public ActionResult ManageContent(int courseSid)
-
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -98,7 +105,7 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToError(message);
             }
 
-            List<Content> items = new List<Content>();
+            var items = new List<Content>();
             using (var contentManager = new ContentManager())
             {
                 message = string.Empty;
@@ -107,10 +114,14 @@ namespace ActiveLearning.Web.Controllers
                 {
                     items = contents.ToList();
                 }
+                else
+                {
+                    SetError(message);
+                    return View(items);
+                }
             }
             ViewBag.CourseSid = courseSid;
-            ViewBag.Message = TempData["Message"];
-            ViewBag.Error = TempData["Error"];
+            GetErrorAneMessage();
             return View(items);
         }
 
@@ -118,25 +129,30 @@ namespace ActiveLearning.Web.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, int courseSid)
         {
-            if (Request.UrlReferrer == null)
+            if (!IsUserAuthenticated())
             {
-                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+                return RedirectToLogin();
             }
             string message = string.Empty;
             if (!HasAccessToCourse(courseSid, out message))
             {
                 return RedirectToError(message);
             }
+            if (Request.UrlReferrer == null)
+            {
+                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            }
+
             using (var contentManger = new ContentManager())
             {
                 var content = contentManger.AddContent(this, file, courseSid, out message);
                 if (content != null)
                 {
-                    TempData["Message"] = Business.Common.Constants.ValueSuccessfuly("File has been uploaded");
+                    SetMessage(Business.Common.Constants.ValueSuccessfuly("File has been uploaded"));
                 }
                 else
                 {
-                    TempData["Error"] = message;
+                    SetError(message);
                 }
             }
             //return new RedirectResult(Request.UrlReferrer.ToString());
@@ -147,75 +163,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult Delete(int courseSid, int contentSid)
         {
-            if (Request.UrlReferrer == null)
-            {
-                return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
-            }
-            string message = string.Empty;
-            if (!HasAccessToCourse(courseSid, out message))
-            {
-                return RedirectToError(message);
-            }
-            using (var contentManager = new ContentManager())
-            {
-                if (contentManager.DeleteContent(this, contentSid, out message))
-                {
-                    TempData["Message"] = Business.Common.Constants.ValueSuccessfuly("File hase been deleted");
-                }
-                else
-                {
-                    TempData["Error"] = message;
-                }
-            }
-            return RedirectToAction("ManageContent", new { courseSid = courseSid });
-        }
-
-        //try
-        //{
-
-        //}
-
-        //        if (file.ContentLength > 0)
-        //        {
-        //            string guid = Guid.NewGuid().ToString();
-
-        //            var fileName = Path.GetFileName(file.FileName);
-        //            Content fileDetail = new Content()
-        //            {
-        //                //TODO set the courseSID
-        //                CourseSid = 2,
-        //                Path = "~/App_Data/Upload/",
-        //                OriginalFileName = fileName,
-        //                FileName = guid + Path.GetExtension(fileName),
-        //                Type = "",
-        //                CreateDT = DateTime.Now
-        //            };
-
-        //            // Write to Database
-        //            using (var fileManager = new ContentManager())
-        //            {
-        //                string message = string.Empty;
-        //                fileManager.AddContent(this, file, 1, out message);
-        //            }
-
-        //            var path = Path.Combine(Server.MapPath("~/App_Data/Upload/"), guid + Path.GetExtension(fileName));
-        //            file.SaveAs(path);
-        //        }
-        //    ViewBag.Message = "Upload successful";
-        //    return View();
-        //}
-        //catch (Exception ex)
-        //{
-        //    ViewBag.Message = "Upload failed. " + ex.Message;
-
-
-        //}
-        //}
-
-        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
-        public ActionResult Download(int courseSid, int contentSid, string originalFileName)
-        {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -224,6 +172,40 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToError(message);
             }
+            //if (Request.UrlReferrer == null)
+            //{
+            //    return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            //}
+            using (var contentManager = new ContentManager())
+            {
+                if (contentManager.DeleteContent(this, contentSid, out message))
+                {
+                    SetMessage(Business.Common.Constants.ValueSuccessfuly("File hase been deleted"));
+                }
+                else
+                {
+                    SetError(message);
+                }
+            }
+            return RedirectToAction("ManageContent", new { courseSid = courseSid });
+        }
+
+        [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
+        public ActionResult Download(int courseSid, int contentSid, string originalFileName)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            //if (Request.UrlReferrer == null)
+            //{
+            //    return RedirectToError(Business.Common.Constants.ValueIsEmpty("UrlReferrer"));
+            //}
             string filepath;
             string fileType;
             using (var contentManager = new ContentManager())
@@ -231,7 +213,9 @@ namespace ActiveLearning.Web.Controllers
                 var content = contentManager.GetContentByContentSid(contentSid, out message);
                 if (content == null)
                 {
-                    return RedirectToError(message);
+                    SetError(message);
+                    return RedirectToAction("ManageContent", new { courseSid = courseSid });
+                    //return RedirectToError(message);
                 }
                 filepath = content.Path + content.FileName;
                 fileType = content.Type;
@@ -239,11 +223,12 @@ namespace ActiveLearning.Web.Controllers
             var file = File(filepath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
             if (file == null)
             {
-                return RedirectToError(ActiveLearning.Business.Common.Constants.ValueNotFound(ActiveLearning.Business.Common.Constants.File));
+                SetError(ActiveLearning.Business.Common.Constants.ValueNotFound(ActiveLearning.Business.Common.Constants.File));
+                return RedirectToAction("ManageContent", new { courseSid = courseSid });
+                //return RedirectToError());
             }
             if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_Video))
             {
-
                 ViewBag.VideoPath = filepath;
                 return View("Video");
             }
@@ -251,7 +236,7 @@ namespace ActiveLearning.Web.Controllers
             {
                 return file;
             }
-            return null;
+            return RedirectToError(null); ;
         }
         #endregion
 
@@ -261,18 +246,21 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult ManageQuiz(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var quizManager = new QuizManager())
             {
-
                 var listQuiz = quizManager.GetActiveQuizQuestionsByCourseSid(id, out message);
                 if (listQuiz == null)
                 {
-                    ViewBag.Message = "The List is empty !";
+                    SetError(message);
                 }
                 TempData["cid"] = id;
                 TempData.Keep("cid");
-                TempData.Peek("cid");
+                //TempData.Peek("cid");
                 return View(listQuiz);
             }
 
@@ -282,8 +270,11 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CreateQuizQuestion()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             return View();
-
         }
 
         // POST: ManageQuiz/CreateQuizQuestion
@@ -291,31 +282,25 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult CreateQuizQuestion(QuizQuestion quizQuestion)
         {
-
-            try
+            if (!IsUserAuthenticated())
             {
+                return RedirectToLogin();
+            }
 
-                int cid = Convert.ToInt32(TempData["cid"]);
+            int cid = Convert.ToInt32(TempData["cid"]);
 
-                string message = string.Empty;
-                using (var quizManager = new QuizManager())
+            string message = string.Empty;
+            using (var quizManager = new QuizManager())
+            {
+                if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
                 {
+                    ViewBag.Message = message;
 
-                    if (quizManager.AddQuizQuestionToCourse(quizQuestion, cid, out message) == null)
-                    {
-                        ViewBag.Message = message;
-                        return View();
-                    }
+                    return View();
                 }
-                ViewBag.Message = "Quiz Question Created !";
-
-                return RedirectToAction("ManageQuiz", new { id = cid });
             }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return View(quizQuestion);
+            SetMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been created"));
+            return RedirectToAction("ManageQuiz", new { id = cid });
         }
 
 
@@ -323,11 +308,13 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult DeleteQuizQuestion(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var quizManager = new QuizManager())
             {
-
-
                 QuizQuestion quizQuesion = quizManager.GetQuizQuestionByQuizQuestionSid(id, out message);
                 if (quizQuesion == null)
                 {
@@ -335,49 +322,39 @@ namespace ActiveLearning.Web.Controllers
                 }
                 return View(quizQuesion);
             }
-
         }
-
 
         // POST: ManageQuiz/DeleteQuizQuestion/6
         [HttpPost, ActionName("DeleteQuizQuestion")]
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult DeleteQuiz(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-
-                int cid = Convert.ToInt32(TempData["cid"]);
-                string message = string.Empty;
-                using (var deleteQuiz = new QuizManager())
-                {
-                    QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(id, out message);
-                    if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
-                    {
-                        return RedirectToAction("ManageQuiz", new { id = cid });
-                    }
-                    return RedirectToError(message);
-                };
-            }
-            catch (Exception e)
-            {
-                if (this.HttpContext.IsDebuggingEnabled)
-                {
-                    ModelState.AddModelError(string.Empty, e.ToString());
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
+                return RedirectToLogin();
             }
 
+            int cid = Convert.ToInt32(TempData["cid"]);
+            string message = string.Empty;
+            using (var deleteQuiz = new QuizManager())
+            {
+                QuizQuestion quizQuestion = deleteQuiz.GetQuizQuestionByQuizQuestionSid(id, out message);
+                if (deleteQuiz.DeleteQuizQuestion(quizQuestion, out message))
+                {
+                    return RedirectToAction("ManageQuiz", new { id = cid });
+                }
+                return RedirectToError(message);
+            };
         }
 
         // GET: ManageQuiz/EditQuizQuestio/6
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult EditQuizQuestion(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var getQuizQuestion = new QuizManager())
             {
@@ -396,40 +373,38 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Instructor_Code)]
         public ActionResult updateQuizQus(QuizQuestion quizQuestion)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                int cid = Convert.ToInt32(TempData["cid"]);
-                string message = string.Empty;
-                var quizQusToUpdate = TempData["QuizQuesion"] as QuizQuestion;
-                quizQusToUpdate.Title = quizQuestion.Title;
-
-                using (var updateQus = new QuizManager())
-                {
-                    if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
-                    {
-                        return RedirectToAction("ManageQuiz", new { id = cid });
-                    }
-                    ViewBag.Message = message;
-                    return RedirectToError(message);
-                }
+                return RedirectToLogin();
             }
-            catch (Exception e)
+
+            int cid = Convert.ToInt32(TempData["cid"]);
+            string message = string.Empty;
+            var quizQusToUpdate = TempData["QuizQuesion"] as QuizQuestion;
+            quizQusToUpdate.Title = quizQuestion.Title;
+
+            using (var updateQus = new QuizManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    return RedirectToAction("ManageQuiz", new { id = cid });
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
+                ViewBag.Message = message;
+                return RedirectToError(message);
             }
         }
 
         public async Task<ActionResult> QuizStatistics(int courseSid)
         {
-            //var statisticsService = new StatisticsService();
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
             using (var quizManager = new QuizManager())
             {
                 return View(await quizManager.GenerateStatistics(courseSid));

@@ -1,16 +1,18 @@
 ﻿@model ActiveLearning.DB.QuizQuestion
 
 @{
-    ViewBag.Title = "CreateQuizQuestion";
+    ViewBag.Title = "Create Quiz Question";
 }
 
 <h2>Create Quiz Question</h2>
+
+@Html.Partial("_MessageBoxPartial")
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal" style="margin-top:100px">
         <h4>Quiz Question</h4>
         <hr />
 

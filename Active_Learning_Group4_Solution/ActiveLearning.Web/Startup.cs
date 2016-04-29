@@ -23,9 +23,6 @@ namespace ActiveLearning.Web
                 LoginPath = new PathString("/Home/")
             });
 
-
-
-
             app.MapSignalR();
 
             // app.UseWebApi(GlobalConfiguration.Configuration);

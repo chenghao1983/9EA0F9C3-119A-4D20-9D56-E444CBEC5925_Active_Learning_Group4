@@ -6,6 +6,8 @@
 
 <h2 class="text-center" style="margin-top:10%">Please Login</h2>
 
+@Html.Partial("_MessageBoxPartial")
+
 @using (Html.BeginForm())
 {
     //@Html.AntiForgeryToken()
@@ -13,9 +15,7 @@
     <div class="form-horizontal ">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group ">
-            <label class="text-danger text-center" style="width:100%" >@ViewBag.Message</label>
-        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-5" })
             <div class="col-md-5">
@@ -35,14 +35,61 @@
 
         <div class="form-group col-lg-offset-10">
             <div class="text-center">
-                <input type="submit" value="Login" class="btn btn-primary btn-lg" style="width:400px"/>
+                <button type="submit" value="Login" class="btn btn-primary btn-lg has-spinner" style="width:400px" id="BtnLogin">
+                    <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                    Login
+                </button>
             </div>
         </div>
-
-
     </div>
 }
+<script type="text/javascript">
+    //<![CDATA[
+    $(window).load(function () {
+        $(function () {
+            $('a, button').click(function () {
+                $(this).toggleClass('active');
+            });
+        });
+    });//]]> 
 
+</script>
+<style type="text/css">
+    .spinner {
+        display: inline-block;
+        opacity: 0;
+        width: 0;
+        -webkit-transition: opacity 0.25s, width 0.25s;
+        -moz-transition: opacity 0.25s, width 0.25s;
+        -o-transition: opacity 0.25s, width 0.25s;
+        transition: opacity 0.25s, width 0.25s;
+    }
+
+    .has-spinner.active {
+        cursor: progress;
+    }
+
+        .has-spinner.active .spinner {
+            opacity: 1;
+            width: auto; /* This doesn't work, just fix for unkown width elements */
+        }
+
+    .has-spinner.btn-mini.active .spinner {
+        width: 10px;
+    }
+
+    .has-spinner.btn-small.active .spinner {
+        width: 13px;
+    }
+
+    .has-spinner.btn.active .spinner {
+        width: 16px;
+    }
+
+    .has-spinner.btn-large.active .spinner {
+        width: 19px;
+    }
+</style>
 <div>
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>

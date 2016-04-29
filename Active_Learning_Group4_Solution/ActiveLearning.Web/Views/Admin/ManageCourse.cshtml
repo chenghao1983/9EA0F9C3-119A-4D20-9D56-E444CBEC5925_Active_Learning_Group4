@@ -7,30 +7,13 @@
 
 <h2>Manage Course</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success text-center">
-        <strong>@ViewBag.Message</strong>
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger text-center">
-        <strong>@ViewBag.Error</strong>
-    </div>
-}
+@Html.Partial("_MessageBoxPartial")
 
 <p>
     @Html.ActionLink("Create New Course", "CreateCourse")
 </p>
 
-@if (Model == null || Model.Count() == 0)
-{
-    <div class="alert alert-info text-center">
-        <strong>@Constants.ThereIsNoValueFound(Constants.Course)</strong>
-    </div>
-}
-else
+@if (Model != null && Model.Count() > 0)
 {
     <table class="table">
         <tr>
@@ -43,7 +26,7 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.UpdateDT)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
 
         @foreach (var item in Model)
@@ -59,10 +42,15 @@ else
                     @Html.DisplayFor(modelItem => item.UpdateDT)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditCourse", new { id = item.Sid }) |
-                    @Html.ActionLink("Delete", "DeleteCourse", new { id = item.Sid }) |
-                    @Html.ActionLink("Manage Student", "ManageStudentEnrolment", new { id = item.Sid })
-
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Edit", "EditCourse", new { id = item.Sid })</li>
+                            <li>@Html.ActionLink("Delete", "DeleteCourse", new { id = item.Sid })</li>
+                            <li>@Html.ActionLink("Manage Student", "ManageStudentEnrolment", new { id = item.Sid })</li>
+                            <li>@Html.ActionLink("Manage Instructor", "ManageInstructorEnrolment", new { id = item.Sid })</li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         }

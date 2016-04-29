@@ -6,24 +6,7 @@
 }
 <h2>Manage Content</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success text-center">
-        <strong>@ViewBag.Message</strong>
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger text-center">
-        <strong>@ViewBag.Error</strong>
-    </div>
-}
-@if (Model == null || Model.Count() == 0)
-{
-    <div class="alert alert-info text-center">
-        <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
-    </div>
-}
+@Html.Partial("_MessageBoxPartial")
 
 <div class="container modal-footer">
     <!-- Trigger the modal with a button -->

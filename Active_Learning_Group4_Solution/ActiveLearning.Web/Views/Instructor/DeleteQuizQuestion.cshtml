@@ -1,48 +1,55 @@
 ﻿@model ActiveLearning.DB.QuizQuestion
 
 @{
-    ViewBag.Title = "DeleteQuizQuestion";
+    ViewBag.Title = "Delete Quiz Question";
 }
 
-<h2>DeleteQuizQuestion</h2>
+<h2>Delete Quiz Question</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>QuizQuestion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+@Html.Partial("_MessageBoxPartial")
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+@if (Model != null)
+{
+    <h3 style="margin-top:100px">Confirm to delete ?</h3>
+    <div>
+        <h4>QuizQuestion</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDT)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreateDT)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDT)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateDT)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreateDT)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UpdateDT)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateDT)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.UpdateDT)
+            </dd>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        </dl>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary" /> |
-            @Html.ActionLink("Back to List", "ManageQuiz", new { id=Model.CourseSid })
-        </div>
-    }
-</div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-primary" /> |
+
+            </div>
+        }
+    </div>
+}
+@Html.ActionLink("Back to List", "ManageQuiz", new { id = Model.CourseSid })

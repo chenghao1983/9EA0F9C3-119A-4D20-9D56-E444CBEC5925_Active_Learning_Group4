@@ -6,18 +6,8 @@
 
 <h2>Student Details</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success text-center">
-        <strong>@ViewBag.Message</strong>
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger text-center">
-        <strong>@ViewBag.Error</strong>
-    </div>
-}
+@Html.Partial("_MessageBoxPartial")
+
 @if (Model != null)
 {
     <div>

@@ -14,46 +14,63 @@ namespace ActiveLearning.Web.Controllers
 {
     public class BaseController : Controller
     {
+        #region Property
         public static string UserSessionParam = "LoginUser";
         protected const string LF = "\r\n";
         private const string SEPARATOR = "---------------------------------------------------------------------------------------------------------------";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        #endregion
 
+        #region Message
         public string TempDataMessage
         {
-            get { return TempData["Message"] ==null ? null : TempData["Message"].ToString(); }
+            get { return TempData["Message"] == null ? null : TempData["Message"].ToString(); }
             set { TempData["Message"] = value; }
         }
-
         public string TempDataError
         {
             get { return TempData["Error"] == null ? null : TempData["Error"].ToString(); }
             set { TempData["Error"] = value; }
         }
-
         public string ViewBagMessage
         {
             get { return ViewBag.Message; }
             set { ViewBag.Message = value; }
         }
-
         public string ViewBagError
         {
             get { return ViewBag.Error; }
             set { ViewBag.Error = value; }
         }
+        public void GetErrorAneMessage()
+        {
+            ViewBagMessage = TempDataMessage;
+            ViewBagError = TempDataError;
+        }
+        public void SetError(string error)
+        {
+            TempDataError = error;
+            ViewBagError = error;
+        }
+        public void SetMessage(string message)
+        {
+            TempDataMessage = message;
+            ViewBagMessage = message;
+        }
+        #endregion
 
+        #region Redirection
         public ActionResult RedirectToError(string message)
         {
             ViewBag.Message = message;
             return View("Error");
         }
-        public RedirectResult RedirectToLogin()
+        public ActionResult RedirectToLogin()
         {
             LogUserOut();
             return Redirect("~/home");
         }
-        public RedirectResult RedirectToHome()
+        public ActionResult RedirectToHome()
         {
             if (GetLoginUser() == null)
             {
@@ -75,6 +92,17 @@ namespace ActiveLearning.Web.Controllers
                     break;
             }
         }
+        public ActionResult RedirectToPreviousURL()
+        {
+            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.ToString()))
+            {
+                return new RedirectResult(Request.UrlReferrer.ToString());
+            }
+            return RedirectToError("Unknow error");
+        }
+        #endregion
+
+        #region Access
         public bool HasAccessToCourse(int courseSid, out string message)
         {
             using (var userManager = new UserManager())
@@ -82,8 +110,65 @@ namespace ActiveLearning.Web.Controllers
                 return userManager.HasAccessToCourse(GetLoginUser(), courseSid, out message);
             }
         }
+        public bool IsUserAuthenticated()
+        {
+            if (TempData.Peek(UserSessionParam) == null)
+            {
+                if (Session == null || Session[UserSessionParam] == null)
+                    return false;
 
-        //log error
+                return false;
+            }
+            return true;
+        }
+        public User GetLoginUser()
+        {
+            if (TempData.Peek(UserSessionParam) == null)
+            {
+                if (Session == null || Session[UserSessionParam] == null)
+                    return null;
+
+                return Session[UserSessionParam] as User;
+            }
+            return TempData.Peek(UserSessionParam) as User;
+        }
+
+        public string GetLoginUserRole()
+        {
+            if (TempData.Peek(UserSessionParam) == null)
+            {
+                if (Session == null || Session[UserSessionParam] == null)
+                    return null;
+
+                return (Session[UserSessionParam] as User).Role;
+            }
+            return (TempData.Peek(UserSessionParam) as User).Role;
+        }
+
+        public void LogUserIn(User user)
+        {
+            if (Session != null)
+                Session[UserSessionParam] = user;
+
+            if (!TempData.Keys.Contains(UserSessionParam))
+            {
+                TempData.Add(UserSessionParam, user);
+                InfoLog("User: " + user.Username + " logged in");
+            }
+            TempData.Keep(UserSessionParam);
+        }
+
+        public void LogUserOut()
+        {
+            HttpContext.Request.Cookies.Clear();
+            HttpContext.Response.Cookies.Clear();
+            TempData.Clear();
+            Session.Clear();
+        }
+
+        #endregion
+
+        #region log
         public static void ExceptionLog(Exception ex)
         {
             string loggerName = MethodBase.GetCurrentMethod().DeclaringType.ToString();
@@ -158,59 +243,6 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-        public bool IsUserAuthenticated()
-        {
-            if (TempData.Peek(UserSessionParam) == null)
-            {
-                if (Session == null || Session[UserSessionParam] == null)
-                    return false;
-
-                return false;
-            }
-            return true;
-        }
-
-        public User GetLoginUser()
-        {
-            if (TempData.Peek(UserSessionParam) == null)
-            {
-                if (Session == null || Session[UserSessionParam] == null)
-                    return null;
-
-                return Session[UserSessionParam] as User;
-            }
-            return TempData.Peek(UserSessionParam) as User;
-        }
-
-        public string GetLoginUserRole()
-        {
-            if (TempData.Peek(UserSessionParam) == null)
-            {
-                if (Session == null || Session[UserSessionParam] == null)
-                    return null;
-
-                return (Session[UserSessionParam] as User).Role;
-            }
-            return (TempData.Peek(UserSessionParam) as User).Role;
-        }
-
-        public void LogUserIn(User user)
-        {
-            if (Session != null)
-                Session[UserSessionParam] = user;
-
-            if (!TempData.Keys.Contains(UserSessionParam))
-            {
-                TempData.Add(UserSessionParam, user);
-                InfoLog("User: " + user.Username + " logged in");
-            }
-            TempData.Keep(UserSessionParam);
-        }
-
-        public void LogUserOut()
-        {
-            TempData.Clear();
-            Session.Clear();
-        }
+        #endregion
     }
 }

@@ -1,83 +1,57 @@
 ﻿@model IEnumerable<ActiveLearning.DB.Instructor>
 @using ActiveLearning.Business.Common;
+
 @{
     ViewBag.Title = "ManageInstructor";
 }
 
 <h2>Manage Instructor</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success text-center">
-        <strong>@ViewBag.Message</strong>
-    </div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger text-center">
-        <strong>@ViewBag.Error</strong>
-    </div>
-}
+@Html.Partial("_MessageBoxPartial")
 
 <p>
     @Html.ActionLink("Create New Instructor", "CreateInstructor")
 </p>
 
-@if (Model == null || Model.Count() == 0)
-{
-    <div class="alert alert-info text-center">
-        <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
-    </div>
-}
-else
+@if (Model != null && Model.Count() > 0)
 {
     <table class="table">
 
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </th>
+            <th>
+                @Html.Label("IsActivated")
+            </th>
 
-        @if (Model == null || Model.Count() == 0)
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
         {
-            <div class="alert alert-success">
-                <strong>@Constants.ThereIsNoValueFound(Constants.Content)</strong>
-            </div>
-        }
-        else
-        {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.User.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.User.FullName)
-                </th>
-                <th>
-                    @Html.Label("IsActivated")
-                </th>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.IsActive)
+            </td>
 
-
-                <th></th>
-            </tr>
-
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.Username)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.IsActive)
-                    </td>
-
-                    <td>
-                        @Html.ActionLink("Edit", "EditInstructor", new { id = item.Sid }) |
-                        @Html.ActionLink("Details", "InstructorDetails", new { id = item.Sid }) |
-                        @Html.ActionLink("Delete", "DeleteInstructor", new { id = item.Sid }) |
-                        @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateInstructor" : "ActivateInstructor", new { id = item.Sid })
-                    </td>
-                </tr>
-            }
+            <td>
+                @Html.ActionLink("Edit", "EditInstructor", new { id = item.Sid }) |
+                @Html.ActionLink("Details", "InstructorDetails", new { id = item.Sid }) |
+                @Html.ActionLink("Delete", "DeleteInstructor", new { id = item.Sid }) |
+                @Html.ActionLink(item.User.IsActive ? "Deactivate" : "Activate", item.User.IsActive ? "DeactivateInstructor" : "ActivateInstructor", new { id = item.Sid })
+            </td>
+        </tr>
         }
     </table>
 }

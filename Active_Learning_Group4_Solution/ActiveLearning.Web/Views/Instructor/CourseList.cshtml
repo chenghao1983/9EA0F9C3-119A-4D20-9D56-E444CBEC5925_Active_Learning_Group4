@@ -6,11 +6,9 @@
 
 <h2>Course List</h2>
 
-@if (Model == null || Model.Count() == 0)
-{
-    <label class="alert-info center-block text-center" style="margin-top:100px">@Constants.ThereIsNoValueFound(Constants.Course)</label>
-}
-else
+@Html.Partial("_MessageBoxPartial")
+
+@if (Model != null && Model.Count() > 0)
 {
     <table class="table" style="margin-top:100px">
         <tr>
@@ -39,7 +37,7 @@ else
                     @*@Html.ActionLink("Details", "CourseDetails", new { id = item.Sid }) |
                         @Html.ActionLink("Manage Quiz", "ManageQuiz", new { id = item.Sid })*@
                     <div class="dropdown">
-                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Manage Quiz", "ManageQuiz", new { id = item.Sid })</li>
                             <li>@Html.ActionLink("Manage Content", "ManageContent", new { courseSid = item.Sid })</li>

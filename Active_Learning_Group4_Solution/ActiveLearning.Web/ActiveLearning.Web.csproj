@@ -187,6 +187,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\QuizQuestionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -206,10 +207,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\slide_1.jpg" />
+    <Content Include="Images\slide_2.jpg" />
+    <Content Include="Images\slide_3.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="App_Readme\Handlebarsjs_README.md" />
-    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <Content Include="Content\_bootswatch.scss" />
+    <Content Include="Content\_variables.scss" />
+    <Content Include="Content\variables.less" />
+    <Content Include="Content\bootswatch.less" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ember-1.0.0.debug.js" />
@@ -277,7 +283,7 @@
     <Content Include="Views\Admin\ManageCourse.cshtml" />
     <Content Include="Views\Admin\ManageInstructor.cshtml" />
     <Content Include="Views\Admin\StudentDetails.cshtml" />
-    <Content Include="Views\Admin\ManageEnrolment.cshtml" />
+    <Content Include="Views\Admin\ManageStudentEnrolment.cshtml" />
     <Content Include="Views\Admin\DeleteCourse.cshtml" />
     <Content Include="Views\Student\Chat.cshtml" />
     <Content Include="Views\Student\Quiz.cshtml" />
@@ -294,12 +300,12 @@
     <Content Include="Views\Instructor\ManageQuiz.cshtml" />
     <Content Include="Upload\web.config" />
     <Content Include="Views\Admin\EditCourse.cshtml" />
-    <Content Include="Views\Shared\_ErrorMessageView.cshtml" />
+    <Content Include="Views\Admin\ManageInstructorEnrolment.cshtml" />
+    <Content Include="Views\Shared\_MessageBoxPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Log\" />
-    <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

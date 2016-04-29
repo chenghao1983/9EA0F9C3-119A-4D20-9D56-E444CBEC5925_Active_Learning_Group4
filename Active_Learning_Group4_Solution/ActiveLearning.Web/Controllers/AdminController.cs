@@ -31,11 +31,10 @@ namespace ActiveLearning.Web.Controllers
             _UserManagerfactory = _userFactory;
         }
 
-        // GET: Course
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Index()
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -44,592 +43,491 @@ namespace ActiveLearning.Web.Controllers
 
         #region Course
 
-
-        // GET: ManageCourse
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageCourse()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var courseManager = _CourseManagerfactory.Create())
             {
-
                 var listCourse = courseManager.GetAllCourses(out message);
-                //if (listCourse == null || listCourse.Count() == 0)
-                //{
-                //    ViewBagError = message;
-                //}
-
-                ViewBagMessage = TempDataMessage;
-                ViewBagError = TempDataError;
-
+                if (listCourse == null || listCourse.Count() == 0)
+                {
+                    SetError(message);
+                    return View(listCourse);
+                }
+                GetErrorAneMessage();
                 return View(listCourse);
             }
-
         }
 
-        // GET: ManageCourse/CreateCourse
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse()
         {
-
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             return View();
-            //User user = new User();
-            //user.Role = Constants.User_Role_Student_Code;
-            //user.Username = "Joe";
-
-            //LogUserIn(user);
-
-            //ViewBag.Title = "Create Course";
-            //return View();
         }
 
-        // POST: ManageCourse/CreateCourse
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateCourse(Course course)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var courseManager = _CourseManagerfactory.Create())
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var courseManager = _CourseManagerfactory.Create())
+            {
+                var newcourse = courseManager.AddCourse(course, out message);
+                if (newcourse == null)
                 {
-                    var newcourse = courseManager.AddCourse(course, out message);
-                    if (newcourse == null)
-                    {
-                        ViewBagError = message;
-                        return View();
-                    }
+                    SetError(message);
+                    return View();
                 }
-                TempDataMessage = Constants.ValueSuccessfuly("Course has been created");
-
-                return RedirectToAction("ManageCourse");
             }
-            catch (Exception ex)
-            {
-                ExceptionLog(ex);
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return View(course);
-
-            //string message = string.Empty;
-            //using (var courseManager = new CourseManager())
-            //{
-            //    courseManager.AddCourse(course, out message);
-            //}
-            //ViewBag.Message = "Course Created !";
-            //return View();
+            SetMessage(Constants.ValueSuccessfuly("Course has been created"));
+            return RedirectToAction("ManageCourse");
         }
 
-        // GET: ManageCourse/DeleteCourse/6
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCourse(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var deleteCourse = new CourseManager())
             {
                 Course course = deleteCourse.GetCourseByCourseSid(id, out message);
                 if (course == null)
                 {
-                    ViewBagError = message;
-                    TempDataError = message;
-
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 return View(course);
             };
-
         }
 
-
-        // POST: ManageCourse/DeleteCourse/6
         [HttpPost, ActionName("DeleteCourse")]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteCou(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var courseManager = new CourseManager())
-                {
-                    if (courseManager.DeleteCourse(id, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Course has been deleted");
-
-                        return RedirectToAction("ManageCourse");
-                    }
-                    var course = courseManager.GetCourseByCourseSid(id, out message);
-                    ViewBagError = message;
-                    return View(course);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var courseManager = new CourseManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (courseManager.DeleteCourse(id, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Course has been deleted"));
+                    return RedirectToAction("ManageCourse");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
+                var course = courseManager.GetCourseByCourseSid(id, out message);
+                SetError(message);
+                return View(course);
+            };
         }
 
-        // GET: ManageCourse/EditCourse/6
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditCourse(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var getCourse = new CourseManager())
             {
                 Course course = getCourse.GetCourseByCourseSid(id, out message);
                 if (course == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 TempData["EditCourse"] = course;
                 return View(course);
             };
         }
 
-        // POST: ManageCourse/EditCourse/6
         [HttpPost, ActionName("EditCourse")]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult updateCou(Course course)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                var courseToUpdate = TempData["EditCourse"] as Course;
-                courseToUpdate.CourseName = course.CourseName;
-
-                using (var updateCourse = new CourseManager())
-                {
-                    if (updateCourse.UpdateCourse(courseToUpdate, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Course has been updated");
-                        return RedirectToAction("ManageCourse");
-                    }
-                    ViewBagError = message;
-                    return View();
-                }
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            var courseToUpdate = TempData["EditCourse"] as Course;
+            courseToUpdate.CourseName = course.CourseName;
+
+            using (var updateCourse = new CourseManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (updateCourse.UpdateCourse(courseToUpdate, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Course has been updated"));
+                    return RedirectToAction("ManageCourse");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
+                SetError(message);
                 return View();
             }
         }
-
-
-
-        // POST: ManageCourse/Details/6
         #endregion
 
         #region Instructor
 
-        // GET: ManageInstructor
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageInstructor()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var userManager = new UserManager())
             {
                 var listInstructor = userManager.GetAllActiveInstructor(out message);
-
-                ViewBagMessage = TempDataMessage;
-                ViewBagError = TempDataError;
-
+                GetErrorAneMessage();
                 return View(listInstructor);
             }
-
         }
 
-        // GET: ManageInstructor/EditInstructor/6
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditInstructor(int id)
         {
-            string message = string.Empty;
-            using (var getInstructor = new UserManager())
+            if (!IsUserAuthenticated())
             {
-                Instructor instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
-                if (instructor == null)
-                {
-                    return HttpNotFound();
-                }
-                TempData["EditInstructor"] = instructor;
-                return View(instructor);
-            };
-        }
-
-        // POST: ManageInstructor/EditInstructor/6
-        [CustomAuthorize(Roles = Constants.Admin)]
-        [HttpPost, ActionName("EditInstructor")]
-        public ActionResult updateIns(Instructor instructor)
-        {
-            try
-            {
-                string message = string.Empty;
-                var instructorToUpdate = TempData["EditInstructor"] as Instructor;
-                instructorToUpdate.User.Username = instructor.User.Username;
-                instructorToUpdate.User.Password = instructor.User.Password;
-                instructorToUpdate.User.FullName = instructor.User.FullName;
-                instructorToUpdate.Qualification = instructor.Qualification;
-
-                using (var updateInstructor = new UserManager())
-                {
-                    if (updateInstructor.UpdateInstructor(instructorToUpdate, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been updated");
-                        return RedirectToAction("ManageInstructor");
-                    }
-                    ViewBagError = message;
-                    return View();
-                }
+                return RedirectToLogin();
             }
-            catch (Exception e)
-            {
-                if (this.HttpContext.IsDebuggingEnabled)
-                {
-                    ModelState.AddModelError(string.Empty, e.ToString());
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-        }
-
-        // GET: ManageInstructor/CreateInstructor
-        [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult CreateInstructor()
-        {
-            return View();
-        }
-
-
-        // POST: ManageInstructor/CreateInstructor
-        [HttpPost]
-        [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult CreateInstructor(Instructor instructor)
-        {
-            try
-            {
-                string message = string.Empty;
-                using (var userManager = new UserManager())
-                {
-                    if (userManager.AddInstructor(instructor, out message) == null)
-                    {
-                        ViewBagError = message;
-                        return View();
-                    }
-                }
-                TempDataMessage = Constants.ValueSuccessfuly("Instructor has been created");
-                return RedirectToAction("ManageInstructor");
-            }
-            catch (Exception ex)
-            {
-                ExceptionLog(ex);
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return View(instructor);
-
-            // HttpContext.User.Identity
-            //string message = string.Empty;
-
-            //using (var userManager = new UserManager())
-            //{
-            //    userManager.AddInstructor(instructor, out message);
-            //}
-            //ViewBag.Message = "Instructor Created !";
-            //return View();
-        }
-
-        // GET: ManageInstructor/DeleteInstructor/6
-        [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult DeleteInstructor(int id)
-        {
-            string message = string.Empty;
-            using (var deleteInstructor = new UserManager())
-            {
-                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
-                if (instructor == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(instructor);
-            };
-
-        }
-
-        // POST: ManageInstructor/DeleteInstructor/6
-        [HttpPost, ActionName("DeleteInstructor")]
-        [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult DeleteIns(int id)
-        {
-            try
-            {
-                string message = string.Empty;
-                using (var deleteInstructor = new UserManager())
-                {
-                    Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
-                    if (deleteInstructor.DeleteInstructor(instructor, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been deleted");
-                        return RedirectToAction("ManageInstructor");
-                    }
-                    ViewBagError = message;
-                    return View(instructor);
-                };
-            }
-            catch (Exception e)
-            {
-                if (this.HttpContext.IsDebuggingEnabled)
-                {
-                    ModelState.AddModelError(string.Empty, e.ToString());
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-
-        }
-
-        // GET: ManageInstructor/InstructorDetails
-        [CustomAuthorize(Roles = Constants.Admin)]
-        public ActionResult InstructorDetails(int id)
-        {
             string message = string.Empty;
             using (var getInstructor = new UserManager())
             {
                 var instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
                 if (instructor == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
+                }
+                else
+                {
+                    instructor.User.Password = string.Empty;
+                }
+                TempData["EditInstructor"] = instructor;
+                return View(instructor);
+            };
+        }
+
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize(Roles = Constants.Admin)]
+        [HttpPost, ActionName("EditInstructor")]
+        public ActionResult updateIns(Instructor instructor)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            if (GetLoginUser() == null)
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            var instructorToUpdate = TempData["EditInstructor"] as Instructor;
+            instructorToUpdate.User.Username = instructor.User.Username;
+            instructorToUpdate.User.Password = instructor.User.Password;
+            instructorToUpdate.User.FullName = instructor.User.FullName;
+            instructorToUpdate.Qualification = instructor.Qualification;
+
+            using (var updateInstructor = new UserManager())
+            {
+                if (updateInstructor.UpdateInstructor(instructorToUpdate, out message))
+                {
+                    SetMessage(Constants.ValueSuccessfuly("Instructor has been updated"));
+                    return RedirectToAction("ManageInstructor");
+                }
+                SetError(message);
+                return View();
+            }
+        }
+
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult CreateInstructor()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult CreateInstructor(Instructor instructor)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var userManager = new UserManager())
+            {
+                var newInstructor = userManager.AddInstructor(instructor, out message);
+                if (newInstructor == null)
+                {
+                    SetError(message);
+                    return View();
+                }
+            }
+            SetMessage(Constants.ValueSuccessfuly("Instructor has been created"));
+            return RedirectToAction("ManageInstructor");
+        }
+
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult DeleteInstructor(int id)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var deleteInstructor = new UserManager())
+            {
+                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
+                if (instructor == null)
+                {
+                    SetError(message);
                 }
                 return View(instructor);
             };
-
         }
 
-        // POST: ManageInstructor/ActivateInstructor
+        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("DeleteInstructor")]
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult DeleteIns(int id)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var deleteInstructor = new UserManager())
+            {
+                Instructor instructor = deleteInstructor.GetInstructorByInstructorSid(id, out message);
+                if (deleteInstructor.DeleteInstructor(instructor, out message))
+                {
+                    SetMessage(Constants.ValueSuccessfuly("Instructor has been deleted"));
+                    return RedirectToAction("ManageInstructor");
+                }
+                SetError(message);
+                return View(instructor);
+            };
+        }
+
+        [CustomAuthorize(Roles = Constants.Admin)]
+        public ActionResult InstructorDetails(int id)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var getInstructor = new UserManager())
+            {
+                var instructor = getInstructor.GetInstructorByInstructorSid(id, out message);
+                if (instructor == null)
+                {
+                    SetError(message);
+                }
+                return View(instructor);
+            };
+        }
+
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateInstructor(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var activateInstructor = new UserManager())
-                {
-
-                    var instructor = activateInstructor.GetInstructorByInstructorSid(id, out message);
-                    if (activateInstructor.ActivateInstructor(instructor, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been activated");
-                        return RedirectToAction("ManageInstructor");
-                    }
-                    ViewBagError = message;
-                    return View(instructor);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var activateInstructor = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                var instructor = activateInstructor.GetInstructorByInstructorSid(id, out message);
+                if (activateInstructor.ActivateInstructor(id, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Instructor has been activated"));
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
+                SetError(message);
+                return RedirectToAction("ManageInstructor");
+            };
         }
 
-        // POST: ManageStudent/DeactivateInstructor
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateInstructor(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var deactivateInstructor = new UserManager())
-                {
-
-                    var instructor = deactivateInstructor.GetInstructorByInstructorSid(id, out message);
-                    if (deactivateInstructor.DeactivateInstructor(instructor, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Instructor has been deactivated");
-                        return RedirectToAction("ManageInstructor");
-                    }
-                    ViewBagError = message;
-                    return View(instructor);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var deactivateInstructor = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (deactivateInstructor.DeactivateInstructor(id, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Instructor has been deactivated"));
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-
+                SetError(message);
+                return RedirectToAction("ManageInstructor");
+            };
         }
         #endregion
 
         #region Student
-
-
-        // GET: ManageStudent
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageStudent()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var userManager = _UserManagerfactory.Create())
             {
                 var listStudent = userManager.GetAllStudent(out message);
-
-                ViewBagMessage = TempDataMessage;
-                ViewBagError = TempDataError;
-
+                GetErrorAneMessage();
                 return View(listStudent);
             }
         }
 
-        // GET: ManageStudent/StudentDetails
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult StudentDetails(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var getStudent = new UserManager())
             {
                 Student student = getStudent.GetStudentByStudentSid(id, out message);
                 if (student == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 return View(student);
             };
-
         }
 
-        // GET: ManageStudent/CreateStudent
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent()
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             return View();
-
         }
 
-        // POST: ManageStudent/CreateStudent
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult CreateStudent(Student student)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var userManager = _UserManagerfactory.Create())
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            using (var userManager = _UserManagerfactory.Create())
+            {
+                var newStudent = userManager.AddStudent(student, out message);
+                if (newStudent == null)
                 {
-                    if (userManager.AddStudent(student, out message) == null)
-                    {
-                        ViewBagError = message;
-                        return View();
-                    }
+                    SetError(message);
+                    return View();
                 }
-                TempDataMessage = Constants.ValueSuccessfuly("Student has been created");
-                return RedirectToAction("ManageStudent");
             }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return View(student);
+            SetMessage(Constants.ValueSuccessfuly("Student has been created"));
+            return RedirectToAction("ManageStudent");
         }
 
-        // GET: ManageStudent/EditStudent/6
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult EditStudent(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var getStudent = new UserManager())
             {
-                Student student = getStudent.GetStudentByStudentSid(id, out message);
+                var student = getStudent.GetStudentByStudentSid(id, out message);
                 if (student == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
+                }
+                else
+                {
+                    student.User.Password = string.Empty;
                 }
                 TempData["EditStudent"] = student;
                 return View(student);
             };
         }
 
-        // POST: ManageStudent/EditStudent/6
+        [ValidateAntiForgeryToken]
         [HttpPost, ActionName("EditStudent")]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult updateStu(Student student)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                var studentToUpdate = TempData["EditStudent"] as Student;
-                studentToUpdate.User.Username = student.User.Username;
-                studentToUpdate.User.Password = student.User.Password;
-                studentToUpdate.User.FullName = student.User.FullName;
-
-                studentToUpdate.BatchNo = student.BatchNo;
-                using (var updateStudent = new UserManager())
-                {
-                    if (updateStudent.UpdateStudent(studentToUpdate, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Student has been updated");
-                        return RedirectToAction("ManageStudent");
-                    }
-                    ViewBagError = message;
-                    return View();
-                }
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            var studentToUpdate = TempData["EditStudent"] as Student;
+            studentToUpdate.User.Username = student.User.Username;
+            studentToUpdate.User.Password = student.User.Password;
+            studentToUpdate.User.FullName = student.User.FullName;
+
+            studentToUpdate.BatchNo = student.BatchNo;
+            using (var userManager = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (userManager.UpdateStudent(studentToUpdate, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Student has been updated"));
+                    return RedirectToAction("ManageStudent");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
+                SetError(message);
                 return View();
             }
         }
 
-        // GET: ManageStudent/DeleteStudent/6
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeleteStudent(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var deleteStudent = new UserManager())
             {
                 Student student = deleteStudent.GetStudentByStudentSid(id, out message);
                 if (student == null)
                 {
-                    return HttpNotFound();
+                    SetError(message);
                 }
                 return View(student);
             };
@@ -642,153 +540,103 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult Delete(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var deleteStudent = new UserManager())
-                {
-                    Student student = deleteStudent.GetStudentByStudentSid(id, out message);
-                    if (deleteStudent.DeleteStudent(student, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Student has been deleted");
-                        return RedirectToAction("ManageStudent");
-                    }
-                    ViewBagError = message;
-                    return View(student);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var deleteStudent = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                Student student = deleteStudent.GetStudentByStudentSid(id, out message);
+                if (deleteStudent.DeleteStudent(student, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Student has been deleted"));
+                    return RedirectToAction("ManageStudent");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-
+                SetError(message);
+                return View(student);
+            };
         }
 
 
-        // POST: ManageStudent/ActivateStudent
-        // [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ActivateStudent(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var activateStudent = new UserManager())
-                {
-                    if (activateStudent == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var student = activateStudent.GetStudentByStudentSid(id, out message);
-                    if (activateStudent.ActivateStudent(student, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Student has been activated");
-                        return RedirectToAction("ManageStudent");
-                    }
-                    ViewBagError = message;
-                    return View(student);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var userManager = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (userManager.ActivateStudent(id, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Student has been activated"));
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-
+                SetError(message);
+                return RedirectToAction("ManageStudent");
+            };
         }
 
-        // POST: ManageStudent/DeactivateStudent
-        //[HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult DeactivateStudent(int id)
         {
-            try
+            if (!IsUserAuthenticated())
             {
-                string message = string.Empty;
-                using (var deactivateStudent = new UserManager())
-                {
-                    if (deactivateStudent == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    var student = deactivateStudent.GetStudentByStudentSid(id, out message);
-                    if (deactivateStudent.DeactivateStudent(student, out message))
-                    {
-                        TempDataMessage = Constants.ValueSuccessfuly("Student has been deactivated");
-                        return RedirectToAction("ManageStudent");
-                    }
-                    ViewBagError = message;
-                    return View(student);
-                };
+                return RedirectToLogin();
             }
-            catch (Exception e)
+            string message = string.Empty;
+            using (var userManager = new UserManager())
             {
-                if (this.HttpContext.IsDebuggingEnabled)
+                if (userManager.DeactivateStudent(id, out message))
                 {
-                    ModelState.AddModelError(string.Empty, e.ToString());
+                    SetMessage(Constants.ValueSuccessfuly("Student has been deactivated"));
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Some technical error happened.");
-                }
-                return View();
-            }
-
+                SetError(message);
+                return RedirectToAction("ManageStudent");
+            };
         }
         #endregion
 
         #region Enrolment
 
-
-        // GET: ManageCourse/ManageStudentEnrolment
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageStudentEnrolment(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var enrol = new CourseManager())
             {
-
                 var listStudent = enrol.GetAllActiveStudentsWithHasEnrolledIndicatorByCourseSid(id, out message);
                 if (listStudent == null)
                 {
-                    ViewBag.Message = message;
+                    SetError(message);
+                    return View(new List<Student>());
                 }
                 //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
                 //TempData["CheckedStudent"] = checkedStudentId;
                 TempData["CourseId"] = id;
                 TempData["EntrolStudent"] = listStudent.ToList();
 
-                ViewBagMessage = TempDataMessage;
-                ViewBagError = TempDataError;
-
+                GetErrorAneMessage();
                 return View(listStudent.ToList());
             }
         }
 
-        // POST: ManageCourse/UpdateEnrolment
-        //[HttpPost, ActionName("ManageEnrolment")]
-
-
         // POST: ManageCourse/UpdateStudentEnrolment
         //[HttpPost, ActionName("ManageEnrolment")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult UpdateStudentEnrolment(IList<Student> student)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             var studentEnrol = TempData["EntrolStudent"] as List<Student>;
             int courseId = Convert.ToInt32(TempData["CourseId"]);
@@ -801,26 +649,28 @@ namespace ActiveLearning.Web.Controllers
             {
                 if (enrolStudent.UpdateStudentsCourseEnrolmentByHasEnrolledIndicator(studentEnrol, courseId, out message))
                 {
-                    TempDataMessage = Constants.ValueSuccessfuly(Constants.Student_Course_Enrolment);
-                    return RedirectToAction("ManageStudentEnrolment", new { id = courseId });
+                    SetMessage(Constants.ValueSuccessfuly(Constants.Student_Course_Enrolment));
                 }
-                ViewBagError = message;
-                return View();
+                SetError(message);
+                return RedirectToAction("ManageStudentEnrolment", new { id = courseId });
             }
         }
 
-        // GET: ManageCourse/ManageInstructorEnrolment
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult ManageInstructorEnrolment(int id)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             using (var enrol = new CourseManager())
             {
-
                 var listInstructor = enrol.GetAllActiveInstructorsWithHasEnrolledIndicatorByCourseSid(id, out message);
                 if (listInstructor == null)
                 {
-                    ViewBag.Message = message;
+                    SetError(message);
+                    return View(new List<Instructor>());
                 }
                 //var checkedStudentId = enrol.GetEnrolledStudentSidsByCourseSid(id, out message);
                 //TempData["CheckedStudent"] = checkedStudentId;
@@ -830,12 +680,16 @@ namespace ActiveLearning.Web.Controllers
             }
         }
 
-
-        // POST: ManageCourse/UpdateInstructorEnrolment
         //[HttpPost, ActionName("ManageInstructorEnrolment")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
         [CustomAuthorize(Roles = Constants.Admin)]
         public ActionResult UpdateInstructorEnrolment(IList<Instructor> instructor)
         {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
             string message = string.Empty;
             var instructorEnrol = TempData["EntrolInstructor"] as List<Instructor>;
             int courseId = Convert.ToInt32(TempData["CourseId"]);
@@ -844,20 +698,17 @@ namespace ActiveLearning.Web.Controllers
                 instructorEnrol[i].HasEnrolled = instructor[i].HasEnrolled;
             }
 
-            using (var enrolInstructor= new CourseManager())
+            using (var enrolInstructor = new CourseManager())
             {
                 if (enrolInstructor.UpdateInstructorsCourseEnrolmentByHasEnrolledIndicator(instructorEnrol, courseId, out message))
                 {
-                    
-                    ViewBag.Message = message;
-                    return RedirectToAction("ManageInstructorEnrolment", new { id = courseId });
+                    SetMessage(Constants.ValueSuccessfuly(Constants.Instructor_Course_Enrolment));
                 }
-                return View();
+                SetError(message);
+                return RedirectToAction("ManageInstructorEnrolment", new { id = courseId });
             }
+
         }
-
-
+        #endregion
     }
-
-    #endregion
 }

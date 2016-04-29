@@ -21,7 +21,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Index()
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -34,7 +34,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult CourseList()
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -52,7 +52,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Chat(int courseSid)
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -84,7 +84,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Quiz(int courseSid)
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -103,7 +103,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Content(int courseSid)
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -129,7 +129,7 @@ namespace ActiveLearning.Web.Controllers
         [CustomAuthorize(Roles = Business.Common.Constants.User_Role_Student_Code)]
         public ActionResult Download(int courseSid, int contentSid, string originalFileName)
         {
-            if (GetLoginUser() == null)
+            if (!IsUserAuthenticated())
             {
                 return RedirectToLogin();
             }
@@ -157,7 +157,6 @@ namespace ActiveLearning.Web.Controllers
             }
             if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_Video))
             {
-
                 ViewBag.VideoPath = filepath;
                 return View("Video");
             }

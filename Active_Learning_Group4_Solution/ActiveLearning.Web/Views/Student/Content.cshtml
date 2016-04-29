@@ -7,11 +7,9 @@
 
 <h2>Content List</h2>
 
-@if (Model == null || Model.Count() == 0)
-{
-    <label class="alert-info center-block text-center" style="margin-top:100px">@Constants.ThereIsNoValueFound(Constants.Content)</label>
-}
-else
+@Html.Partial("_MessageBoxPartial")
+
+@if (Model != null && Model.Count() > 0)
 {
     using (Html.BeginForm("Download", "Student", FormMethod.Post))
     {
