@@ -6,10 +6,15 @@
 
 <h2>Edit Quiz Option</h2>
 
+@Html.Partial("_MessageBoxPartial")
+
+@if (Model != null)
+{
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>QuizOption</h4>
         <hr />
@@ -47,3 +52,4 @@
 <div>
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>
+}
