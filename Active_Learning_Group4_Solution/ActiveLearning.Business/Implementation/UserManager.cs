@@ -426,7 +426,7 @@ namespace ActiveLearning.Business.Implementation
             if (student == null || student.User == null)
             {
                 message = Constants.PleaseFillInAllRequiredFields();
-               // message = Constants.ValueIsEmpty(Constants.Student);
+                // message = Constants.ValueIsEmpty(Constants.Student);
                 return false;
             }
             if (string.IsNullOrEmpty(student.User.Username) || string.IsNullOrEmpty(student.User.Username.Trim()))
@@ -605,6 +605,58 @@ namespace ActiveLearning.Business.Implementation
                 ExceptionLog(ex);
                 message = Constants.OperationFailedDuringDeletingValue(Constants.Student);
                 return false;
+            }
+        }
+        public bool ChangePassword(User user, string oldPass, string newPass, string newPassConfirm, out string message)
+        {
+            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Username))
+            {
+                message = Constants.ValueIsEmpty(Constants.Student);
+                return false;
+            }
+            if (string.IsNullOrEmpty(oldPass))
+            {
+                message = Constants.PleaseEnterValue("Old Password");
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(newPass.Trim()))
+            {
+                message =Constants.PleaseEnterValue("New Password");
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPassConfirm) || string.IsNullOrEmpty(newPassConfirm.Trim()))
+            {
+                message = Constants.PleaseEnterValue("Confirmed New Password");
+                return false;
+            }
+            if (!newPass.Trim().Equals(newPassConfirm, StringComparison.CurrentCultureIgnoreCase))
+            {
+                message = "Please confirm new password";
+                return false;
+            }
+            var existingUser = IsAuthenticated(user.Username, oldPass, out message);
+            if (existingUser == null)
+            {
+                message = Constants.Invalid_Password;
+                return false;
+            }
+            string newPassHash = Util.CreateHash(newPass, user.PasswordSalt);
+
+            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+            {
+                try
+                {
+                    unitOfWork.Users.Get(user.Sid).Password = newPassHash;
+                    unitOfWork.Users.Get(user.Sid).UpdateDT = DateTime.Now;
+                    unitOfWork.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringSavingValue(Constants.Password);
+                    return false;
+                }
             }
         }
         #endregion

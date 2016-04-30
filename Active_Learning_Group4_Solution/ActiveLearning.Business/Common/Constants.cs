@@ -64,6 +64,7 @@ namespace ActiveLearning.Business.Common
         public const string Upload = "Upload";
 
         public const string Invalid_Username_Or_Password = "Invalid Username or Password";
+        public const string Invalid_Password = "Invalid Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
 
