@@ -27,6 +27,8 @@ namespace ActiveLearning.Web.Controllers
         }
         #endregion
 
+       
+
         #region Course
         [OutputCache(Duration = Cache_Length)]
         public ActionResult CourseList()
@@ -218,6 +220,7 @@ namespace ActiveLearning.Web.Controllers
             if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_Video))
             {
                 ViewBag.VideoPath = filepath;
+                SetBackURL("ManageContent?courseSid=" + courseSid);
                 return View("Video");
             }
             else if (fileType.Equals(ActiveLearning.Business.Common.Constants.Content_Type_File))

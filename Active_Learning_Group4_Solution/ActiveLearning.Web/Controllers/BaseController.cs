@@ -223,10 +223,52 @@ namespace ActiveLearning.Web.Controllers
         {
             HttpContext.Request.Cookies.Clear();
             HttpContext.Response.Cookies.Clear();
+            string error = TempDataError;
+            string message = TempDataMessage;
             TempData.Clear();
+            SetTempDataError(error);
+            SetTempDataMessage(message);
             Session.Clear();
         }
 
+        #endregion
+
+        #region Profile
+        public ActionResult ChangePassword()
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            var user = GetLoginUser();
+            user.Password = string.Empty;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPass, string newPass, string newPassConfirm)
+        {
+            var user = GetLoginUser();
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            string message = string.Empty;
+            using (var userManager = new UserManager())
+            {
+                if (!userManager.ChangePassword(user, oldPass, newPass, newPassConfirm, out message))//(GetLoginUser().Username, oldPass, out message) == null)
+                {
+                    SetViewBagError(message);
+                    return View();
+                }
+                else
+                {
+                    SetTempDataMessage((Business.Common.Constants.ValueIsSuccessful("Password has been changed") + ". Please login using the new password"));
+                    return RedirectToLogin();
+                }
+            }
+        }
         #endregion
 
         #region log

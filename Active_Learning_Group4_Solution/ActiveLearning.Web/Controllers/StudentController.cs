@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using ActiveLearning.Business.Implementation;
+using ActiveLearning.Business.Common;
 using ActiveLearning.DB;
 using System.Linq;
 using ActiveLearning.Web.Filter;

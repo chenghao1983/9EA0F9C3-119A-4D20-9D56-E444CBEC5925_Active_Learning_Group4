@@ -204,7 +204,7 @@ namespace ActiveLearning.Web.Controllers
             string message = string.Empty;
             using (var userManager = new UserManager())
             {
-                var listInstructor = userManager.GetAllActiveInstructor(out message);
+                var listInstructor = userManager.GetAllInstructor(out message);
                 GetErrorAneMessage();
                 return View(listInstructor);
             }

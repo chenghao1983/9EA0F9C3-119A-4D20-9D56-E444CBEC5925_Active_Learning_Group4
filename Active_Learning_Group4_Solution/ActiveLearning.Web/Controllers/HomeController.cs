@@ -28,6 +28,7 @@ namespace ActiveLearning.Web.Controllers
         public ActionResult Login()
         {
             LogUserOut();
+            GetErrorAneMessage();
             return View();
         }
 
@@ -58,6 +59,7 @@ namespace ActiveLearning.Web.Controllers
                     }
                 }
                 SetViewBagError(message);
+                
                 return result;
             }
         }
