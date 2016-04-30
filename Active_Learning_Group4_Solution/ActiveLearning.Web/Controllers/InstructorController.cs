@@ -255,6 +255,7 @@ namespace ActiveLearning.Web.Controllers
                 TempData.Keep("cid");
                 //TempData.Peek("cid");
                 SetBackURL("courselist");
+                GetErrorAneMessage();
                 return View(listQuiz);
             }
 
@@ -266,6 +267,15 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
+
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
+            SetBackURL("ManageQuiz?coursesid=" + courseSid);
             return View();
         }
 
@@ -279,7 +289,7 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int courseSid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
 
             string message = string.Empty;
             if (!HasAccessToCourse(courseSid, out message))
@@ -307,11 +317,13 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
+
             string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
 
             using (var quizManager = new QuizManager())
             {
@@ -320,7 +332,7 @@ namespace ActiveLearning.Web.Controllers
                 {
                     SetViewBagError(message);
                 }
-                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
+                SetBackURL("ManageQuiz?coursesid=" + courseSid);
                 return View(quizQuesion);
             }
         }
@@ -334,7 +346,7 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int courseSid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
             string message = string.Empty;
             using (var deleteQuiz = new QuizManager())
             {
@@ -346,7 +358,9 @@ namespace ActiveLearning.Web.Controllers
                 else
                 {
                     SetTempDataError(message);
+                    return View(quizQuestion);
                 }
+                SetBackURL("ManageQuiz?coursesid=" + courseSid);
                 return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             };
         }
@@ -358,21 +372,24 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
+
             string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
 
             using (var getQuizQuestion = new QuizManager())
             {
                 QuizQuestion quizQuesion = getQuizQuestion.GetQuizQuestionByQuizQuestionSid(quizQuestionSid, out message);
                 if (quizQuesion == null)
                 {
+                    SetBackURL("managequiz?coursesid=" + courseSid);
                     SetViewBagError(message);
                 }
                 TempData["QuizQuesion"] = quizQuesion;
-                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
+                SetBackURL("managequiz?coursesid=" + courseSid);
                 return View(quizQuesion);
             };
         }
@@ -387,14 +404,14 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int courseSid = Convert.ToInt32(TempData["cid"]);
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
             string message = string.Empty;
             if (!HasAccessToCourse(courseSid, out message))
             {
                 return RedirectToError(message);
             }
 
-            var quizQusToUpdate = TempData["QuizQuesion"] as QuizQuestion;
+            var quizQusToUpdate = TempData.Peek("QuizQuesion") as QuizQuestion;
             quizQusToUpdate.Title = quizQuestion.Title;
 
             using (var updateQus = new QuizManager())
@@ -402,11 +419,12 @@ namespace ActiveLearning.Web.Controllers
                 if (updateQus.UpdateQuizQuestion(quizQusToUpdate, out message))
                 {
                     SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Question has been updated"));
-
                 }
                 else
                 {
-                    SetTempDataError(message);
+                    SetViewBagError(message);
+                    SetBackURL("managequiz?coursesid=" + courseSid);
+                    return View(quizQusToUpdate);
                 }
                 return RedirectToAction("ManageQuiz", new { courseSid = courseSid });
             }
@@ -425,6 +443,7 @@ namespace ActiveLearning.Web.Controllers
             }
             using (var quizManager = new QuizManager())
             {
+                SetBackURL("courselist");
                 return View(await quizManager.GenerateStatistics(courseSid));
             }
         }
@@ -438,11 +457,12 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
             string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
 
             using (var quizManager = new QuizManager())
             {
@@ -455,12 +475,12 @@ namespace ActiveLearning.Web.Controllers
                 TempData.Keep("quizQuestionSid");
 
                 //TempData.Peek("cid");
-                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
+                SetBackURL("managequiz?coursesid=" + courseSid);
+                GetErrorAneMessage();
                 return View(listOption);
             }
 
         }
-
 
         // GET: ManageOption/CreateQuizOption
         [OutputCache(NoStore = true, Duration = 0)]
@@ -470,6 +490,15 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
+
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
+            SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
             return View();
         }
 
@@ -482,20 +511,20 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
-
-            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
-
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
             string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
 
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
             using (var quizManager = new QuizManager())
             {
                 if (quizManager.AddQuizOptionToQuizQuestion(quizOption, quizQuestionSid, out message) == null)
                 {
                     SetViewBagError(message);
+                    SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
                     return View();
                 }
             }
@@ -510,12 +539,14 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
-            string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
 
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
             using (var quizManager = new QuizManager())
             {
                 QuizOption quizOption = quizManager.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
@@ -523,6 +554,7 @@ namespace ActiveLearning.Web.Controllers
                 {
                     SetViewBagError(message);
                 }
+                SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
                 return View(quizOption);
             }
         }
@@ -536,9 +568,15 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
 
-            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
             string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
             using (var deleteOption = new QuizManager())
             {
                 QuizOption quizOption = deleteOption.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
@@ -548,7 +586,9 @@ namespace ActiveLearning.Web.Controllers
                 }
                 else
                 {
-                    SetTempDataError(message);
+                    SetViewBagError(message);
+                    SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
+                    return View(quizOption);
                 }
                 return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
             };
@@ -561,9 +601,14 @@ namespace ActiveLearning.Web.Controllers
             {
                 return RedirectToLogin();
             }
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
 
             string message = string.Empty;
-
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
             using (var getQuizOption = new QuizManager())
             {
                 QuizOption quizOption = getQuizOption.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
@@ -572,7 +617,7 @@ namespace ActiveLearning.Web.Controllers
                     SetViewBagError(message);
                 }
                 TempData["QuizOption"] = quizOption;
-                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
+                SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
                 return View(quizOption);
             };
         }
@@ -588,14 +633,17 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToLogin();
             }
 
-            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
-            string message = string.Empty;
-            //if (!HasAccessToCourse(courseSid, out message))
-            //{
-            //    return RedirectToError(message);
-            //}
+            int courseSid = Convert.ToInt32(TempData.Peek("cid"));
 
-            var quizOptToUpdate = TempData["QuizOption"] as QuizOption;
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+
+            int quizQuestionSid = Convert.ToInt32(TempData.Peek("quizQuestionSid"));
+
+            var quizOptToUpdate = TempData.Peek("QuizOption") as QuizOption;
             quizOptToUpdate.Title = quizOption.Title;
 
             quizOptToUpdate.IsCorrect = quizOption.IsCorrect;
@@ -609,7 +657,9 @@ namespace ActiveLearning.Web.Controllers
                 }
                 else
                 {
-                    SetTempDataError(message);
+                    SetViewBagError(message);
+                    SetBackURL("ManageOption?quizQuestionSid=" + quizQuestionSid);
+                    return View(quizOptToUpdate);
                 }
                 return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
             }

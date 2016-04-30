@@ -304,6 +304,7 @@
     <Content Include="Views\Instructor\CreateQuizOption.cshtml" />
     <Content Include="Views\Instructor\DeleteQuizOption.cshtml" />
     <Content Include="Views\Instructor\ManageOption.cshtml" />
+    <Content Include="Views\Instructor\EditQuizOption.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
