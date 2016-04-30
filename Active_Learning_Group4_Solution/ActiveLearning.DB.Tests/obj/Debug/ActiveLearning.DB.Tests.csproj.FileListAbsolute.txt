@@ -10,3 +10,16 @@ C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Lea
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.csprojResolveAssemblyReference.cache
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.dll
 C:\Users\sheng kiat\Source\Repos\9EA0F9C3-119A-4D20-9D56-E444CBEC5925_Active_Learning_Group4\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.pdb
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\ActiveLearning.DB.Tests.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\ActiveLearning.DB.Tests.pdb
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\ActiveLearning.DB.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\EntityFramework.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\ActiveLearning.DB.pdb
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\EntityFramework.xml
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.csprojResolveAssemblyReference.cache
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.dll
+D:\Workspace\Active_Learning_Group4\trunk\Active_Learning_Group4_Solution\ActiveLearning.DB.Tests\obj\Debug\ActiveLearning.DB.Tests.pdb

@@ -31,7 +31,7 @@ namespace ActiveLearning.Business.Mock
 
         public void Dispose()
         {
-            
+
         }
 
         #region Course Mock Data
@@ -57,10 +57,15 @@ namespace ActiveLearning.Business.Mock
             message = string.Empty;
             try
             {
-                return MockCourses as IEnumerable<Course>;
+                var mock = MockCourses as IEnumerable<Course>;
+                if (mock == null || mock.Count() == 0)
+                {
+                    message = Constants.ValueNotFound(Constants.Course);
+                }
+                return mock;
             }
             catch (Exception ex)
-            {            
+            {
                 message = Constants.OperationFailedDuringRetrievingValue(Constants.Course);
                 return null;
             }

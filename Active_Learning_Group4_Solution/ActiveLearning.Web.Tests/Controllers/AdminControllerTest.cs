@@ -43,12 +43,13 @@ namespace ActiveLearning.Web.Tests.Controllers
                 {
                     Sid = 1,
                      CourseName = "Andy Lau"
-
+                    ,CreateDT= DateTime.Now
                 },
                 new Course()
                 {
-                    Sid = 1,
+                    Sid = 2,
                      CourseName = "Donnie Yen"
+                     ,CreateDT= DateTime.Now
                 }
             }).AsQueryable();
 
@@ -71,7 +72,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.ManageCourse();
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == "The List is empty !");
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.ValueNotFound(Constants.Course));
         }
 
         [TestMethod]
@@ -97,7 +98,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.CreateCourse(null);
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.ValueIsEmpty(Constants.Course));
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.ValueIsEmpty(Constants.Course));
         }
 
         [TestMethod]
@@ -110,7 +111,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.CreateCourse(new Course());
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Course));
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Course));
         }
 
         [TestMethod]
@@ -150,7 +151,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.ManageStudent();
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == "The List is empty !");
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.ThereIsNoValueFound(Constants.Student));
         }
 
         [TestMethod]
@@ -176,7 +177,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.CreateStudent(null);
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.ValueIsEmpty(Constants.Student));
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.ValueIsEmpty(Constants.Student));
         }
 
         [TestMethod]
@@ -189,7 +190,7 @@ namespace ActiveLearning.Web.Tests.Controllers
             var view = (ViewResult)_controller.CreateStudent(new Student());
 
             // Assert  
-            Assert.IsTrue(view.ViewData["Message"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Student));
+            Assert.IsTrue(view.ViewData["Error"].ToString() == Constants.OperationFailedDuringAddingValue(Constants.Student));
         }
 
     }

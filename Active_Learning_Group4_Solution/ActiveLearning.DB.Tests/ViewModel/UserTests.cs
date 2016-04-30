@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ActiveLearning.DB.Tests.ViewModel
@@ -13,6 +14,10 @@ namespace ActiveLearning.DB.Tests.ViewModel
 
             model.Username = "Andy Lau";
             model.Password = "Tony Chiu";
+            model.FullName = "Andy Lau";
+            model.CreateDT = DateTime.Now;
+            model.Role = "S";
+
 
             TestModelHelper.ValidateObject(model);
         }
@@ -40,6 +45,9 @@ namespace ActiveLearning.DB.Tests.ViewModel
                 var model = new ActiveLearning.DB.User();
 
                 model.Username = "Andy Lau";
+                model.FullName = "Andy Lau";
+                model.CreateDT = DateTime.Now;
+                model.Role = "S";
 
                 TestModelHelper.ValidateObject(model);
             }

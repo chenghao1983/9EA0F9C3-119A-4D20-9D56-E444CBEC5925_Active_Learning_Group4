@@ -30,6 +30,14 @@ namespace ActiveLearning.Web.Controllers
         {
             _CourseManagerfactory = _courseFactory;
             _UserManagerfactory = _userFactory;
+            User user = new DB.User();
+            user.Sid = 1;
+            user.CreateDT = DateTime.Parse("2015-01-01");
+            user.Role = "A";
+            user.Username = "Bruce";
+            user.FullName = "Bruce Lee";
+            user.Admins.Add(new Admin { Sid=1, UserSid = 1});
+            LogUserIn(user);
         }
 
         public ActionResult Index()
@@ -428,6 +436,10 @@ namespace ActiveLearning.Web.Controllers
             {
                 var listStudent = userManager.GetAllStudent(out message);
                 GetErrorAneMessage();
+                if (listStudent == null)
+                {
+                    SetViewBagError(message);
+                }
                 return View(listStudent);
             }
         }

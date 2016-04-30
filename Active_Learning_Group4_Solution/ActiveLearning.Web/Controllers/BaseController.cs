@@ -194,19 +194,26 @@ namespace ActiveLearning.Web.Controllers
         ClaimsIdentity identity;
         public void LogUserIn(User user)
         {
-            claims.Add(new Claim(ClaimTypes.PrimarySid, user.Sid.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.FullName));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Username));
-            claims.Add(new Claim(ClaimTypes.Role, user.Role));
-
-            identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+            try
             {
-                //ExpiresUtc = DateTime.UtcNow.(200),
-                IsPersistent = true
-            }, identity);
+                claims.Add(new Claim(ClaimTypes.PrimarySid, user.Sid.ToString()));
+                claims.Add(new Claim(ClaimTypes.Name, user.FullName));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Username));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role));
 
+                identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+                {
+                    //ExpiresUtc = DateTime.UtcNow.(200),
+                    IsPersistent = true
+                }, identity);
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                //throw;
+            }
 
             if (Session != null)
                 Session[UserSessionParam] = user;
