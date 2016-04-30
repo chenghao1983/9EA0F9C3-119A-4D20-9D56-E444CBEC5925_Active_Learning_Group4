@@ -359,7 +359,7 @@ namespace ActiveLearning.Business.Implementation
             {
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
-                    var quizOptionToUpdate = unitOfWork.QuizOptions.Get(quizOption.Sid);
+                    var quizOptionToUpdate = unitOfWork.QuizOptions.GetAll().Where(a=> a.QuizQuestionSid == quizOption.Sid).FirstOrDefault();
                     Util.CopyNonNullProperty(quizOption, quizOptionToUpdate);
                     quizOptionToUpdate.UpdateDT = DateTime.Now;
 
