@@ -553,6 +553,67 @@ namespace ActiveLearning.Web.Controllers
                 return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
             };
         }
+
+
+        public ActionResult EditQuizOption(int quizOptionSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            string message = string.Empty;
+
+            using (var getQuizOption = new QuizManager())
+            {
+                QuizOption quizOption = getQuizOption.GetQuizOptionByQuizOptionSid(quizOptionSid, out message);
+                if (quizOption == null)
+                {
+                    SetViewBagError(message);
+                }
+                TempData["QuizOption"] = quizOption;
+                //SetBackURL("ManageQuiz?coursesid=" + courseSid);
+                return View(quizOption);
+            };
+        }
+
+
+        [HttpPost, ActionName("EditQuizOption")]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult updateQuizOpt(QuizOption quizOption)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+
+            int quizQuestionSid = Convert.ToInt32(TempData["quizQuestionSid"]);
+            string message = string.Empty;
+            //if (!HasAccessToCourse(courseSid, out message))
+            //{
+            //    return RedirectToError(message);
+            //}
+
+            var quizOptToUpdate = TempData["QuizOption"] as QuizOption;
+            quizOptToUpdate.Title = quizOption.Title;
+
+            quizOptToUpdate.IsCorrect = quizOption.IsCorrect;
+
+            using (var updateOpt = new QuizManager())
+            {
+                if (updateOpt.UpdateQuizOption(quizOptToUpdate, out message))
+                {
+                    SetTempDataMessage(Business.Common.Constants.ValueIsSuccessful("Quiz Option has been updated"));
+
+                }
+                else
+                {
+                    SetTempDataError(message);
+                }
+                return RedirectToAction("ManageOption", new { quizQuestionSid = quizQuestionSid });
+            }
+        }
         #endregion
     }
 }
