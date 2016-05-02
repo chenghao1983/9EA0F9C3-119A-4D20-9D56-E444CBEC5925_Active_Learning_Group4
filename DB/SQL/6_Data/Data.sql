@@ -24,13 +24,13 @@ INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [Cre
 GO
 INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (4, N'Instructor3', N'oa2koZYg8TLrW4qUfykT7ilKoTgL4lEy', 'Tom Cruise', 1, CAST(N'2016-04-13 23:18:59.883' AS DateTime), NULL, NULL, N'I',N'hTJOxnbQmKLChQqOwKBv6s6BCRrE2riL ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Instructor4', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', 'Walker Smith', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (5, N'Instructor4', N'TFQv51wShe7p5Mxinu6wEm66j7eK8AmT', 'Walker Smith', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'i2k7XSN+Gi8kDpq9feHX2H7zMjVx4dGR ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (6, N'Instructor5', N'g1F5dl6j/L8eidvFTwCQ2upXAssmyOUd', 'Celestino Douglas', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (6, N'Instructor5', N'NSr+4maxT00PDMoKNGuJ4xWo+4OoCQpe', 'Celestino Douglas', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'Luni0t7I0MCTOMbt8n0bpuQUpAAIgfdh ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (7, N'Instructor6', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', 'Alexandros Hafiz', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (7, N'Instructor6', N'6yG3xPGAdpnlCy1UlodH4GGhNw5yEX08', 'Alexandros Hafiz', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'cxxx/Zd2AKXaUaNAze+t20MF+gCnbMFZ ')
 GO
-INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (8, N'Instructor7', N'JlZ0WHX4WWV9Kt6yN+pCRXt7tjpqcojP', 'Dimas Channing', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ')
+INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (8, N'Instructor7', N'TmHNU5R0Fpw5INQrazI/PQA+7zy5iVta', 'Dimas Channing', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'xnnwmyxMXSfQtcUpnSHceSMTlJZ+VdDO ')
 GO
 INSERT [dbo].[User] ([Sid], [Username], [Password], [FullName], [IsActive], [CreateDT], [UpdateDT], [DeleteDT], [Role], [PasswordSalt]) VALUES (9, N'Instructor8', N'm9Z8my2Kx0tAaEpWOJ3CDki2oua8bDgO', 'Codie Lucinda', 1, CAST(N'2016-04-13 23:21:00.933' AS DateTime), NULL, NULL, N'I',N'VklxCbwR/oHKBRV6npO0VmbAvbR46Sd/ ')
 GO
