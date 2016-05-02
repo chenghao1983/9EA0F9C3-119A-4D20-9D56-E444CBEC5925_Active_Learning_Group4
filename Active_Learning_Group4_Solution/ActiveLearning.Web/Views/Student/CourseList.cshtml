@@ -22,12 +22,8 @@
                 @Html.DisplayNameFor(model => model.UpdateDT)
             </th>
             <th>
-
+                Action
             </th>
-            <th>
-                &nbsp;
-            </th>
-
         </tr>
 
         @foreach (var item in Model)
@@ -42,7 +38,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UpdateDT)
                 </td>
-
                 <td>
                     @Html.ActionLink("Chat", "Chat", new { courseSid = item.Sid })
                     &nbsp; | &nbsp; @Html.ActionLink("Quiz", "Quiz", new { courseSid = item.Sid })

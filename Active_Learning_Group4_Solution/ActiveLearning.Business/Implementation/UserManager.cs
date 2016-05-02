@@ -63,6 +63,11 @@ namespace ActiveLearning.Business.Implementation
                 message = Constants.ValueIsEmpty(Constants.Password);
                 return null;
             }
+            if (!Util.IsPasswordComplex(user.Password))
+            {
+                message = Constants.PasswordTooSimple;
+                return null;
+            }
             try
             {
                 string salt = Util.GenerateSalt();
@@ -120,7 +125,7 @@ namespace ActiveLearning.Business.Implementation
                             messge = Constants.Invalid_Username_Or_Password;
                             return authenticatedUser;
                         }
-                        InfoLog(Constants.User + " : " + user.Username + " " + Constants.Authenticated);
+                        //InfoLog(Constants.User + " : " + user.Username + " " + Constants.Authenticated);
                         switch (user.Role)
                         {
                             case Constants.User_Role_Student_Code:
@@ -245,6 +250,63 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
 
+        }
+        public bool ChangePassword(User user, string oldPass, string newPass, string newPassConfirm, out string message)
+        {
+            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Username))
+            {
+                message = Constants.ValueIsEmpty(Constants.Student);
+                return false;
+            }
+            if (string.IsNullOrEmpty(oldPass))
+            {
+                message = Constants.PleaseEnterValue("Old Password");
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(newPass.Trim()))
+            {
+                message = Constants.PleaseEnterValue("New Password");
+                return false;
+            }
+            if (string.IsNullOrEmpty(newPassConfirm) || string.IsNullOrEmpty(newPassConfirm.Trim()))
+            {
+                message = Constants.PleaseEnterValue("Confirmed New Password");
+                return false;
+            }
+            if (!newPass.Trim().Equals(newPassConfirm, StringComparison.CurrentCultureIgnoreCase))
+            {
+                message = Constants.PleaseConfirmValue("new password");
+                return false;
+            }
+            if (!Util.IsPasswordComplex(newPass))
+            {
+                message = Constants.PasswordTooSimple;
+                return false;
+            }
+            var existingUser = IsAuthenticated(user.Username, oldPass, out message);
+            if (existingUser == null)
+            {
+                message = Constants.Invalid_Password;
+                return false;
+            }
+            string newPassHash = Util.CreateHash(newPass, user.PasswordSalt);
+
+            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+            {
+                try
+                {
+                    unitOfWork.Users.Get(user.Sid).Password = newPassHash;
+                    unitOfWork.Users.Get(user.Sid).UpdateDT = DateTime.Now;
+                    unitOfWork.Complete();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLog(ex);
+                    message = Constants.OperationFailedDuringSavingValue(Constants.Password);
+                    return false;
+                }
+            }
         }
         #endregion
 
@@ -458,6 +520,11 @@ namespace ActiveLearning.Business.Implementation
                     Util.CopyNonNullProperty(student.User, userToUpdate);
                     userToUpdate.UpdateDT = DateTime.Now;
                     if (userToUpdate.Password != null) userToUpdate.Password = userToUpdate.Password.Trim();
+                    if (!Util.IsPasswordComplex(userToUpdate.Password))
+                    {
+                        message = Constants.PasswordTooSimple;
+                        return false;
+                    }
                     if (!string.IsNullOrEmpty(userToUpdate.Password))
                     {
                         userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
@@ -607,58 +674,7 @@ namespace ActiveLearning.Business.Implementation
                 return false;
             }
         }
-        public bool ChangePassword(User user, string oldPass, string newPass, string newPassConfirm, out string message)
-        {
-            if (user == null || user.Sid == 0 || string.IsNullOrEmpty(user.Username))
-            {
-                message = Constants.ValueIsEmpty(Constants.Student);
-                return false;
-            }
-            if (string.IsNullOrEmpty(oldPass))
-            {
-                message = Constants.PleaseEnterValue("Old Password");
-                return false;
-            }
-            if (string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(newPass.Trim()))
-            {
-                message =Constants.PleaseEnterValue("New Password");
-                return false;
-            }
-            if (string.IsNullOrEmpty(newPassConfirm) || string.IsNullOrEmpty(newPassConfirm.Trim()))
-            {
-                message = Constants.PleaseEnterValue("Confirmed New Password");
-                return false;
-            }
-            if (!newPass.Trim().Equals(newPassConfirm, StringComparison.CurrentCultureIgnoreCase))
-            {
-                message = "Please confirm new password";
-                return false;
-            }
-            var existingUser = IsAuthenticated(user.Username, oldPass, out message);
-            if (existingUser == null)
-            {
-                message = Constants.Invalid_Password;
-                return false;
-            }
-            string newPassHash = Util.CreateHash(newPass, user.PasswordSalt);
 
-            using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
-            {
-                try
-                {
-                    unitOfWork.Users.Get(user.Sid).Password = newPassHash;
-                    unitOfWork.Users.Get(user.Sid).UpdateDT = DateTime.Now;
-                    unitOfWork.Complete();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    ExceptionLog(ex);
-                    message = Constants.OperationFailedDuringSavingValue(Constants.Password);
-                    return false;
-                }
-            }
-        }
         #endregion
 
         #region Instructor
@@ -870,12 +886,17 @@ namespace ActiveLearning.Business.Implementation
                     {
                         instructor.User.UpdateDT = DateTime.Now;
                         Util.CopyNonNullProperty(instructor, unitOfWork.Instructors.Get(instructor.Sid));
-                        var instructorToUpdate = unitOfWork.Users.Get(instructor.User.Sid);
-                        Util.CopyNonNullProperty(instructor.User, instructorToUpdate);
-                        if (instructorToUpdate.Password != null) instructorToUpdate.Password = instructorToUpdate.Password.Trim();
-                        if (!string.IsNullOrEmpty(instructorToUpdate.Password))
+                        var userToUpdate = unitOfWork.Users.Get(instructor.User.Sid);
+                        Util.CopyNonNullProperty(instructor.User, userToUpdate);
+                        if (userToUpdate.Password != null) userToUpdate.Password = userToUpdate.Password.Trim();
+                        if (!Util.IsPasswordComplex(userToUpdate.Password))
                         {
-                            instructorToUpdate.Password = Util.CreateHash(instructorToUpdate.Password, instructorToUpdate.PasswordSalt);
+                            message = Constants.PasswordTooSimple;
+                            return false;
+                        }
+                        if (!string.IsNullOrEmpty(userToUpdate.Password))
+                        {
+                            userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
                         }
                         unitOfWork.Complete();
                         scope.Complete();
@@ -1198,11 +1219,17 @@ namespace ActiveLearning.Business.Implementation
                     {
                         admin.User.UpdateDT = DateTime.Now;
                         Util.CopyNonNullProperty(admin, unitOfWork.Admins.Get(admin.Sid));
-                        var adminToUpdate = unitOfWork.Users.Get(admin.User.Sid);
-                        Util.CopyNonNullProperty(admin.User, adminToUpdate);
-                        if (!string.IsNullOrEmpty(adminToUpdate.Password))
+                        var userToUpdate = unitOfWork.Users.Get(admin.User.Sid);
+                        Util.CopyNonNullProperty(admin.User, userToUpdate);
+                        if (userToUpdate.Password != null) userToUpdate.Password = userToUpdate.Password.Trim();
+                        if (!Util.IsPasswordComplex(userToUpdate.Password))
                         {
-                            adminToUpdate.Password = Util.CreateHash(adminToUpdate.Password, adminToUpdate.PasswordSalt);
+                            message = Constants.PasswordTooSimple;
+                            return false;
+                        }
+                        if (!string.IsNullOrEmpty(userToUpdate.Password))
+                        {
+                            userToUpdate.Password = Util.CreateHash(userToUpdate.Password, userToUpdate.PasswordSalt);
                         }
                         unitOfWork.Complete();
                         scope.Complete();

@@ -32,7 +32,7 @@
             @*<th>
                     @Html.DisplayNameFor(model => model.QuizQuestion.Title)
                 </th>*@
-            <th></th>
+            <th>Action</th>
         </tr>
 
         @foreach (var item in Model)
@@ -54,9 +54,9 @@
                         @Html.DisplayFor(modelItem => item.QuizQuestion.Title)
                     </td>*@
                 <td>
-                    @Html.ActionLink("Edit", "EditQuizOption", new { quizOptionSid = item.Sid }) |
+                    @Html.ActionLink("Edit", "EditQuizOption", new { quizOptionSid = item.Sid })
                     @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("Delete", "DeleteQuizOption", new { quizOptionSid = item.Sid })
+                    &nbsp; | &nbsp; @Html.ActionLink("Delete", "DeleteQuizOption", new { quizOptionSid = item.Sid })
                 </td>
             </tr>
         }

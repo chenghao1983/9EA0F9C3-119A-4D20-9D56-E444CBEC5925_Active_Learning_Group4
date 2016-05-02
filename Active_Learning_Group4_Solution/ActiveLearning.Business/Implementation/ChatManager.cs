@@ -77,6 +77,46 @@ namespace ActiveLearning.Business.Implementation
             message = string.Empty;
             return chats.Select(c => c.Sid).ToList();
         }
+        public IEnumerable<Chat> GetChatHistoryByCourseSid(int courseSid, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
+                {
+                    var chats = unitOfWork.Chats.Find(c => c.CourseSid == courseSid && !c.DeleteDT.HasValue).OrderBy(c => c.Sid).Take(Util.GetChatHistoryCount());
+
+                    if (chats == null || chats.Count() == 0)
+                    {
+                        message = Constants.ValueNotFound(Constants.Chat);
+                        return null;
+                    }
+                    using (var userManager = new UserManager())
+                    {
+                        foreach (Chat chat in chats)
+                        {
+                            if (chat.StudentSid.HasValue)
+                            {
+                                chat.Student = userManager.GetStudentByStudentSid(chat.StudentSid.Value, out message);
+                            }
+                            if(chat.InstructorSid.HasValue)
+                            {
+                                chat.Instructor = userManager.GetInstructorByInstructorSid(chat.InstructorSid.Value, out message);
+                            }
+                        }
+                    }
+
+                    message = string.Empty;
+                    return chats.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog(ex);
+                message = Constants.OperationFailedDuringRetrievingValue(Constants.Chat);
+                return null;
+            }
+        }
         public IEnumerable<Chat> GetChatsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message)
         {
             message = string.Empty;

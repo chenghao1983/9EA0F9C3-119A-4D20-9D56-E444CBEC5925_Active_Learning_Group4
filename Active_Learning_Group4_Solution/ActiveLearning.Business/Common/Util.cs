@@ -4,6 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using ActiveLearning.DB;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ActiveLearning.Business.Common
 {
@@ -96,12 +98,11 @@ namespace ActiveLearning.Business.Common
         #endregion
 
         #region Password Complexity
-        public bool IsPasswordComple(string password)
+        public static bool IsPasswordComplex(string plainPassword)
         {
-            string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string regexPattern = @"^(?=(.*\d){2})(?=.*[a-z]{2})(?=.*[A-Z]{2})(?=.*[^a-zA-Z\d]{2}).{8,}$";
 
-
-            return false;
+            return Regex.IsMatch(plainPassword, regexPattern);
         }
         #endregion
 
@@ -112,7 +113,7 @@ namespace ActiveLearning.Business.Common
             string defaultExtensions = ".mp4,.ppt,.pptx,.txt,.doc,.docx,.pdf,.xls,.xlsx";
             string key = "AllowedFileExtensions";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
-            return settings == null || settings.Length == 0 ? defaultExtensions : "." + settings[0].Replace(",", ",."); 
+            return settings == null || settings.Length == 0 ? defaultExtensions : "." + settings[0].Replace(",", ",.");
         }
         public static string GetVideoFormatsFromConfig()
         {
@@ -149,6 +150,33 @@ namespace ActiveLearning.Business.Common
             string key = "UploadPath";
             string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
             return settings == null || settings.Length == 0 ? defaultFolder : settings[0];
+        }
+        #endregion
+
+        #region Chat
+
+
+        public static int GetChatHistoryCount()
+        {
+            int defaultChatHistoryCount = 100;
+            string key = "ChatHistoryCount";
+            string[] settings = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues(key);
+            if (settings == null || settings.Length == 0)
+            {
+                return defaultChatHistoryCount;
+            }
+            else
+            {
+                int chatHistoryCount = 0;
+                if (int.TryParse(settings[0], out chatHistoryCount))
+                {
+                    return chatHistoryCount;
+                }
+                else
+                {
+                    return defaultChatHistoryCount;
+                }
+            }
         }
         #endregion
 

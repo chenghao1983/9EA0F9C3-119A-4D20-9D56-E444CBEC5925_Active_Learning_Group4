@@ -15,7 +15,7 @@ namespace ActiveLearning.Business.Interface
         User IsAuthenticated(string userName, string password, out string message);
         User IsAuthenticated(User user, out string message);
         bool HasAccessToCourse(User user, int courseSid, out string message);
-
+        bool ChangePassword(User user, string oldPass, string newPass, string newPassConfirm, out string message);
         #endregion
 
         #region Student

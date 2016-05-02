@@ -32,7 +32,7 @@ namespace ActiveLearning.Business.SignalRHub
                     BaseManager.ExceptionLog(ex);
                 }
             }
-            Clients.Group(courseSid.ToString()).addNewMessageToPage(Context.User.Identity.Name, message);
+            Clients.Group(courseSid.ToString()).addNewMessageToPage(studentSid, Context.User.Identity.Name, message);
         }
 
 

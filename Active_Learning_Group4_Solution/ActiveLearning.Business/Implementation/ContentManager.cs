@@ -108,7 +108,7 @@ namespace ActiveLearning.Business.Implementation
 
             if (!allowedFileExtension.Contains(fileExtension))
             {
-                message = Constants.ValueNotAllowed(Constants.FileExtension + ": " + fileExtension);
+                message = Constants.OnlyValueAllowed(allowedFileExtension.Replace(".", ""));
                 return null;
             }
 
@@ -190,7 +190,7 @@ namespace ActiveLearning.Business.Implementation
                 using (var unitOfWork = new UnitOfWork(new ActiveLearningContext()))
                 {
                     var content = unitOfWork.Contents.Get(contentSid);
-                    string path = controller.Server.MapPath( content.Path + content.FileName);
+                    string path = controller.Server.MapPath(content.Path + content.FileName);
                     File.Delete(path);
                     content.DeleteDT = DateTime.Now;
                     unitOfWork.Complete();

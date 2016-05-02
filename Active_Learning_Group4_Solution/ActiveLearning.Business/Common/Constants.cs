@@ -67,10 +67,15 @@ namespace ActiveLearning.Business.Common
         public const string Invalid_Password = "Invalid Password";
         public const string Authenticating_User = "Authenticating User ";
         public const string Authenticated = "Authenticated ";
+        public const string PasswordTooSimple = "Password must be a combination of at least 2 digits, 2 upper case letters, 2 lower case letters and 2 symbols";
 
         public static string ValueNotAllowed(string value)
         {
-            return  value + " is not allowed";
+            return value + " is not allowed";
+        }
+        public static string OnlyValueAllowed(string value)
+        {
+            return "Only " + value + " allowed";
         }
         public static string PleaseFillInAllRequiredFields()
         {
@@ -79,6 +84,10 @@ namespace ActiveLearning.Business.Common
         public static string PleaseEnterValue(string value)
         {
             return "Please enter " + value;
+        }
+        public static string PleaseConfirmValue(string value)
+        {
+            return "Please confirm " + value;
         }
         public static string UnknownValue(string value)
         {

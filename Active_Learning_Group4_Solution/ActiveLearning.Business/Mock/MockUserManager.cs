@@ -272,6 +272,11 @@ namespace ActiveLearning.Business.Mock
             throw new NotImplementedException();
         }
 
+        public bool ChangePassword(User user, string oldPass, string newPass, string newPassConfirm, out string message)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         #endregion

@@ -11,6 +11,7 @@ namespace ActiveLearning.Business.Interface
         Chat GetChatByChatSid(int chatSid, out string message);
         IEnumerable<Chat> GetChatsByCourseSid(int courseSid, out string message);
         IEnumerable<int> GetChatSidsByCourseSid(int courseSid, out string message);
+        IEnumerable<Chat> GetChatHistoryByCourseSid(int courseSid, out string message);
         IEnumerable<Chat> GetChatsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message);
         IEnumerable<int> GetChatSidsByStudentSidAndCourseSid(int studentSid, int courseSid, out string message);
         IEnumerable<Chat> GetChatsByInstructorSidAndCourseSid(int instructorSid, int courseSid, out string message);

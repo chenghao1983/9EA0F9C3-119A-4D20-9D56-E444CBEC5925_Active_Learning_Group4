@@ -26,7 +26,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.UpdateDT)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
 
         @foreach (var item in Model)
@@ -41,12 +41,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UpdateDT)
                 </td>
-
                 <td>
-                    @Html.ActionLink("Edit", "EditQuizQuestion", new { quizQuestionSid = item.Sid }) |
-                    @*@Html.ActionLink("Details", "Details", new { id=item.Sid }) |*@
-                    @Html.ActionLink("Delete", "DeleteQuizQuestion", new { quizQuestionSid = item.Sid })|
-                    @Html.ActionLink("ManageOption ", "ManageOption", new { quizQuestionSid = item.Sid })
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Edit", "EditQuizQuestion", new { quizQuestionSid = item.Sid })</li>
+                            <li>@Html.ActionLink("Delete", "DeleteQuizQuestion", new { quizQuestionSid = item.Sid })</li>
+                            <li>@Html.ActionLink("ManageOption ", "ManageOption", new { quizQuestionSid = item.Sid })</li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         }

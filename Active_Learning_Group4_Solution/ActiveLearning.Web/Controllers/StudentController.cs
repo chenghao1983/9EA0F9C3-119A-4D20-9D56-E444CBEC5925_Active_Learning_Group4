@@ -78,9 +78,15 @@ namespace ActiveLearning.Web.Controllers
                 //ExpiresUtc = DateTime.UtcNow.(200),
                 IsPersistent = true
             }, identity);
-            SetBackURL("courselist");
-            return View(courseSid);
 
+            using (var chatManager = new ChatManager())
+            {
+                var chatHistory = chatManager.GetChatHistoryByCourseSid(courseSid, out message);
+                ViewBag.CourseSid = courseSid;
+                ViewBag.StudentSid = GetLoginUser().Students.FirstOrDefault().Sid;
+                SetBackURL("courselist");
+                return View(chatHistory);
+            }
         }
         #endregion
 
