@@ -132,6 +132,8 @@ GO
 
 
 -- [dbo].[Course] --
+DELETE from [dbo].[Chat]
+GO
 DELETE from [dbo].[QuizOption]
 GO
 DELETE from [dbo].[QuizQuestion]
@@ -708,3 +710,41 @@ GO
 INSERT INTO [dbo].[Content] ([Sid], [CourseSid], [Type], [Path], [FileName], [OriginalFileName], [CreateDT], [UpdateDT], [DeleteDT]) VALUES(2, 1, 'V', '/Upload/', 'B2ADDC26-CBA3-4F78-AA45-57832EB2AF12.mp4', 'Interstellar Movie - Official Trailer 3.mp4', Getdate(), null,  null)
 GO
 SET IDENTITY_INSERT [dbo].[Content] OFF
+
+-- chat --
+
+SET IDENTITY_INSERT [dbo].[Chat] ON 
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (1, 1, 1, NULL, N'Hi', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (2, 1, 1, NULL, N'Hi there', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (3, 1, 1, NULL, N'Everything good ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (4, 7, 2, NULL, N'Hi', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (5, 6, 1, NULL, N'Hey', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (6, 6, 2, NULL, N'let''s talk', GETDATE(),  NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (7, 6, 1, NULL, N'what you would like to talk ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (8, 6, 2, NULL, N'how do you find this chat ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (9, 6, 2, NULL, N'good or not ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (10, 6, 1, NULL, N'I think so so ba', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (11, 6, 1, NULL, N'what you think ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (12, 6, 2, NULL, N'me a ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (13, 6, 2, NULL, N'no idea ...', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (14, 6, 1, NULL, N'alright ... bye', GETDATE() , NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Chat] OFF
+GO
+
+
+
