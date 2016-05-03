@@ -11,11 +11,11 @@ namespace ActiveLearning.Business.SignalRHub
 {
     public class ChatHub : Hub
     {
-        public void Send(int courseSid,string studentSid, string name, string message)
+        public void Send(int courseSid, string studentSid, string instructorSid, string name, string message)
         {
             // Call the addNewMessageToPage method to update clients.
             //Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
-            if(message ==null ||string.IsNullOrEmpty(message))
+            if (message == null || string.IsNullOrEmpty(message))
             {
                 message = "";
             }
@@ -24,20 +24,34 @@ namespace ActiveLearning.Business.SignalRHub
                 try
                 {
                     string msg = string.Empty;
-                    Chat chat = new Chat() { CourseSid = courseSid, CreateDT = DateTime.Now, Message = message, StudentSid = int.Parse(studentSid) };
-                    chatManager.AddStudentChatToCourse(chat, chat.StudentSid.Value, chat.CourseSid, out msg);
+                    Chat chat = new Chat()
+                    {
+                        CourseSid = courseSid,
+                        CreateDT = DateTime.Now,
+                        Message = message,
+                        StudentSid = string.IsNullOrEmpty(studentSid) ? null : int.Parse(studentSid) as int?,
+                        InstructorSid = string.IsNullOrEmpty(instructorSid) ? null : int.Parse(instructorSid) as int?
+                    };
+                    if (string.IsNullOrEmpty(instructorSid))
+                    {
+                        chatManager.AddStudentChatToCourse(chat, chat.StudentSid.Value, chat.CourseSid, out msg);
+                    }
+                    else if (string.IsNullOrEmpty(studentSid))
+                    {
+                        chatManager.AddInstructorChatToCourse(chat, chat.InstructorSid.Value, chat.CourseSid, out msg);
+                    }
                 }
                 catch (Exception ex)
                 {
                     BaseManager.ExceptionLog(ex);
                 }
             }
-            Clients.Group(courseSid.ToString()).addNewMessageToPage(studentSid, Context.User.Identity.Name, message);
+            Clients.Group(courseSid.ToString()).addNewMessageToPage(string.IsNullOrEmpty(studentSid) ? "Instructor" : "Student", studentSid, instructorSid, Context.User.Identity.Name, message);
         }
 
 
         public override Task OnConnected()
-       {
+        {
             string username = Context.User.Identity.Name;
 
             var identity = (ClaimsIdentity)Context.User.Identity;
@@ -48,7 +62,7 @@ namespace ActiveLearning.Business.SignalRHub
                 if (LiveChatHelper.ParseClaimsType(claim.Type) == "GroupSid")
                 {
 
-                   //LiveChatHelper.CourseID = claim.Value;
+                    //LiveChatHelper.CourseID = claim.Value;
                     Groups.Add(this.Context.ConnectionId, claim.Value);
                 }
             }
