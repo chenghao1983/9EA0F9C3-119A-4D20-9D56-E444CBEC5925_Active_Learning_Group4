@@ -1,6 +1,6 @@
 ﻿@using ActiveLearning.Web.Controllers;
 @using ActiveLearning.DB;
-
+@model IEnumerable<Chat>
 @{
     ViewBag.Title = "Chat";
 }
@@ -11,7 +11,6 @@
 
 <div class="container left" style="width:100%">
     <div style="height:600px;overflow-y:scroll;text-wrap:normal" id="discussionDiv" class="wordwrap">
-        @*<ul id="discussion" style="height:380px" class="list-group-item-info"></ul>*@
         <div class="list-group" id="discussion"></div>
     </div>
     <br />
@@ -40,19 +39,15 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
-        function getRandomClass() {
-            var x = Math.floor((Math.random() * 4) + 1);
-            var classes = ["success","info","warning","danger"];
-            return classes[x];
-        }
+
 
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
             // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
+            chat.client.addNewMessageToPage = function (sender ,studentSid, instructorSid, name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getRandomClass()+'">' + htmlEncode("Instructor: "+name)
+                $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(instructorSid)+'">' + sender +': ' + htmlEncode(name)
                     + ': ' + htmlEncode(message) + '</a>');
                 $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
             };
@@ -62,9 +57,6 @@
 
             // Set initial focus to message input box.
             $('#message').focus();
-
-            @{var studentSid = (TempData.Peek(BaseController.UserSessionParam) as User).Students.FirstOrDefault().Sid; }
-
 
             // Start the connection.
             $.connection.hub.start().done(function () {
@@ -81,7 +73,7 @@
                         return;
                     }
                     // Call the Send method on the hub.
-                    chat.server.send(@Model, @studentSid, $('#displayname').val(), $('#message').val());
+                    chat.server.send(@ViewBag.CourseSid,"", @ViewBag.InstructorSid, $('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                     $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
@@ -94,12 +86,62 @@
             return encodedValue;
         }
 
-        $(document).ready(function(){
-            $('#message').keypress(function(e){
-                if(e.keyCode==13)
-                    $('#sendmessage').click();
-            });
-        });
+        function getMessageClass(instructorSid) {
+            if(instructorSid == @ViewBag.InstructorSid)
+                return 'success';
+            else
+                return 'default';
+            }
+
+
+        function showChatHistory()
+        {
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (Chat chat in Model)
+                {
+                    string fullName = string.Empty;
+                    string sender = string.Empty;
+                    if (chat.Student != null && chat.Student.User != null)
+                    {
+                        fullName = chat.Student.User.FullName;
+                        sender = "Student";
+                    }
+                    else if (chat.Instructor != null && chat.Instructor.User != null)
+                    {
+                        fullName = chat.Instructor.User.FullName;
+                        sender = "Instructor";
+                    }
+
+                    int sid = chat.InstructorSid.HasValue ? chat.InstructorSid.Value : 0;
+
+                    <text>
+            $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(@sid)+'">@sender: ' +
+           ('@fullName') + ': ' + ('@chat.Message') + '</a>');
+            </text>
+                }
+                 <text>
+            $('#discussion').append('<a href="#" class="list-group-item list-group-item-info>End of chat history</a>');
+            $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
+            </text>
+            }
+        }
+
+
+        $(document).ready
+        (
+            function()
+            {
+                $('#message').keypress
+                (function(e)
+                {
+                    if(e.keyCode==13)
+                        $('#sendmessage').click();
+                }
+                );
+                showChatHistory();
+            }
+        );
     </script>
 }
 <style>

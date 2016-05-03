@@ -45,9 +45,9 @@
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
             // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (studentSid, name, message) {
+            chat.client.addNewMessageToPage = function (sender ,studentSid, instructorSid, name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(studentSid)+'">' + htmlEncode(name)
+                $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(studentSid)+'">' + sender +': ' + htmlEncode(name)
                     + ': ' + htmlEncode(message) + '</a>');
                 $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
             };
@@ -73,7 +73,7 @@
                         return;
                     }
                     // Call the Send method on the hub.
-                    chat.server.send(@ViewBag.CourseSid, @ViewBag.StudentSid, $('#displayname').val(), $('#message').val());
+                    chat.server.send(@ViewBag.CourseSid, @ViewBag.StudentSid,"", $('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                     $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
@@ -100,19 +100,32 @@
             {
                 foreach (Chat chat in Model)
                 {
+                    string fullName = string.Empty;
+                    string sender = string.Empty;
+                    if (chat.Student != null && chat.Student.User != null)
+                    {
+                        fullName = chat.Student.User.FullName;
+                        sender = "Student";
+                    }
+                    else if (chat.Instructor != null && chat.Instructor.User != null)
+                    {
+                        fullName = chat.Instructor.User.FullName;
+                        sender = "Instructor";
+                    }
+
+                    int sid = chat.StudentSid.HasValue ? chat.StudentSid.Value : 0;
+
                     <text>
-                    $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(@chat.StudentSid)+'">' + ('@chat.Student.User.FullName')
-                     + ': ' + ('@chat.Message') + '</a>');
-                    </text>
+            $('#discussion').append('<a href="#" class="list-group-item list-group-item-'+ getMessageClass(@sid)+'">@sender: ' +
+           ('@fullName') + ': ' + ('@chat.Message') + '</a>');
+            </text>
                 }
                  <text>
-                 $('#discussion').append('<a href="#" class="list-group-item list-group-item-info>End of chat history</a>');
-                 $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
-                 </text>
-
+            $('#discussion').append('<a href="#" class="list-group-item list-group-item-info>End of chat history</a>');
+            $('#discussionDiv').scrollTop($('#discussionDiv').prop("scrollHeight"));
+            </text>
             }
         }
-
 
         $(document).ready
         (

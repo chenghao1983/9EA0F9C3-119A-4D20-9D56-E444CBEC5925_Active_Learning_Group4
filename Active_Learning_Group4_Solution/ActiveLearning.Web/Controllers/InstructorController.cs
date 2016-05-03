@@ -52,34 +52,40 @@ namespace ActiveLearning.Web.Controllers
         #endregion
 
         #region Chat
-        //public ActionResult Chat(int courseSid)
-        //{
-        //    if (!IsUserAuthenticated())
-        //    {
-        //        return RedirectToLogin();
-        //    }
-        //    string message = string.Empty;
-        //    if (!HasAccessToCourse(courseSid, out message))
-        //    {
-        //        return RedirectToError(message);
-        //    }
-        //    var claims = new List<Claim>();
+        public ActionResult Chat(int courseSid)
+        {
+            if (!IsUserAuthenticated())
+            {
+                return RedirectToLogin();
+            }
+            string message = string.Empty;
+            if (!HasAccessToCourse(courseSid, out message))
+            {
+                return RedirectToError(message);
+            }
+            var claims = new List<Claim>();
 
 
-        //    claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
-        //    claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
+            claims.Add(new Claim(ClaimTypes.GroupSid, courseSid.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, GetLoginUser().FullName));
 
-        //    var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
-        //    HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
-        //    {
-        //        //ExpiresUtc = DateTime.UtcNow.(200),
-        //        IsPersistent = true
-        //    }, identity);
-        //    SetBackURL("courselist");
-        //    return View(courseSid);
-        //}
+            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+            {
+                //ExpiresUtc = DateTime.UtcNow.(200),
+                IsPersistent = true
+            }, identity);
 
+            using (var chatManager = new ChatManager())
+            {
+                var chatHistory = chatManager.GetChatHistoryByCourseSid(courseSid, out message);
+                ViewBag.CourseSid = courseSid;
+                ViewBag.InstructorSid = GetLoginUser().Instructors.FirstOrDefault().Sid;
+                SetBackURL("courselist");
+                return View(chatHistory);
+            }
+        }
         #endregion
 
         #region Content
