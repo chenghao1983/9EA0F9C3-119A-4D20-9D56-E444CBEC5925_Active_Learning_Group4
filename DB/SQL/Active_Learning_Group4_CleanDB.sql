@@ -666,21 +666,23 @@ INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VA
 GO
 INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (4, 1, 12, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (5, 2, 3, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (5, 2, 1, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (6, 2, 4, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (6, 2, 3, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (7, 2, 6, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (7, 2, 4, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (8, 2, 7, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (8, 2, 6, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (9, 2, 8, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (9, 2, 7, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (10, 2, 10, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (10, 2, 8, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (11, 2, 11, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (11, 2, 10, GETDATE())
 GO
-INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (12, 3, 9, GETDATE())
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (12, 2, 11, GETDATE())
+GO
+INSERT INTO [dbo].[Student_Course_Map] (Sid, StudentSid, CourseSid, CreateDT) VALUES (13, 3, 9, GETDATE())
 GO
 
 SET IDENTITY_INSERT [dbo].[Student_Course_Map] OFF
@@ -1220,6 +1222,14 @@ GO
 INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (13, 6, 2, NULL, N'no idea ...', GETDATE() , NULL, NULL)
 GO
 INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (14, 6, 1, NULL, N'alright ... bye', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (15, 1, NULL, 1,  N'Hi students, how was morning class ?', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (16, 1, 1, NULL,  N'Hi sir, it was good ! ', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (17, 1, NULL, 1,  N'That is great ! Feel free to contact me if you have any doubts ', GETDATE() , NULL, NULL)
+GO
+INSERT [dbo].[Chat] ([Sid], [CourseSid], [StudentSid], [InstructorSid], [Message], [CreateDT], [UpdateDT], [DeleteDT]) VALUES (18, 1, 2, NULL,  N'Thank you sir, you have a nice day !', GETDATE() , NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Chat] OFF
 GO
